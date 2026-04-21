@@ -3,11 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="陳品愷 Kevin Chen — 動態設計師 × 3D 藝術家 × AI 創作者，5 年業界經驗，擅長影片製作、3D 動畫與 AI 工具整合。">
-<meta property="og:title" content="陳品愷 Kevin Chen | Portfolio">
-<meta property="og:description" content="動態設計 × 3D 動畫 × AI 生成，幫品牌縮短影片製作週期 3 倍">
-<meta property="og:image" content="images/avatar.png?v=20260421b">
-<title>陳品愷 Kevin Chen | Motion Designer × AI Creator</title>
+<title>陳品愷 Kevin Chen | Portfolio Review Refresh</title>
 <style>
   :root {
     --bg: #0a0a0f;
@@ -37,92 +33,40 @@
     pointer-events:none; z-index:0;
   }
 
-  /* ── Scanline overlay ── */
-  body::after {
-    content:'';
-    position:fixed; inset:0;
-    background: repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 2px,
-      rgba(0,0,0,0.03) 2px,
-      rgba(0,0,0,0.03) 4px
-    );
-    pointer-events:none; z-index:0;
-  }
-
   /* ── NAV ── */
   nav {
     position:fixed; top:0; left:0; right:0; z-index:100;
     display:flex; justify-content:space-between; align-items:center;
     padding:1.2rem 4rem;
-    background: rgba(10,10,15,0.85);
-    backdrop-filter: blur(16px);
+    background: rgba(10,10,15,0.8);
+    backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--border);
   }
-  .nav-logo {
-    font-size:1.4rem; font-weight:700; color:var(--accent2); letter-spacing:0.05em;
-    position:relative;
-  }
-  .nav-logo::after {
-    content:''; position:absolute; bottom:-4px; left:0; width:100%; height:2px;
-    background: linear-gradient(90deg, var(--accent), var(--accent3));
-    border-radius:2px;
-  }
+  .nav-logo { font-size:1.4rem; font-weight:700; color:var(--accent2); letter-spacing:0.05em; }
   .nav-links { display:flex; gap:2rem; list-style:none; }
-  .nav-links a {
-    color:var(--muted); text-decoration:none; font-size:0.9rem;
-    letter-spacing:0.05em; transition:color 0.3s;
-    position:relative; padding-bottom:2px;
-  }
-  .nav-links a::after {
-    content:''; position:absolute; bottom:0; left:0; width:0; height:1px;
-    background: var(--accent3); transition:width 0.3s;
-  }
+  .nav-links a { color:var(--muted); text-decoration:none; font-size:0.9rem; letter-spacing:0.05em; transition:color 0.3s; }
   .nav-links a:hover { color:var(--accent2); }
-  .nav-links a:hover::after { width:100%; }
 
   /* ── HERO ── */
   .hero {
     min-height:100vh; display:flex; flex-direction:column;
     justify-content:center; align-items:center; text-align:center;
     padding:2rem; position:relative; overflow:hidden;
-    isolation: isolate;
   }
   .hero-glow {
-    position:absolute; width:700px; height:700px; border-radius:50%;
+    position:absolute; width:600px; height:600px; border-radius:50%;
     background: radial-gradient(circle, rgba(124,58,237,0.15) 0%, transparent 70%);
     top:50%; left:50%; transform:translate(-50%,-50%);
     animation: pulse 4s ease-in-out infinite;
-    z-index:0; pointer-events:none;
+    z-index:0;
   }
-  .hero-glow2 {
-    position:absolute; width:400px; height:400px; border-radius:50%;
-    background: radial-gradient(circle, rgba(6,182,212,0.07) 0%, transparent 70%);
-    top:30%; left:70%; transform:translate(-50%,-50%);
-    animation: pulse 6s ease-in-out infinite reverse;
-    z-index:0; pointer-events:none;
-  }
-  /* 掃光線條 */
-  .hero-scanline {
-    position:absolute; inset:0; z-index:0; pointer-events:none; overflow:hidden;
-  }
-  .hero-scanline::before {
-    content:'';
-    position:absolute; top:-100%; left:0; width:100%; height:60%;
-    background: linear-gradient(180deg, transparent 0%, rgba(124,58,237,0.04) 50%, transparent 100%);
-    animation: scanDown 8s linear infinite;
-  }
-  @keyframes scanDown { from{top:-100%} to{top:200%} }
   @keyframes pulse { 0%,100%{transform:translate(-50%,-50%) scale(1)} 50%{transform:translate(-50%,-50%) scale(1.15)} }
-
   .hero-tag {
     display:inline-block; padding:0.4rem 1rem;
     border:1px solid var(--accent); border-radius:50px;
     font-size:0.8rem; color:var(--accent2); letter-spacing:0.15em;
     text-transform:uppercase; margin-bottom:1.5rem;
     animation: fadeUp 0.8s ease both;
-    background: rgba(124,58,237,0.08);
   }
   .hero h1 {
     font-size:clamp(3rem, 8vw, 6rem); font-weight:800; line-height:1.05;
@@ -145,29 +89,16 @@
     transition:transform 0.2s, box-shadow 0.2s;
     box-shadow: 0 0 30px rgba(124,58,237,0.4);
   }
-  .btn-primary:hover { transform:translateY(-2px); box-shadow:0 0 50px rgba(124,58,237,0.7); }
+  .btn-primary:hover { transform:translateY(-2px); box-shadow:0 0 40px rgba(124,58,237,0.6); }
   .btn-outline {
     padding:0.9rem 2rem; border-radius:8px; font-weight:600; font-size:0.95rem;
     background:transparent; color:var(--accent2); border:1px solid var(--accent);
     text-decoration:none; transition:all 0.2s;
   }
-  .btn-outline:hover { background:rgba(124,58,237,0.15); border-color:var(--accent2); }
+  .btn-outline:hover { background:rgba(124,58,237,0.1); }
 
   @keyframes fadeUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
-
-  /* ── STAT COUNTER ── */
-  .hero-stats {
-    display:flex; gap:3rem; margin-top:3rem; flex-wrap:wrap; justify-content:center;
-    animation: fadeUp 0.8s 0.8s ease both;
-  }
-  .stat-divider { width:1px; background:rgba(124,58,237,0.3); }
-  .stat-num {
-    font-size:2.2rem; font-weight:800;
-    background:linear-gradient(135deg,#fff,#a855f7);
-    -webkit-background-clip:text; -webkit-text-fill-color:transparent;
-  }
-  .stat-num.cyan { background:linear-gradient(135deg,#fff,#06b6d4); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
-  .stat-label { font-size:0.8rem; color:#94a3b8; margin-top:0.2rem; letter-spacing:0.05em; }
+  @keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(10px)} }
 
   /* TV WALL */
   .tv-cell {
@@ -176,20 +107,12 @@
     border: 1px solid rgba(124,58,237,0.25);
     background: #0f0f1a;
     aspect-ratio: 16 / 9;
-    transition: border-color 0.3s, box-shadow 0.3s;
-  }
-  .tv-cell:hover {
-    border-color: rgba(168,85,247,0.6);
-    box-shadow: 0 0 20px rgba(124,58,237,0.3);
   }
   .tv-cell video { width:100%; height:100%; object-fit:contain; object-position: center center; background:#0f0f1a; }
   @keyframes scrollLeft { from{transform:translateX(0)} to{transform:translateX(-50%)} }
   @keyframes scrollRight { from{transform:translateX(-50%)} to{transform:translateX(0)} }
   #row1 { animation: scrollLeft 25s linear infinite; }
   #row2 { animation: scrollRight 30s linear infinite; }
-  .tv-row-wrap:hover #row1 { animation-play-state: paused; }
-  .tv-row-wrap:hover #row2 { animation-play-state: paused; }
-
   /* ── SECTION BASE ── */
   section { padding:6rem 4rem; max-width:1200px; margin:0 auto; }
   .section-title {
@@ -210,6 +133,15 @@
   .info-item { display:flex; flex-direction:column; gap:0.2rem; }
   .info-label { font-size:0.75rem; color:var(--accent2); text-transform:uppercase; letter-spacing:0.1em; }
   .info-value { font-size:0.95rem; color:var(--text); }
+  .skills-visual { display:flex; flex-direction:column; gap:1rem; }
+  .skill-item { display:flex; flex-direction:column; gap:0.4rem; }
+  .skill-name { font-size:0.85rem; color:var(--muted); display:flex; justify-content:space-between; }
+  .skill-bar { height:6px; background:rgba(255,255,255,0.08); border-radius:3px; overflow:hidden; }
+  .skill-fill {
+    height:100%; border-radius:3px;
+    background: linear-gradient(90deg, var(--accent), var(--accent3));
+    transition: width 1.5s ease;
+  }
 
   /* ── EXPERIENCE ── */
   .timeline { position:relative; padding-left:2rem; }
@@ -226,9 +158,9 @@
   }
   .timeline-card {
     background:var(--card); border:1px solid var(--border); border-radius:12px;
-    padding:1.5rem; transition:transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+    padding:1.5rem; transition:transform 0.3s, box-shadow 0.3s;
   }
-  .timeline-card:hover { transform:translateX(6px); box-shadow:0 0 30px rgba(124,58,237,0.25); border-color:rgba(168,85,247,0.5); }
+  .timeline-card:hover { transform:translateX(6px); box-shadow:0 0 30px rgba(124,58,237,0.2); }
   .timeline-header { display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.8rem; }
   .timeline-company { font-size:1.1rem; font-weight:700; color:var(--text); }
   .timeline-role { font-size:0.85rem; color:var(--accent2); margin-top:0.2rem; }
@@ -245,52 +177,51 @@
   .skills-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(220px,1fr)); gap:1.5rem; }
   .skill-card {
     background:var(--card); border:1px solid var(--border); border-radius:12px; padding:1.5rem;
-    transition:transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+    transition:transform 0.3s, box-shadow 0.3s;
   }
-  .skill-card:hover { transform:translateY(-6px); box-shadow:0 0 30px rgba(124,58,237,0.25); border-color:rgba(168,85,247,0.5); }
+  .skill-card:hover { transform:translateY(-4px); box-shadow:0 0 25px rgba(124,58,237,0.2); }
   .skill-card-icon { font-size:2rem; margin-bottom:0.8rem; }
   .skill-card-title { font-size:1rem; font-weight:600; color:var(--text); margin-bottom:0.6rem; }
   .skill-tags { display:flex; flex-wrap:wrap; gap:0.4rem; }
   .tag {
     font-size:0.75rem; padding:0.25rem 0.7rem; border-radius:50px;
     background:rgba(124,58,237,0.15); border:1px solid rgba(124,58,237,0.3);
-    color:var(--accent2); transition:background 0.2s, border-color 0.2s;
+    color:var(--accent2);
   }
-  .tag:hover { background:rgba(124,58,237,0.3); border-color:rgba(168,85,247,0.6); }
 
   /* ── PORTFOLIO ── */
   .portfolio-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(300px,1fr)); gap:1.5rem; }
   .portfolio-card {
     background:var(--card); border:1px solid var(--border); border-radius:12px;
-    overflow:hidden; transition:transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+    overflow:hidden; transition:transform 0.3s, box-shadow 0.3s;
   }
-  .portfolio-card:hover { transform:translateY(-8px); box-shadow:0 0 50px rgba(124,58,237,0.3); border-color:rgba(168,85,247,0.5); }
+  .portfolio-card:hover { transform:translateY(-6px); box-shadow:0 0 40px rgba(124,58,237,0.25); }
   .portfolio-thumb {
     width:100%; aspect-ratio:16/9;
     background: linear-gradient(135deg, rgba(124,58,237,0.3), rgba(6,182,212,0.2));
     display:flex; align-items:center; justify-content:center;
     font-size:3rem; position:relative; overflow:hidden;
   }
-  .portfolio-thumb img { width:100%; height:100%; object-fit:cover; loading:lazy; transition: transform 0.5s; }
-  .portfolio-card:hover .portfolio-thumb img { transform: scale(1.05); }
+  .portfolio-thumb video { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0; transition:opacity 0.5s; }
+  .portfolio-card:hover .portfolio-thumb video { opacity:1; }
   .portfolio-info { padding:1.2rem; }
   .portfolio-title { font-size:1rem; font-weight:600; color:var(--text); margin-bottom:0.4rem; }
   .portfolio-desc { font-size:0.85rem; color:var(--muted); line-height:1.6; margin-bottom:0.8rem; }
   .portfolio-link {
     display:inline-flex; align-items:center; gap:0.4rem;
     font-size:0.85rem; color:var(--accent2); text-decoration:none;
-    transition:gap 0.2s, color 0.2s;
+    transition:gap 0.2s;
   }
-  .portfolio-link:hover { gap:0.7rem; color:var(--accent3); }
+  .portfolio-link:hover { gap:0.7rem; }
 
   /* ── CERTS ── */
   .certs-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(200px,1fr)); gap:1.2rem; }
   .cert-card {
     background:var(--card); border:1px solid var(--border); border-radius:12px; padding:1.2rem;
     display:flex; align-items:center; gap:1rem;
-    transition:transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+    transition:transform 0.3s;
   }
-  .cert-card:hover { transform:translateY(-4px); box-shadow:0 0 20px rgba(124,58,237,0.2); border-color:rgba(168,85,247,0.5); }
+  .cert-card:hover { transform:translateY(-3px); }
   .cert-icon { font-size:2rem; flex-shrink:0; }
   .cert-name { font-size:0.9rem; font-weight:600; color:var(--text); }
   .cert-org { font-size:0.8rem; color:var(--muted); }
@@ -304,55 +235,16 @@
     background:var(--card); border:1px solid var(--border); border-radius:10px;
     text-decoration:none; color:var(--text); transition:all 0.3s;
   }
-  .contact-link:hover { border-color:var(--accent2); background:rgba(124,58,237,0.12); transform:translateX(4px); }
+  .contact-link:hover { border-color:var(--accent2); background:rgba(124,58,237,0.1); }
   .contact-link-icon { font-size:1.4rem; }
   .contact-link-label { font-size:0.8rem; color:var(--muted); }
   .contact-link-value { font-size:0.95rem; }
 
-  /* ── CONTACT CTA BOX ── */
-  .contact-cta-box {
-    background: linear-gradient(135deg, rgba(124,58,237,0.15), rgba(6,182,212,0.08));
-    border:1px solid rgba(124,58,237,0.4);
-    border-radius:16px; padding:3rem 2rem;
-    text-align:center;
-    position:relative; overflow:hidden;
-  }
-  .contact-cta-box::before {
-    content:''; position:absolute; inset:0;
-    background: radial-gradient(circle at 50% 0%, rgba(124,58,237,0.2), transparent 70%);
-    pointer-events:none;
-  }
-  .contact-cta-box .cta-title { font-size:1.5rem; font-weight:700; color:var(--text); margin-bottom:0.5rem; }
-  .contact-cta-box .cta-sub { color:var(--muted); margin-bottom:2rem; font-size:0.95rem; line-height:1.6; }
-  .contact-cta-box .cta-badges { display:flex; gap:0.6rem; justify-content:center; flex-wrap:wrap; margin-bottom:2rem; }
-  .cta-badge {
-    padding:0.3rem 0.9rem; border-radius:50px; font-size:0.8rem;
-    background:rgba(124,58,237,0.15); border:1px solid rgba(124,58,237,0.4); color:var(--accent2);
-  }
-
   /* ── FOOTER ── */
   footer {
-    text-align:center; padding:2.5rem; border-top:1px solid var(--border);
+    text-align:center; padding:2rem; border-top:1px solid var(--border);
     color:var(--muted); font-size:0.85rem;
-    background: var(--bg2);
   }
-  footer .footer-inner { max-width:1200px; margin:0 auto; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; }
-  footer .footer-links { display:flex; gap:1.5rem; }
-  footer a { color:var(--muted); text-decoration:none; transition:color 0.2s; }
-  footer a:hover { color:var(--accent2); }
-
-  /* ── SCROLL TO TOP ── */
-  .scroll-top {
-    position:fixed; bottom:2rem; right:2rem; z-index:50;
-    width:44px; height:44px; border-radius:50%;
-    background: linear-gradient(135deg, var(--accent), var(--accent2));
-    border:none; cursor:pointer; color:#fff; font-size:1.2rem;
-    box-shadow:0 0 20px rgba(124,58,237,0.4);
-    opacity:0; transition:opacity 0.3s, transform 0.2s;
-    display:flex; align-items:center; justify-content:center;
-  }
-  .scroll-top.visible { opacity:1; }
-  .scroll-top:hover { transform:translateY(-3px); box-shadow:0 0 30px rgba(124,58,237,0.6); }
 
   /* ── RESPONSIVE ── */
   @media (max-width: 768px) {
@@ -362,15 +254,9 @@
     .about-grid { grid-template-columns:1fr; }
     .contact-grid { grid-template-columns:1fr; }
     .hero h1 { font-size:3rem; }
-    .hero-stats { gap:1.5rem; }
+    #what-i-do > div { padding:0 1.5rem !important; }
+    #what-i-do div[style*="grid-template-columns:repeat(2,minmax(0,1fr))"] { grid-template-columns:1fr !important; }
   }
-
-  /* ── FADE IN ANIMATION ── */
-  .fade-in {
-    opacity:0; transform:translateY(24px);
-    transition:opacity 0.6s ease, transform 0.6s ease;
-  }
-  .fade-in.visible { opacity:1; transform:translateY(0); }
 </style>
 </head>
 <body>
@@ -379,73 +265,105 @@
 <nav>
   <div class="nav-logo">Kevin Chen</div>
   <ul class="nav-links">
-    <li><a href="#about">關於我</a></li>
-    <li><a href="#experience">工作經歷</a></li>
-    <li><a href="#skills">技能</a></li>
+    <li><a href="#what-i-do">方向</a></li>
     <li><a href="#portfolio">作品集</a></li>
-    <li><a href="#certs">認證</a></li>
+    <li><a href="#about">關於我</a></li>
+    <li><a href="#skills">能力</a></li>
+    <li><a href="#experience">經歷</a></li>
     <li><a href="#contact">聯絡</a></li>
   </ul>
 </nav>
 
 <!-- HERO -->
 <div class="hero">
-  <div class="hero-glow"></div>
-  <div class="hero-glow2"></div>
-  <div class="hero-scanline"></div>
-  <canvas id="particles" style="position:absolute;inset:0;pointer-events:none;z-index:0;"></canvas>
+  <!-- 背景影片 -->
+  <video id="hero-video" autoplay muted loop playsinline style="
+    position:absolute; inset:0; width:100%; height:100%;
+    object-fit:cover; z-index:0; opacity:0;
+    transition: opacity 1.5s ease;
+  ">
+    <source src="videos/v1.mp4?v=20260421r" type="video/mp4">
+  </video>
+  <!-- 深色遮罩 -->
+  <div style="position:absolute;inset:0;z-index:1;
+    background:linear-gradient(180deg, rgba(10,10,15,0.55) 0%, rgba(10,10,15,0.72) 50%, rgba(10,10,15,0.96) 100%);
+  "></div>
+  <!-- 底部霧化融合到下一區 -->
+  <div style="position:absolute;bottom:0;left:0;right:0;height:120px;z-index:1;
+    background:linear-gradient(0deg, var(--bg) 0%, transparent 100%);
+  "></div>
 
-  <div style="position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;width:100%;">
-    <div class="hero-tag">✦ Motion Designer &amp; AI Creator</div>
-    <h1>陳品愷<br>Kevin Chen</h1>
-    <p class="hero-sub">幫品牌用 AI 工具把影片製作週期縮短 3 倍——動態設計 × 3D 動畫 × AI 生成，5 年實戰經驗</p>
+  <div class="hero-glow" style="z-index:2;"></div>
 
-    <!-- 技能標籤 -->
-    <div style="display:flex;flex-wrap:wrap;gap:0.6rem;justify-content:center;margin-top:1.8rem;max-width:600px;animation:fadeUp 0.8s 0.5s ease both;">
-      <span style="padding:0.35rem 0.9rem;border-radius:50px;background:rgba(124,58,237,0.15);border:1px solid rgba(124,58,237,0.4);font-size:0.8rem;color:#a855f7;">After Effects</span>
-      <span style="padding:0.35rem 0.9rem;border-radius:50px;background:rgba(6,182,212,0.1);border:1px solid rgba(6,182,212,0.3);font-size:0.8rem;color:#06b6d4;">Cinema 4D</span>
-      <span style="padding:0.35rem 0.9rem;border-radius:50px;background:rgba(124,58,237,0.15);border:1px solid rgba(124,58,237,0.4);font-size:0.8rem;color:#a855f7;">Blender</span>
-      <span style="padding:0.35rem 0.9rem;border-radius:50px;background:rgba(6,182,212,0.1);border:1px solid rgba(6,182,212,0.3);font-size:0.8rem;color:#06b6d4;">Stable Diffusion</span>
-      <span style="padding:0.35rem 0.9rem;border-radius:50px;background:rgba(124,58,237,0.15);border:1px solid rgba(124,58,237,0.4);font-size:0.8rem;color:#a855f7;">MAYA</span>
-      <span style="padding:0.35rem 0.9rem;border-radius:50px;background:rgba(6,182,212,0.1);border:1px solid rgba(6,182,212,0.3);font-size:0.8rem;color:#06b6d4;">MidJourney</span>
-      <span style="padding:0.35rem 0.9rem;border-radius:50px;background:rgba(124,58,237,0.15);border:1px solid rgba(124,58,237,0.4);font-size:0.8rem;color:#a855f7;">Premiere</span>
+  <div style="position:relative;z-index:3;display:flex;flex-direction:column;align-items:center;width:100%;">
+    <div class="hero-tag">✦ Motion Design × 3D × AI Workflow</div>
+    <h1 style="font-size:clamp(2.2rem,5vw,3.8rem);">陳品愷 Kevin Chen</h1>
+    <p class="hero-sub" style="font-size:clamp(1.3rem,3vw,1.9rem);font-weight:700;color:#fff;margin-top:1.2rem;max-width:820px;line-height:1.5;">
+      我不只是使用 AI，<br>我把 AI 變成真正能工作的系統。
+    </p>
+    <p style="font-size:1rem;color:#b0b8c8;margin-top:1.2rem;max-width:760px;line-height:1.9;animation:fadeUp 0.8s 0.5s ease both;">
+      從動態設計、3D 視覺到 AI 工作流整合，
+      我持續把零散的工具、靈感與製作流程，整理成更能真正落地的創作方式。
+    </p>
+
+    <div style="display:flex;flex-wrap:wrap;gap:0.6rem;justify-content:center;margin-top:1.8rem;max-width:760px;">
+      <span style="padding:0.35rem 0.9rem;border-radius:50px;background:rgba(124,58,237,0.15);border:1px solid rgba(124,58,237,0.4);font-size:0.8rem;color:#a855f7;">Motion Design</span>
+      <span style="padding:0.35rem 0.9rem;border-radius:50px;background:rgba(6,182,212,0.1);border:1px solid rgba(6,182,212,0.3);font-size:0.8rem;color:#06b6d4;">3D Visual</span>
+      <span style="padding:0.35rem 0.9rem;border-radius:50px;background:rgba(124,58,237,0.15);border:1px solid rgba(124,58,237,0.4);font-size:0.8rem;color:#a855f7;">AI Workflow</span>
+      <span style="padding:0.35rem 0.9rem;border-radius:50px;background:rgba(6,182,212,0.1);border:1px solid rgba(6,182,212,0.3);font-size:0.8rem;color:#06b6d4;">Creative System</span>
+      <span style="padding:0.35rem 0.9rem;border-radius:50px;background:rgba(124,58,237,0.15);border:1px solid rgba(124,58,237,0.4);font-size:0.8rem;color:#a855f7;">Blender MCP</span>
+      <span style="padding:0.35rem 0.9rem;border-radius:50px;background:rgba(6,182,212,0.1);border:1px solid rgba(6,182,212,0.3);font-size:0.8rem;color:#06b6d4;">Knowledge Workflow</span>
     </div>
 
     <!-- CTA -->
     <div class="hero-cta">
-      <a href="#portfolio" class="btn-primary">查看作品集 →</a>
-      <a href="#contact" class="btn-outline">與我聯絡</a>
+      <a href="#what-i-do" class="btn-outline">我正在做的事情</a>
+    </div>
+  </div>
+</div>
+
+<!-- WHAT I DO -->
+<section id="what-i-do" style="background:var(--bg2); max-width:100%; padding:5rem 0;">
+<div style="max-width:1200px; margin:0 auto; padding:0 4rem;">
+  <div style="text-align:center; margin-bottom:3rem;">
+    <span style="font-size:0.8rem;color:#a855f7;letter-spacing:0.15em;text-transform:uppercase;">✦ What I'm Working On</span>
+    <div style="font-size:1.8rem;font-weight:700;margin-top:0.8rem;background:linear-gradient(90deg,#fff,var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">我正在做的事情</div>
+    <p style="color:#94a3b8;margin-top:0.6rem;font-size:0.95rem;max-width:760px;margin-left:auto;margin-right:auto;line-height:1.8;">
+      我關注的不只是單一作品形式，而是創作在 AI 時代裡，如何從靈感走到真正落地。
+    </p>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.5rem;align-items:stretch;">
+
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:2rem;min-height:260px;display:flex;flex-direction:column;justify-content:flex-start;transition:transform 0.3s,box-shadow 0.3s;" onmouseover="this.style.transform='translateY(-6px)';this.style.boxShadow='0 0 35px rgba(124,58,237,0.2)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+      <div style="font-size:2rem;margin-bottom:1rem;">🎬</div>
+      <div style="font-size:1.1rem;font-weight:700;color:var(--text);margin-bottom:0.6rem;">AI 與內容工作流</div>
+      <p style="font-size:0.88rem;color:#94a3b8;line-height:1.7;">我在意的不是工具本身有多新，而是它能不能真正幫助內容從想法走到完成，並讓流程變得更穩定、更可重複。</p>
     </div>
 
-    <!-- 數據統計 -->
-    <div class="hero-stats">
-      <div style="text-align:center;">
-        <div class="stat-num">5+</div>
-        <div class="stat-label">年業界經驗</div>
-      </div>
-      <div class="stat-divider"></div>
-      <div style="text-align:center;">
-        <div class="stat-num cyan">5</div>
-        <div class="stat-label">間企業經歷</div>
-      </div>
-      <div class="stat-divider"></div>
-      <div style="text-align:center;">
-        <div class="stat-num">10+</div>
-        <div class="stat-label">軟體工具</div>
-      </div>
-      <div class="stat-divider"></div>
-      <div style="text-align:center;">
-        <div class="stat-num cyan">3</div>
-        <div class="stat-label">專業認證</div>
-      </div>
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:2rem;min-height:260px;display:flex;flex-direction:column;justify-content:flex-start;transition:transform 0.3s,box-shadow 0.3s;" onmouseover="this.style.transform='translateY(-6px)';this.style.boxShadow='0 0 35px rgba(6,182,212,0.2)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+      <div style="font-size:2rem;margin-bottom:1rem;">🎞️</div>
+      <div style="font-size:1.1rem;font-weight:700;color:var(--text);margin-bottom:0.6rem;">影像與轉場設計</div>
+      <p style="font-size:0.88rem;color:#94a3b8;line-height:1.7;">我關注不同類型的影片創作者，在節奏、風格與觀眾感受上的差異，並思考轉場如何真正服務內容，而不是只成為效果本身。</p>
+    </div>
+
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:2rem;min-height:260px;display:flex;flex-direction:column;justify-content:flex-start;transition:transform 0.3s,box-shadow 0.3s;" onmouseover="this.style.transform='translateY(-6px)';this.style.boxShadow='0 0 35px rgba(124,58,237,0.2)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+      <div style="font-size:2rem;margin-bottom:1rem;">🧠</div>
+      <div style="font-size:1.1rem;font-weight:700;color:var(--text);margin-bottom:0.6rem;">知識整理與系統化</div>
+      <p style="font-size:0.88rem;color:#94a3b8;line-height:1.7;">除了作品本身，我也持續整理創作過程中的方法、判斷與研究資料，希望讓做過的事可以被延續，而不是每次重新開始。</p>
+    </div>
+
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:2rem;min-height:260px;display:flex;flex-direction:column;justify-content:flex-start;transition:transform 0.3s,box-shadow 0.3s;" onmouseover="this.style.transform='translateY(-6px)';this.style.boxShadow='0 0 35px rgba(6,182,212,0.2)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+      <div style="font-size:2rem;margin-bottom:1rem;">🧪</div>
+      <div style="font-size:1.1rem;font-weight:700;color:var(--text);margin-bottom:0.6rem;">AI 輔助創作與實驗</div>
+      <p style="font-size:0.88rem;color:#94a3b8;line-height:1.7;">我持續把 AI 放進影像、3D、知識整理與工作流程中，測試它在真實創作情境裡的位置與限制，並把實驗轉化成更實際的方法。</p>
     </div>
 
   </div>
 </div>
-
+</section>
 
 <!-- TV WALL -->
-<div class="tv-row-wrap" style="padding:4rem 0 0; overflow:hidden; background:var(--bg); position:relative;">
+<div style="padding:4rem 0 0; overflow:hidden; background:var(--bg); position:relative;">
   <div style="text-align:center; margin-bottom:1.5rem;">
     <span style="font-size:0.8rem;color:#94a3b8;letter-spacing:0.15em;text-transform:uppercase;">✦ Works Showcase</span>
   </div>
@@ -460,7 +378,7 @@
     </span>
   </div>
 
-  <!-- Row 1: 左移 -->
+    <!-- Row 1: 左移 (廣告作品 16:9) -->
   <div class="tv-row" id="row1" style="display:flex;gap:12px;margin-bottom:12px;width:max-content;">
     <div class="tv-cell"><video src="G:/我的雲端硬碟/作品集/廣告/06.mp4" autoplay muted loop playsinline></video></div>
     <div class="tv-cell"><video src="G:/我的雲端硬碟/作品集/廣告/07.mp4" autoplay muted loop playsinline></video></div>
@@ -471,6 +389,7 @@
     <div class="tv-cell"><video src="G:/我的雲端硬碟/作品集/廣告/12.mp4" autoplay muted loop playsinline></video></div>
     <div class="tv-cell"><video src="G:/我的雲端硬碟/作品集/廣告/13.mp4" autoplay muted loop playsinline></video></div>
     <div class="tv-cell"><video src="G:/我的雲端硬碟/作品集/廣告/14.mp4" autoplay muted loop playsinline></video></div>
+    <!-- 無縫複製 -->
     <div class="tv-cell"><video src="G:/我的雲端硬碟/作品集/廣告/06.mp4" autoplay muted loop playsinline></video></div>
     <div class="tv-cell"><video src="G:/我的雲端硬碟/作品集/廣告/07.mp4" autoplay muted loop playsinline></video></div>
     <div class="tv-cell"><video src="G:/我的雲端硬碟/作品集/廣告/08.mp4" autoplay muted loop playsinline></video></div>
@@ -482,7 +401,7 @@
     <div class="tv-cell"><video src="G:/我的雲端硬碟/作品集/廣告/14.mp4" autoplay muted loop playsinline></video></div>
   </div>
 
-  <!-- Row 2: 右移 -->
+    <!-- Row 2: 右移 (AI Video 16:9) -->
   <div class="tv-row" id="row2" style="display:flex;gap:12px;margin-bottom:12px;width:max-content;">
     <div class="tv-cell"><video src="G:/我的雲端硬碟/作品集/AI Video/01 (1).mp4" autoplay muted loop playsinline></video></div>
     <div class="tv-cell"><video src="G:/我的雲端硬碟/作品集/AI Video/09.mp4" autoplay muted loop playsinline></video></div>
@@ -492,6 +411,7 @@
     <div class="tv-cell"><video src="G:/我的雲端硬碟/作品集/AI Video/13.mp4" autoplay muted loop playsinline></video></div>
     <div class="tv-cell"><video src="G:/我的雲端硬碟/作品集/AI Video/14.mp4" autoplay muted loop playsinline></video></div>
     <div class="tv-cell"><video src="G:/我的雲端硬碟/作品集/AI Video/15.mp4" autoplay muted loop playsinline></video></div>
+    <!-- 無縫複製 -->
     <div class="tv-cell"><video src="G:/我的雲端硬碟/作品集/AI Video/01 (1).mp4" autoplay muted loop playsinline></video></div>
     <div class="tv-cell"><video src="G:/我的雲端硬碟/作品集/AI Video/09.mp4" autoplay muted loop playsinline></video></div>
     <div class="tv-cell"><video src="G:/我的雲端硬碟/作品集/AI Video/10.mp4" autoplay muted loop playsinline></video></div>
@@ -506,16 +426,113 @@
   <div style="position:absolute;top:0;left:0;bottom:0;width:120px;background:linear-gradient(90deg,var(--bg) 0%,transparent 100%);pointer-events:none;z-index:2;"></div>
   <div style="position:absolute;top:0;right:0;bottom:0;width:120px;background:linear-gradient(270deg,var(--bg) 0%,transparent 100%);pointer-events:none;z-index:2;"></div>
 </div>
+<!-- PORTFOLIO -->
+<section id="portfolio" style="background:var(--bg2); max-width:100%; padding:6rem 0;">
+<div style="max-width:1200px; margin:0 auto; padding:0 4rem;">
+  <div class="section-title">作品集</div>
+  <div class="section-line"></div>
+
+  <!-- 精選作品 -->
+  <div style="margin-bottom:2.5rem;">
+    <div style="font-size:0.85rem;color:#a855f7;letter-spacing:0.1em;margin-bottom:1.2rem;display:flex;align-items:center;gap:0.6rem;">
+      <span style="width:24px;height:2px;background:#a855f7;display:inline-block;border-radius:2px;"></span>
+      精選作品
+    </div>
+    <div class="portfolio-grid">
+      <div class="portfolio-card">
+        <div class="portfolio-thumb" style="background:none;"><img src="images/thumb_motion_ai.jpg?v=20260421r" style="width:100%;height:100%;object-fit:cover;"></div>
+        <div class="portfolio-info">
+          <div class="portfolio-title">動態影片作品集</div>
+          <div class="portfolio-desc">CG 動畫、AR 物件、廣告動態 — 從鏡電視到訊連科技的商業製作精選。</div>
+        </div>
+      </div>
+      <div class="portfolio-card">
+        <div class="portfolio-thumb" style="background:none;"><img src="images/thumb_3d_car_purple.png?v=20260421r" style="width:100%;height:100%;object-fit:cover;"></div>
+        <div class="portfolio-info">
+          <div class="portfolio-title">3D 建模與渲染</div>
+          <div class="portfolio-desc">C4D、Blender、MAYA 製作的 3D 場景、角色與產品視覺化。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 商業專案 -->
+  <div style="margin-bottom:2.5rem;">
+    <div style="font-size:0.85rem;color:#06b6d4;letter-spacing:0.1em;margin-bottom:1.2rem;display:flex;align-items:center;gap:0.6rem;">
+      <span style="width:24px;height:2px;background:#06b6d4;display:inline-block;border-radius:2px;"></span>
+      商業專案
+    </div>
+    <div class="portfolio-grid">
+      <div class="portfolio-card">
+        <div class="portfolio-thumb" style="background:none;"><img src="images/thumb_tv_ai.jpg?v=20260421r" style="width:100%;height:100%;object-fit:cover;"></div>
+        <div class="portfolio-info">
+          <div class="portfolio-title">電視台廣告動畫</div>
+          <div class="portfolio-desc">鏡電視時期的電視廣告動畫、CG 特效與棚內動態設計。</div>
+        </div>
+      </div>
+      <div class="portfolio-card">
+        <div class="portfolio-thumb" style="background:none;"><img src="images/thumb_game.jpg?v=20260421r" style="width:100%;height:100%;object-fit:cover;"></div>
+        <div class="portfolio-info">
+          <div class="portfolio-title">遊戲廣告製作</div>
+          <div class="portfolio-desc">真好玩娛樂科技的遊戲 PV、廣告動畫與宣傳素材。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AI 實驗 -->
+  <div>
+    <div style="font-size:0.85rem;color:#a855f7;letter-spacing:0.1em;margin-bottom:1.2rem;display:flex;align-items:center;gap:0.6rem;">
+      <span style="width:24px;height:2px;background:#a855f7;display:inline-block;border-radius:2px;"></span>
+      AI 實驗
+    </div>
+    <div class="portfolio-grid">
+      <div class="portfolio-card">
+        <div class="portfolio-thumb" style="background:none;"><img src="images/thumb_ai_new.jpg?v=20260421r" style="width:100%;height:100%;object-fit:cover;"></div>
+        <div class="portfolio-info">
+          <div class="portfolio-title">AI 生成創作</div>
+          <div class="portfolio-desc">整合 Stable Diffusion、MidJourney、Runway 等 AI 工具的實驗性創作與應用。</div>
+        </div>
+      </div>
+      <div class="portfolio-card">
+        <div class="portfolio-thumb" style="background:none;"><img src="images/thumb_personal.jpg?v=20260421r" style="width:100%;height:100%;object-fit:cover;"></div>
+        <div class="portfolio-info">
+          <div class="portfolio-title">個人創作實驗</div>
+          <div class="portfolio-desc">風格探索、新技術實驗與跨媒介創作。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</section>
 
 <!-- ABOUT -->
 <section id="about">
   <div class="section-title">關於我</div>
   <div class="section-line"></div>
   <div class="about-grid">
-    <div class="about-text fade-in">
-      <p>你好，我是品愷，一名擁有豐富媒體製作經驗的動畫師與內容創作者。畢業於銘傳大學數位媒體設計系，曾任職於鏡電視、訊連科技等知名企業。</p>
-      <p>近年來積極投入 AI 工具的研究與整合，擅長將 Stable Diffusion、MidJourney、Runway 等 AI 技術融入傳統創作流程，大幅提升製作效率與創意邊界。同時熟悉 OpenClaw、MCP 整合等 AI Agent 工作流，能將 AI 工具串聯成自動化內容生產線。</p>
-      <p>對於動態設計、3D 建模與影片製作充滿熱情，持續探索科技與創意的交匯點。</p>
+    <div class="about-text">
+      <p>我是品愷。做動態設計和 3D 出身，近年把重心放在一件事：<strong style="color:#a855f7;">怎麼讓 AI 真正融入創作工作流。</strong></p>
+      <p>從民視、鏡電視到訊連科技，我做過電視廣告、CG 動畫、遊戲 PV、AR 物件。這些經驗讓我理解製作流程裡哪些環節可以被 AI 加速，哪些不行。</p>
+      <p>現在我同時在做兩件事：用 AI 工具提升影像製作效率，以及把 Claude、MCP、本地模型串成一套真正能跑的工作系統。</p>
+      <!-- 數據統計（從 Hero 搬來） -->
+      <div style="display:flex;gap:2rem;margin-top:2rem;flex-wrap:wrap;">
+        <div style="text-align:center;">
+          <div style="font-size:1.8rem;font-weight:800;background:linear-gradient(135deg,#fff,#a855f7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">5+</div>
+          <div style="font-size:0.75rem;color:#94a3b8;letter-spacing:0.05em;">年經驗</div>
+        </div>
+        <div style="width:1px;background:rgba(124,58,237,0.3);"></div>
+        <div style="text-align:center;">
+          <div style="font-size:1.8rem;font-weight:800;background:linear-gradient(135deg,#fff,#06b6d4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">5</div>
+          <div style="font-size:0.75rem;color:#94a3b8;letter-spacing:0.05em;">間企業</div>
+        </div>
+        <div style="width:1px;background:rgba(124,58,237,0.3);"></div>
+        <div style="text-align:center;">
+          <div style="font-size:1.8rem;font-weight:800;background:linear-gradient(135deg,#fff,#a855f7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">10+</div>
+          <div style="font-size:0.75rem;color:#94a3b8;letter-spacing:0.05em;">工具</div>
+        </div>
+      </div>
       <div class="info-grid" style="margin-top:1.5rem;">
         <div class="info-item">
           <span class="info-label">所在地</span>
@@ -525,51 +542,134 @@
           <span class="info-label">學歷</span>
           <span class="info-value">銘傳大學 數位媒體設計系</span>
         </div>
-        <div class="info-item">
-          <span class="info-label">工作年資</span>
-          <span class="info-value">5+ 年業界經驗</span>
-        </div>
-        <div class="info-item">
-          <span class="info-label">信箱</span>
-          <span class="info-value">gold51008@gmail.com</span>
-        </div>
       </div>
     </div>
-    <div style="display:flex;flex-direction:column;align-items:center;gap:1.5rem;" class="fade-in">
-      <!-- 頭像框：純邊框漸層，不用大光暈圓 -->
-      <div style="position:relative;width:260px;height:260px;flex-shrink:0;">
-        <!-- 漸層邊框圈（細） -->
-        <div style="
-          position:absolute;inset:-3px;border-radius:50%;
-          background:conic-gradient(from 0deg, #7c3aed, #a855f7, #06b6d4, #7c3aed);
-          opacity:0.9;
-        "></div>
-        <!-- 白色間隔 -->
-        <div style="position:absolute;inset:3px;border-radius:50%;background:var(--bg);"></div>
-        <!-- 頭像 -->
-        <img src="images/avatar.png?v=20260421b" alt="Kevin Chen" loading="lazy"
-          style="position:absolute;inset:6px;width:calc(100% - 12px);height:calc(100% - 12px);border-radius:50%;object-fit:cover;object-position:top center;">
-        <!-- 右下角狀態點 -->
-        <div style="position:absolute;bottom:12px;right:12px;width:18px;height:18px;border-radius:50%;background:#22c55e;border:3px solid var(--bg);z-index:3;"></div>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:1.5rem;position:relative;z-index:1;">
+      <div style="position:relative;width:320px;height:320px;flex-shrink:0;">
+        <div style="position:absolute;inset:-4px;border-radius:50%;background:linear-gradient(135deg,#7c3aed,#a855f7,#06b6d4);opacity:0.8;"></div>
+        <img src="images/avatar.png?v=20260421r" alt="Kevin Chen"
+          style="position:relative;width:320px;height:320px;border-radius:50%;object-fit:cover;object-position:top center;border:4px solid var(--bg);z-index:2;display:block;">
       </div>
-      <div style="display:flex;flex-wrap:wrap;gap:0.5rem;justify-content:center;max-width:260px;">
+      <div style="display:flex;flex-wrap:wrap;gap:0.6rem;justify-content:center;max-width:260px;">
         <span style="padding:0.3rem 0.8rem;border-radius:50px;background:rgba(124,58,237,0.15);border:1px solid rgba(124,58,237,0.4);font-size:0.75rem;color:#a855f7;">Motion Designer</span>
         <span style="padding:0.3rem 0.8rem;border-radius:50px;background:rgba(6,182,212,0.1);border:1px solid rgba(6,182,212,0.3);font-size:0.75rem;color:#06b6d4;">3D Artist</span>
         <span style="padding:0.3rem 0.8rem;border-radius:50px;background:rgba(124,58,237,0.15);border:1px solid rgba(124,58,237,0.4);font-size:0.75rem;color:#a855f7;">AI Creator</span>
-        <span style="padding:0.3rem 0.8rem;border-radius:50px;background:rgba(6,182,212,0.1);border:1px solid rgba(6,182,212,0.3);font-size:0.75rem;color:#06b6d4;">Video Producer</span>
+        <span style="padding:0.3rem 0.8rem;border-radius:50px;background:rgba(6,182,212,0.1);border:1px solid rgba(6,182,212,0.3);font-size:0.75rem;color:#06b6d4;">System Builder</span>
       </div>
     </div>
   </div>
 </section>
 
-<!-- EXPERIENCE -->
-<section id="experience" style="background:var(--bg2); max-width:100%; padding:6rem 0;">
+<!-- SKILLS -->
+<section id="skills" style="background:var(--bg2); max-width:100%; padding:6rem 0;">
 <div style="max-width:1200px; margin:0 auto; padding:0 4rem;">
+  <div class="section-title">能力範疇</div>
+  <div class="section-line"></div>
+  <div style="display:flex;flex-direction:column;gap:2rem;">
+
+    <!-- 區塊 1：影像與動態設計 -->
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:2.5rem;display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;align-items:center;">
+      <div>
+        <div style="display:flex;align-items:center;gap:0.8rem;margin-bottom:1rem;">
+          <span style="font-size:1.6rem;">🎬</span>
+          <span style="font-size:1.2rem;font-weight:700;color:var(--text);">影像與動態設計</span>
+        </div>
+        <p style="font-size:0.9rem;color:#94a3b8;line-height:1.8;">從腳本規劃、CG 動畫、棚內動態到影片後製的完整製作能力。曾為電視台、遊戲公司、科技品牌製作廣告與宣傳影片。</p>
+      </div>
+      <div>
+        <div style="font-size:0.75rem;color:#a855f7;letter-spacing:0.1em;margin-bottom:0.8rem;">主要工具</div>
+        <div class="skill-tags" style="gap:0.5rem;">
+          <span class="tag">After Effects</span>
+          <span class="tag">Premiere</span>
+          <span class="tag">DaVinci Resolve</span>
+          <span class="tag">EDIUS</span>
+          <span class="tag">CapCut</span>
+          <span class="tag">剪映 Pro</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 區塊 2：3D 場景構建 -->
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:2.5rem;display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;align-items:center;">
+      <div>
+        <div style="display:flex;align-items:center;gap:0.8rem;margin-bottom:1rem;">
+          <span style="font-size:1.6rem;">🧊</span>
+          <span style="font-size:1.2rem;font-weight:700;color:var(--text);">3D 場景構建</span>
+        </div>
+        <p style="font-size:0.9rem;color:#94a3b8;line-height:1.8;">產品視覺化、場景搭建、角色建模與渲染。近期透過 Blender MCP 實現對話式 AI 建模，用自然語言驅動 3D 創作。</p>
+      </div>
+      <div>
+        <div style="font-size:0.75rem;color:#06b6d4;letter-spacing:0.1em;margin-bottom:0.8rem;">主要工具</div>
+        <div class="skill-tags" style="gap:0.5rem;">
+          <span class="tag">C4D</span>
+          <span class="tag">Blender</span>
+          <span class="tag">MAYA</span>
+          <span class="tag">3ds Max</span>
+          <span class="tag">Houdini</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 區塊 3：AI 創作整合 -->
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:2.5rem;display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;align-items:center;">
+      <div>
+        <div style="display:flex;align-items:center;gap:0.8rem;margin-bottom:1rem;">
+          <span style="font-size:1.6rem;">🤖</span>
+          <span style="font-size:1.2rem;font-weight:700;color:var(--text);">AI 創作整合</span>
+        </div>
+        <p style="font-size:0.9rem;color:#94a3b8;line-height:1.8;">把 AI 生成工具嵌入傳統製作流程。圖像、影片、音訊全鏈路 AI 輔助，從素材生成到最終輸出都能用 AI 加速。</p>
+      </div>
+      <div>
+        <div style="font-size:0.75rem;color:#a855f7;letter-spacing:0.1em;margin-bottom:0.8rem;">圖像生成</div>
+        <div class="skill-tags" style="gap:0.5rem;margin-bottom:1rem;">
+          <span class="tag">Stable Diffusion</span>
+          <span class="tag">MidJourney</span>
+          <span class="tag">Nano Banana</span>
+        </div>
+        <div style="font-size:0.75rem;color:#a855f7;letter-spacing:0.1em;margin-bottom:0.8rem;">影片生成</div>
+        <div class="skill-tags" style="gap:0.5rem;">
+          <span class="tag">Runway</span>
+          <span class="tag">Kling</span>
+          <span class="tag">Seedance</span>
+          <span class="tag">Veo</span>
+          <span class="tag">Sora</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 區塊 4：工作流系統化 -->
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:2.5rem;display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;align-items:center;">
+      <div>
+        <div style="display:flex;align-items:center;gap:0.8rem;margin-bottom:1rem;">
+          <span style="font-size:1.6rem;">🔧</span>
+          <span style="font-size:1.2rem;font-weight:700;color:var(--text);">工作流系統化</span>
+        </div>
+        <p style="font-size:0.9rem;color:#94a3b8;line-height:1.8;">不只會用工具，更把工具串成系統。AI Agent 串接、多模型分工路由、流程自動化、知識庫管理，建立真正能持續運作的 AI 工作流。</p>
+      </div>
+      <div>
+        <div style="font-size:0.75rem;color:#06b6d4;letter-spacing:0.1em;margin-bottom:0.8rem;">核心工具</div>
+        <div class="skill-tags" style="gap:0.5rem;">
+          <span class="tag">Claude Code</span>
+          <span class="tag">OpenClaw</span>
+          <span class="tag">MCP</span>
+          <span class="tag">Ollama</span>
+          <span class="tag">Obsidian</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+<div style="max-width:1200px; margin:0 auto;">
   <div class="section-title">工作經歷</div>
   <div class="section-line"></div>
   <div class="timeline">
 
-    <div class="timeline-item fade-in">
+    <div class="timeline-item">
       <div class="timeline-dot"></div>
       <div class="timeline-card">
         <div class="timeline-header">
@@ -580,14 +680,14 @@
           <div class="timeline-period">2025/4 ～ 現在</div>
         </div>
         <ul class="timeline-tasks">
-          <li>AI 素材製作與應用研究</li>
+          <li>AI 素材製作與應用</li>
           <li>動態轉場設計與製作</li>
           <li>多媒體內容專案協助</li>
         </ul>
       </div>
     </div>
 
-    <div class="timeline-item fade-in">
+    <div class="timeline-item">
       <div class="timeline-dot"></div>
       <div class="timeline-card">
         <div class="timeline-header">
@@ -606,7 +706,7 @@
       </div>
     </div>
 
-    <div class="timeline-item fade-in">
+    <div class="timeline-item">
       <div class="timeline-dot"></div>
       <div class="timeline-card">
         <div class="timeline-header">
@@ -625,7 +725,7 @@
       </div>
     </div>
 
-    <div class="timeline-item fade-in">
+    <div class="timeline-item">
       <div class="timeline-dot"></div>
       <div class="timeline-card">
         <div class="timeline-header">
@@ -642,7 +742,7 @@
       </div>
     </div>
 
-    <div class="timeline-item fade-in">
+    <div class="timeline-item">
       <div class="timeline-dot"></div>
       <div class="timeline-card">
         <div class="timeline-header">
@@ -665,173 +765,15 @@
 </div>
 </section>
 
-<!-- SKILLS -->
-<section id="skills">
-  <div class="section-title">專業技能</div>
-  <div class="section-line"></div>
-  <div class="skills-grid">
-    <div class="skill-card fade-in">
-      <div class="skill-card-icon">🎬</div>
-      <div class="skill-card-title">影片製作</div>
-      <div class="skill-tags">
-        <span class="tag">Premiere</span>
-        <span class="tag">After Effects</span>
-        <span class="tag">EDIUS</span>
-        <span class="tag">剪映 Pro</span>
-        <span class="tag">DaVinci Resolve</span>
-        <span class="tag">CapCut</span>
-      </div>
-    </div>
-    <div class="skill-card fade-in">
-      <div class="skill-card-icon">🧊</div>
-      <div class="skill-card-title">3D 動畫</div>
-      <div class="skill-tags">
-        <span class="tag">C4D</span>
-        <span class="tag">MAYA</span>
-        <span class="tag">3ds Max</span>
-        <span class="tag">Blender</span>
-        <span class="tag">Houdini</span>
-      </div>
-    </div>
-    <div class="skill-card fade-in">
-      <div class="skill-card-icon">🎨</div>
-      <div class="skill-card-title">平面設計</div>
-      <div class="skill-tags">
-        <span class="tag">Illustrator</span>
-        <span class="tag">Photoshop</span>
-        <span class="tag">CorelDraw</span>
-      </div>
-    </div>
-    <div class="skill-card fade-in">
-      <div class="skill-card-icon">🤖</div>
-      <div class="skill-card-title">AI 工具整合</div>
-      <div style="font-size:0.78rem;color:#94a3b8;margin-bottom:0.8rem;line-height:1.6;">
-        將 AI 工具嵌入傳統製作流程，素材生成、影片腳本到最終輸出全程 AI 輔助
-      </div>
-      <div style="font-size:0.78rem;color:#a855f7;margin-bottom:0.5rem;letter-spacing:0.05em;">▸ 圖像生成</div>
-      <div class="skill-tags" style="margin-bottom:0.8rem;">
-        <span class="tag">Stable Diffusion</span>
-        <span class="tag">MidJourney</span>
-        <span class="tag">Nano Banana</span>
-      </div>
-      <div style="font-size:0.78rem;color:#a855f7;margin-bottom:0.5rem;letter-spacing:0.05em;">▸ 影片生成</div>
-      <div class="skill-tags" style="margin-bottom:0.8rem;">
-        <span class="tag">Runway</span>
-        <span class="tag">可靈 Kling</span>
-        <span class="tag">Seedance</span>
-        <span class="tag">Veo</span>
-        <span class="tag">即夢 AI</span>
-        <span class="tag">Sora</span>
-      </div>
-      <div style="font-size:0.78rem;color:#a855f7;margin-bottom:0.5rem;letter-spacing:0.05em;">▸ AI 助理</div>
-      <div class="skill-tags" style="margin-bottom:0.8rem;">
-        <span class="tag">ChatGPT</span>
-        <span class="tag">Claude</span>
-        <span class="tag">剪映 CapCut AI</span>
-      </div>
-      <div style="font-size:0.78rem;color:#a855f7;margin-bottom:0.5rem;letter-spacing:0.05em;">▸ AI Agent 工作流</div>
-      <div class="skill-tags">
-        <span class="tag">OpenClaw</span>
-        <span class="tag">MCP 整合</span>
-        <span class="tag">Claude Code</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- PORTFOLIO -->
-<section id="portfolio" style="background:var(--bg2); max-width:100%; padding:6rem 0;">
-<div style="max-width:1200px; margin:0 auto; padding:0 4rem;">
-  <div class="section-title">作品集</div>
-  <div class="section-line"></div>
-  <div class="portfolio-grid">
-
-    <div class="portfolio-card fade-in">
-      <div class="portfolio-thumb"><img src="images/thumb_motion_ai.jpg?v=20260421b" alt="動態影片作品集" loading="lazy"></div>
-      <div class="portfolio-info">
-        <div class="portfolio-title">動態影片作品集</div>
-        <div class="portfolio-desc">包含 CG 動畫、AR 物件、廣告動態等各式影片製作作品。</div>
-        <a href="https://drive.google.com/drive/folders/1fW4Z-Xd_IVPiHLrYe0R-x6TRg6BUph-Z?usp=drive_link" target="_blank" class="portfolio-link">查看作品 →</a>
-      </div>
-    </div>
-
-    <div class="portfolio-card fade-in">
-      <div class="portfolio-thumb"><img src="images/thumb_3d_car_purple.png?v=20260421b" alt="3D 建模與渲染" loading="lazy"></div>
-      <div class="portfolio-info">
-        <div class="portfolio-title">3D 建模與渲染</div>
-        <div class="portfolio-desc">使用 C4D、Blender、MAYA 製作的 3D 場景、角色與產品視覺化作品。</div>
-        <a href="https://drive.google.com/drive/folders/1fW4Z-Xd_IVPiHLrYe0R-x6TRg6BUph-Z?usp=drive_link" target="_blank" class="portfolio-link">查看作品 →</a>
-      </div>
-    </div>
-
-    <div class="portfolio-card fade-in">
-      <div class="portfolio-thumb"><img src="images/thumb_ai_new.jpg?v=20260421b" alt="AI 生成創作" loading="lazy"></div>
-      <div class="portfolio-info">
-        <div class="portfolio-title">AI 生成創作</div>
-        <div class="portfolio-desc">整合 Stable Diffusion、MidJourney、Runway 等 AI 工具的實驗性創作與應用案例。</div>
-        <a href="https://drive.google.com/drive/folders/1fW4Z-Xd_IVPiHLrYe0R-x6TRg6BUph-Z?usp=drive_link" target="_blank" class="portfolio-link">查看作品 →</a>
-      </div>
-    </div>
-
-    <div class="portfolio-card fade-in">
-      <div class="portfolio-thumb"><img src="images/thumb_tv_ai.jpg?v=20260421b" alt="電視台廣告動畫" loading="lazy"></div>
-      <div class="portfolio-info">
-        <div class="portfolio-title">電視台廣告動畫</div>
-        <div class="portfolio-desc">鏡電視時期製作的電視廣告動畫、CG 特效與棚內動態設計。</div>
-        <a href="https://drive.google.com/drive/folders/1fW4Z-Xd_IVPiHLrYe0R-x6TRg6BUph-Z?usp=drive_link" target="_blank" class="portfolio-link">查看作品 →</a>
-      </div>
-    </div>
-
-    <div class="portfolio-card fade-in">
-      <div class="portfolio-thumb"><img src="images/thumb_game.jpg?v=20260421b" alt="遊戲廣告製作" loading="lazy"></div>
-      <div class="portfolio-info">
-        <div class="portfolio-title">遊戲廣告製作</div>
-        <div class="portfolio-desc">真好玩娛樂科技任職期間製作的遊戲 PV、廣告動畫與宣傳素材。</div>
-        <a href="https://drive.google.com/drive/folders/1fW4Z-Xd_IVPiHLrYe0R-x6TRg6BUph-Z?usp=drive_link" target="_blank" class="portfolio-link">查看作品 →</a>
-      </div>
-    </div>
-
-    <div class="portfolio-card fade-in">
-      <div class="portfolio-thumb"><img src="images/thumb_personal.jpg?v=20260421b" alt="個人創作實驗" loading="lazy"></div>
-      <div class="portfolio-info">
-        <div class="portfolio-title">個人創作實驗</div>
-        <div class="portfolio-desc">個人風格探索、新技術實驗與跨媒介創作作品集。</div>
-        <a href="https://site-10084869-6202-4528.mystrikingly.com" target="_blank" class="portfolio-link">查看網站 →</a>
-      </div>
-    </div>
-
+<!-- CERTS (compact) -->
+<div style="max-width:1200px;margin:0 auto;padding:2rem 4rem;display:flex;align-items:center;gap:2rem;flex-wrap:wrap;">
+  <span style="font-size:0.8rem;color:#94a3b8;letter-spacing:0.1em;">認證</span>
+  <div style="display:flex;gap:1rem;flex-wrap:wrap;">
+    <span style="padding:0.4rem 1rem;border-radius:50px;background:rgba(124,58,237,0.1);border:1px solid rgba(124,58,237,0.25);font-size:0.78rem;color:#a855f7;">Adobe Certified Flash Designer</span>
+    <span style="padding:0.4rem 1rem;border-radius:50px;background:rgba(6,182,212,0.08);border:1px solid rgba(6,182,212,0.25);font-size:0.78rem;color:#06b6d4;">MOS Microsoft Office Specialist</span>
+    <span style="padding:0.4rem 1rem;border-radius:50px;background:rgba(124,58,237,0.1);border:1px solid rgba(124,58,237,0.25);font-size:0.78rem;color:#a855f7;">Adobe Illustrator SSE</span>
   </div>
 </div>
-</section>
-
-<!-- CERTS -->
-<section id="certs">
-  <div class="section-title">專業認證</div>
-  <div class="section-line"></div>
-  <div class="certs-grid">
-    <div class="cert-card fade-in">
-      <div class="cert-icon">🏆</div>
-      <div>
-        <div class="cert-name">Adobe Certified Flash Designer</div>
-        <div class="cert-org">Adobe</div>
-      </div>
-    </div>
-    <div class="cert-card fade-in">
-      <div class="cert-icon">📋</div>
-      <div>
-        <div class="cert-name">MOS Microsoft Office Specialist</div>
-        <div class="cert-org">Microsoft</div>
-      </div>
-    </div>
-    <div class="cert-card fade-in">
-      <div class="cert-icon">🎨</div>
-      <div>
-        <div class="cert-name">Adobe Illustrator SSE</div>
-        <div class="cert-org">Adobe</div>
-      </div>
-    </div>
-  </div>
-</section>
 
 <!-- CONTACT -->
 <section id="contact" style="background:var(--bg2); max-width:100%; padding:6rem 0;">
@@ -839,8 +781,8 @@
   <div class="section-title">聯絡我</div>
   <div class="section-line"></div>
   <div class="contact-grid">
-    <div class="contact-info fade-in">
-      <p>如果你有影片製作、動畫設計或 AI 工具整合的合作需求，歡迎隨時聯絡。期待與你共同創作出精彩的內容！</p>
+    <div class="contact-info">
+      <p>不管你是想做影片、探索 AI 工作流、或只是想聊聊這個領域的可能性——歡迎隨時聯絡。</p>
       <div class="contact-links">
         <a href="mailto:gold51008@gmail.com" class="contact-link">
           <span class="contact-link-icon">📧</span>
@@ -872,15 +814,13 @@
         </a>
       </div>
     </div>
-    <div class="contact-cta-box fade-in">
-      <div class="cta-title">準備好合作了嗎？</div>
-      <div class="cta-sub">讓我們一起打造令人驚豔的內容——<br>從動態設計到 AI 生成，全流程搞定。</div>
-      <div class="cta-badges">
-        <span class="cta-badge">⚡ 快速回覆</span>
-        <span class="cta-badge">🎯 目標導向</span>
-        <span class="cta-badge">🤖 AI 整合</span>
+    <div style="display:flex; align-items:center; justify-content:center;">
+      <div style="text-align:center;">
+        <div style="font-size:5rem; margin-bottom:1rem;">🚀</div>
+        <div style="font-size:1.2rem; font-weight:700; color:var(--text); margin-bottom:0.5rem;">準備好合作了嗎？</div>
+        <div style="color:var(--muted); margin-bottom:1.5rem;">讓我們一起打造令人驚豔的作品</div>
+        <a href="mailto:gold51008@gmail.com" class="btn-primary">立即聯絡 →</a>
       </div>
-      <a href="mailto:gold51008@gmail.com" class="btn-primary">立即聯絡 →</a>
     </div>
   </div>
 </div>
@@ -888,67 +828,39 @@
 
 <!-- FOOTER -->
 <footer>
-  <div class="footer-inner">
-    <span>© 2026 陳品愷 Kevin Chen · All Rights Reserved · v2026.04.21-b</span>
-    <div class="footer-links">
-      <a href="mailto:gold51008@gmail.com">Email</a>
-      <a href="https://drive.google.com/drive/folders/1fW4Z-Xd_IVPiHLrYe0R-x6TRg6BUph-Z?usp=drive_link" target="_blank">Portfolio</a>
-      <a href="https://site-10084869-6202-4528.mystrikingly.com" target="_blank">Website</a>
-    </div>
-  </div>
+  <p>© 2026 陳品愷 Kevin Chen · All Rights Reserved · review-refresh v2026.04.21-r</p>
 </footer>
-
-<!-- Scroll to Top -->
-<button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
 
 <script>
   // Scroll animation
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(e => {
-      if(e.isIntersecting) e.target.classList.add('visible');
+      if(e.isIntersecting) {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'translateY(0)';
+      }
     });
   }, { threshold: 0.1 });
-  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
-  // Scroll to top button
-  const scrollBtn = document.getElementById('scrollTop');
-  window.addEventListener('scroll', () => {
-    scrollBtn.classList.toggle('visible', window.scrollY > 400);
+  document.querySelectorAll('.timeline-card, .skill-card, .portfolio-card, .cert-card').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    observer.observe(el);
   });
-
-  // Particle effect
-  const canvas = document.getElementById('particles');
-  const ctx = canvas.getContext('2d');
-  let particles = [];
-  function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-  resize(); window.addEventListener('resize', resize);
-  for(let i=0;i<80;i++) particles.push({
-    x: Math.random()*window.innerWidth,
-    y: Math.random()*window.innerHeight,
-    r: Math.random()*2+0.3,
-    dx: (Math.random()-0.5)*0.35,
-    dy: (Math.random()-0.5)*0.35,
-    o: Math.random()*0.4+0.08,
-    cyan: Math.random() > 0.7
-  });
-  function drawParticles() {
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-    particles.forEach(p => {
-      ctx.beginPath();
-      ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-      ctx.fillStyle = p.cyan ? `rgba(6,182,212,${p.o})` : `rgba(168,85,247,${p.o})`;
-      ctx.fill();
-      p.x+=p.dx; p.y+=p.dy;
-      if(p.x<0||p.x>canvas.width) p.dx*=-1;
-      if(p.y<0||p.y>canvas.height) p.dy*=-1;
+  // Hero 背景影片淡入
+  const heroVideo = document.getElementById('hero-video');
+  if (heroVideo) {
+    heroVideo.addEventListener('canplay', function() {
+      heroVideo.style.opacity = '0.45';
     });
-    requestAnimationFrame(drawParticles);
+    // fallback: 如果影片已經 ready
+    if (heroVideo.readyState >= 3) {
+      heroVideo.style.opacity = '0.45';
+    }
   }
-  drawParticles();
-
-  // Auto-update footer year
-  document.querySelector('footer .footer-inner span').textContent =
-    `© ${new Date().getFullYear()} 陳品愷 Kevin Chen · All Rights Reserved`;
 </script>
 </body>
 </html>
+
+
