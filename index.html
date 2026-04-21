@@ -108,7 +108,7 @@
     background: #0f0f1a;
     aspect-ratio: 16 / 9;
   }
-  .tv-cell video { width:100%; height:100%; object-fit:contain; object-position: center center; background:#0f0f1a; }
+  .tv-cell video, .tv-cell img { width:100%; height:100%; object-fit:contain; object-position: center center; background:#0f0f1a; display:block; }
   @keyframes scrollLeft { from{transform:translateX(0)} to{transform:translateX(-50%)} }
   @keyframes scrollRight { from{transform:translateX(-50%)} to{transform:translateX(0)} }
   #row1 { animation: scrollLeft 25s linear infinite; }
@@ -380,46 +380,46 @@
 
     <!-- Row 1: 左移 (廣告作品 16:9) -->
   <div class="tv-row" id="row1" style="display:flex;gap:12px;margin-bottom:12px;width:max-content;">
-    <div class="tv-cell"><video src="videos/ad/06.mp4?v=20260421tv" autoplay muted loop playsinline preload="metadata"></video></div>
-    <div class="tv-cell"><video src="videos/ad/07.mp4?v=20260421tv" autoplay muted loop playsinline preload="metadata"></video></div>
-    <div class="tv-cell"><video src="videos/ad/08.mp4?v=20260421tv" autoplay muted loop playsinline preload="metadata"></video></div>
-    <div class="tv-cell"><video src="videos/ad/09.mp4?v=20260421tv" autoplay muted loop playsinline preload="metadata"></video></div>
-    <div class="tv-cell"><video src="videos/ad/10.mp4?v=20260421tv" autoplay muted loop playsinline preload="metadata"></video></div>
-    <div class="tv-cell"><video src="videos/ad/11.mp4?v=20260421tv" autoplay muted loop playsinline preload="metadata"></video></div>
-    <div class="tv-cell"><video src="videos/ad/12.mp4?v=20260421tv" autoplay muted loop playsinline preload="metadata"></video></div>
-    <div class="tv-cell"><video src="videos/ad/13.mp4?v=20260421tv" autoplay muted loop playsinline preload="metadata"></video></div>
-    <div class="tv-cell"><video src="videos/ad/14.mp4?v=20260421tv" autoplay muted loop playsinline preload="metadata"></video></div>
+    <div class="tv-cell"><img src="gifs/ad06.gif?v=20260421gif" alt="廣告動畫 06" loading="eager"></div>
+    <div class="tv-cell"><img src="gifs/ad07.gif?v=20260421gif" alt="廣告動畫 07" loading="eager"></div>
+    <div class="tv-cell"><img src="gifs/ad08.gif?v=20260421gif" alt="廣告動畫 08" loading="eager"></div>
+    <div class="tv-cell"><img src="gifs/ad09.gif?v=20260421gif" alt="廣告動畫 09" loading="eager"></div>
+    <div class="tv-cell"><img src="gifs/ad10.gif?v=20260421gif" alt="廣告動畫 10" loading="eager"></div>
+    <div class="tv-cell"><img src="gifs/ad11.gif?v=20260421gif" alt="廣告動畫 11" loading="eager"></div>
+    <div class="tv-cell"><img src="gifs/ad12.gif?v=20260421gif" alt="廣告動畫 12" loading="eager"></div>
+    <div class="tv-cell"><img src="gifs/ad13.gif?v=20260421gif" alt="廣告動畫 13" loading="eager"></div>
+    <div class="tv-cell"><img src="gifs/ad14.gif?v=20260421gif" alt="廣告動畫 14" loading="eager"></div>
     <!-- 無縫複製 -->
-    <div class="tv-cell"><video src="videos/ad/06.mp4?v=20260421tv" autoplay muted loop playsinline preload="metadata"></video></div>
-    <div class="tv-cell"><video src="videos/ad/07.mp4?v=20260421tv" autoplay muted loop playsinline preload="metadata"></video></div>
-    <div class="tv-cell"><video src="videos/ad/08.mp4?v=20260421tv" autoplay muted loop playsinline preload="metadata"></video></div>
-    <div class="tv-cell"><video src="videos/ad/09.mp4?v=20260421tv" autoplay muted loop playsinline preload="metadata"></video></div>
-    <div class="tv-cell"><video src="videos/ad/10.mp4?v=20260421tv" autoplay muted loop playsinline preload="metadata"></video></div>
-    <div class="tv-cell"><video src="videos/ad/11.mp4?v=20260421tv" autoplay muted loop playsinline preload="metadata"></video></div>
-    <div class="tv-cell"><video src="videos/ad/12.mp4?v=20260421tv" autoplay muted loop playsinline preload="metadata"></video></div>
-    <div class="tv-cell"><video src="videos/ad/13.mp4?v=20260421tv" autoplay muted loop playsinline preload="metadata"></video></div>
-    <div class="tv-cell"><video src="videos/ad/14.mp4?v=20260421tv" autoplay muted loop playsinline preload="metadata"></video></div>
+    <div class="tv-cell"><img src="gifs/ad06.gif?v=20260421gif" alt="廣告動畫 06" loading="eager"></div>
+    <div class="tv-cell"><img src="gifs/ad07.gif?v=20260421gif" alt="廣告動畫 07" loading="eager"></div>
+    <div class="tv-cell"><img src="gifs/ad08.gif?v=20260421gif" alt="廣告動畫 08" loading="eager"></div>
+    <div class="tv-cell"><img src="gifs/ad09.gif?v=20260421gif" alt="廣告動畫 09" loading="eager"></div>
+    <div class="tv-cell"><img src="gifs/ad10.gif?v=20260421gif" alt="廣告動畫 10" loading="eager"></div>
+    <div class="tv-cell"><img src="gifs/ad11.gif?v=20260421gif" alt="廣告動畫 11" loading="eager"></div>
+    <div class="tv-cell"><img src="gifs/ad12.gif?v=20260421gif" alt="廣告動畫 12" loading="eager"></div>
+    <div class="tv-cell"><img src="gifs/ad13.gif?v=20260421gif" alt="廣告動畫 13" loading="eager"></div>
+    <div class="tv-cell"><img src="gifs/ad14.gif?v=20260421gif" alt="廣告動畫 14" loading="eager"></div>
   </div>
 
     <!-- Row 2: 右移 (AI Video 16:9) -->
   <div class="tv-row" id="row2" style="display:flex;gap:12px;margin-bottom:12px;width:max-content;">
-    <div class="tv-cell"><video src="videos/ai/01%20(1).mp4?v=20260421tv" autoplay muted loop playsinline preload="metadata"></video></div>
-    <div class="tv-cell"><video src="videos/ai/09.mp4?v=20260421tv" autoplay muted loop playsinline preload="metadata"></video></div>
-    <div class="tv-cell"><video src="videos/ai/10.mp4?v=20260421tv" autoplay muted loop playsinline preload="metadata"></video></div>
-    <div class="tv-cell"><video src="videos/ai/11.mp4?v=20260421tv" autoplay muted loop playsinline preload="metadata"></video></div>
-    <div class="tv-cell"><video src="videos/ai/12.mp4?v=20260421tv" autoplay muted loop playsinline preload="metadata"></video></div>
-    <div class="tv-cell"><video src="videos/ai/13.mp4?v=20260421tv" autoplay muted loop playsinline preload="metadata"></video></div>
-    <div class="tv-cell"><video src="videos/ai/14.mp4?v=20260421tv" autoplay muted loop playsinline preload="metadata"></video></div>
-    <div class="tv-cell"><video src="videos/ai/15.mp4?v=20260421tv" autoplay muted loop playsinline preload="metadata"></video></div>
+    <div class="tv-cell"><img src="gifs/ai01_1.gif?v=20260421gif" alt="AI 影片 01" loading="eager"></div>
+    <div class="tv-cell"><img src="gifs/ai09.gif?v=20260421gif" alt="AI 影片 09" loading="eager"></div>
+    <div class="tv-cell"><img src="gifs/ai10.gif?v=20260421gif" alt="AI 影片 10" loading="eager"></div>
+    <div class="tv-cell"><img src="gifs/ai11.gif?v=20260421gif" alt="AI 影片 11" loading="eager"></div>
+    <div class="tv-cell"><img src="gifs/ai12.gif?v=20260421gif" alt="AI 影片 12" loading="eager"></div>
+    <div class="tv-cell"><img src="gifs/ai13.gif?v=20260421gif" alt="AI 影片 13" loading="eager"></div>
+    <div class="tv-cell"><img src="gifs/ai14.gif?v=20260421gif" alt="AI 影片 14" loading="eager"></div>
+    <div class="tv-cell"><img src="gifs/ai15.gif?v=20260421gif" alt="AI 影片 15" loading="eager"></div>
     <!-- 無縫複製 -->
-    <div class="tv-cell"><video src="videos/ai/01%20(1).mp4?v=20260421tv" autoplay muted loop playsinline preload="metadata"></video></div>
-    <div class="tv-cell"><video src="videos/ai/09.mp4?v=20260421tv" autoplay muted loop playsinline preload="metadata"></video></div>
-    <div class="tv-cell"><video src="videos/ai/10.mp4?v=20260421tv" autoplay muted loop playsinline preload="metadata"></video></div>
-    <div class="tv-cell"><video src="videos/ai/11.mp4?v=20260421tv" autoplay muted loop playsinline preload="metadata"></video></div>
-    <div class="tv-cell"><video src="videos/ai/12.mp4?v=20260421tv" autoplay muted loop playsinline preload="metadata"></video></div>
-    <div class="tv-cell"><video src="videos/ai/13.mp4?v=20260421tv" autoplay muted loop playsinline preload="metadata"></video></div>
-    <div class="tv-cell"><video src="videos/ai/14.mp4?v=20260421tv" autoplay muted loop playsinline preload="metadata"></video></div>
-    <div class="tv-cell"><video src="videos/ai/15.mp4?v=20260421tv" autoplay muted loop playsinline preload="metadata"></video></div>
+    <div class="tv-cell"><img src="gifs/ai01_1.gif?v=20260421gif" alt="AI 影片 01" loading="eager"></div>
+    <div class="tv-cell"><img src="gifs/ai09.gif?v=20260421gif" alt="AI 影片 09" loading="eager"></div>
+    <div class="tv-cell"><img src="gifs/ai10.gif?v=20260421gif" alt="AI 影片 10" loading="eager"></div>
+    <div class="tv-cell"><img src="gifs/ai11.gif?v=20260421gif" alt="AI 影片 11" loading="eager"></div>
+    <div class="tv-cell"><img src="gifs/ai12.gif?v=20260421gif" alt="AI 影片 12" loading="eager"></div>
+    <div class="tv-cell"><img src="gifs/ai13.gif?v=20260421gif" alt="AI 影片 13" loading="eager"></div>
+    <div class="tv-cell"><img src="gifs/ai14.gif?v=20260421gif" alt="AI 影片 14" loading="eager"></div>
+    <div class="tv-cell"><img src="gifs/ai15.gif?v=20260421gif" alt="AI 影片 15" loading="eager"></div>
   </div>
 
   <!-- 左右漸層遮罩 -->
@@ -828,7 +828,7 @@
 
 <!-- FOOTER -->
 <footer>
-  <p>© 2026 陳品愷 Kevin Chen · All Rights Reserved · review-refresh v2026.04.21-r</p>
+  <p>© 2026 陳品愷 Kevin Chen · All Rights Reserved · review-refresh v2026.04.21-gif</p>
 </footer>
 
 <script>
