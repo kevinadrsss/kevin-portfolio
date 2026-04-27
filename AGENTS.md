@@ -3,6 +3,9 @@
 這個檔案是給 Codex、Claude Code、或其他 coding agent 讀的專案說明。
 請優先遵守這裡的規則，再開始修改檔案。
 
+另請讀取：
+- `CODEX.md` — 阿福 / Hermes 工作模式摘要
+
 ## 專案身份
 
 這是 Kevin Chen / 陳品愷的個人作品集網站。
