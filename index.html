@@ -266,8 +266,35 @@
     .about-grid { grid-template-columns:1fr; }
     .contact-grid { grid-template-columns:1fr; }
     .hero h1 { font-size:3rem; }
-    #what-i-do > div { padding:0 1.5rem !important; }
+    #what-i-do > div,
+    #portfolio > div,
+    #skills > div,
+    #contact > div { padding:0 1.5rem !important; }
     #what-i-do div[style*="grid-template-columns:repeat(2,minmax(0,1fr))"] { grid-template-columns:1fr !important; }
+    #skills div[style*="grid-template-columns:1fr 1fr"] {
+      grid-template-columns:1fr !important;
+      gap:1.25rem !important;
+      padding:1.5rem !important;
+      align-items:flex-start !important;
+    }
+    #skills div[style*="grid-template-columns:1fr 1fr"] > div:first-child {
+      min-width:0;
+    }
+    #skills div[style*="grid-template-columns:1fr 1fr"] > div:first-child > div:first-child {
+      align-items:flex-start !important;
+    }
+    #skills div[style*="grid-template-columns:1fr 1fr"] > div:first-child > div:first-child span:last-child {
+      line-height:1.35 !important;
+    }
+    #skills .skill-tags {
+      width:100%;
+      gap:0.45rem !important;
+    }
+    #skills .tag {
+      max-width:100%;
+      white-space:normal;
+      overflow-wrap:anywhere;
+    }
   }
 </style>
 </head>
