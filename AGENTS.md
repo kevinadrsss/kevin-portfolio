@@ -62,10 +62,18 @@ GitHub repo:
 - 新增文案時，務必同時補中文與英文
 
 電視牆：
-- 使用 GIF，不用大量 autoplay video
-- 目的：提高相容性，避免瀏覽器或公司電腦不播放影片
-- 電視牆素材位於 `gifs/`
+- 目前使用 `<video>` + `<img>` fallback 雙軌（2026-08-20 改）
+- 播放檔為 `gifs/mp4/*.mp4`，poster 為 `gifs/mp4/*.jpg`
+- 原始 GIF 保留在 `gifs/`，作為不支援 video 環境的 fallback，不要刪除
+- 原本全 GIF 的做法是為了相容性，但 24 個 GIF 共 32MB，
+  在手機 IG 內建瀏覽器會載不出圖；轉 MP4 後降到 2.2MB（-93%）
+- video 必須保留 `autoplay muted loop playsinline` 四個屬性，
+  少任何一個 iOS 就不會自動播
+- 新增電視牆素材時：先放 GIF 到 `gifs/`，再用 ffmpeg 轉出 mp4 與 poster
 - 第三列目前是「最新作品」
+
+圖片載入：
+- 除電視牆外，`images/` 的圖一律加 `loading="lazy" decoding="async"`
 
 ## Kevin 偏好
 
