@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>阿福系統 AFU System | 陳品愷 Kevin Chen</title>
+<meta name="description" content="Kevin Chen 為自己打造的 AI 創作作業系統：Hermes Agent、創作工作台與個人知識庫。">
+<style>
+  :root {
+    --bg: #0a0a0f; --bg2: #0f0f1a;
+    --accent: #7c3aed; --accent2: #a855f7; --accent3: #06b6d4;
+    --text: #e2e8f0; --muted: #94a3b8; --card: #12121f;
+    --border: rgba(124,58,237,0.3);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { background:var(--bg); color:var(--text); font-family:'Segoe UI','Microsoft JhengHei',sans-serif; overflow-x:hidden; line-height:1.7; }
+  body::before {
+    content:''; position:fixed; inset:0; pointer-events:none; z-index:0;
+    background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  }
+  a { color:inherit; }
+
+  nav {
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    display:flex; justify-content:space-between; align-items:center;
+    padding:1.2rem 4rem; background:rgba(10,10,15,0.8); backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--border);
+  }
+  .nav-logo { font-size:1.4rem; font-weight:700; color:var(--accent2); letter-spacing:0.05em; text-decoration:none; }
+  .nav-back { color:var(--muted); text-decoration:none; font-size:0.9rem; letter-spacing:0.05em; transition:color .3s; }
+  .nav-back:hover { color:var(--accent2); }
+  .nav-right { display:flex; align-items:center; gap:1.5rem; }
+  .lang-switch {
+    display:flex; align-items:center; gap:0.35rem; padding:0.45rem 0.8rem; border-radius:999px;
+    border:1px solid var(--border); background:rgba(124,58,237,0.12); color:var(--text);
+    font-size:0.78rem; font-weight:700; letter-spacing:0.06em; cursor:pointer; transition:all .2s ease;
+  }
+  .lang-switch:hover { border-color:var(--accent2); background:rgba(124,58,237,0.22); transform:translateY(-1px); }
+  .lang-switch .muted { color:var(--muted); font-weight:600; }
+
+  main { position:relative; z-index:1; }
+  .wrap { max-width:1120px; margin:0 auto; padding:0 2rem; }
+  section { padding:5rem 0; }
+
+  .hero { padding:10rem 0 4rem; position:relative; overflow:hidden; }
+  .hero::after {
+    content:''; position:absolute; top:4rem; right:-10%; width:min(620px,90vw); height:620px; z-index:-1;
+    background:radial-gradient(circle, rgba(124,58,237,0.22), rgba(6,182,212,0.08) 45%, transparent 70%);
+    filter:blur(10px);
+  }
+  .tag {
+    display:inline-block; padding:0.4rem 1rem; border:1px solid var(--border); border-radius:999px;
+    font-size:0.78rem; letter-spacing:0.12em; color:var(--accent2); margin-bottom:1.5rem; background:rgba(124,58,237,0.08);
+  }
+  h1 { font-size:clamp(2.2rem,5vw,3.6rem); line-height:1.2; font-weight:800; margin-bottom:1.4rem; }
+  h1 .grad { background:linear-gradient(90deg,var(--accent2),var(--accent3)); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .lead { font-size:1.12rem; color:var(--muted); max-width:760px; }
+
+  .stats { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:1rem; margin-top:3rem; }
+  .stat { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:1.3rem 1.2rem; }
+  .stat b { display:block; font-size:1.9rem; line-height:1.1; color:var(--text); margin-bottom:0.35rem; }
+  .stat span { font-size:0.82rem; color:var(--muted); }
+
+  .eyebrow { font-size:0.85rem; color:var(--accent3); letter-spacing:0.12em; margin-bottom:0.8rem; display:flex; align-items:center; gap:0.6rem; }
+  .eyebrow::before { content:''; width:24px; height:2px; background:currentColor; border-radius:2px; }
+  .eyebrow.purple { color:var(--accent2); }
+  h2 { font-size:clamp(1.6rem,3vw,2.2rem); margin-bottom:1rem; line-height:1.3; }
+  .intro { color:var(--muted); max-width:780px; margin-bottom:2.2rem; }
+
+  /* 架構圖 */
+  .arch { display:grid; grid-template-columns:1fr auto 1.3fr auto 1fr; gap:0.9rem; align-items:stretch; }
+  .arch-col { display:flex; flex-direction:column; gap:0.9rem; }
+  .node { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:1rem 1.1rem; }
+  .node h4 { font-size:0.98rem; margin-bottom:0.25rem; }
+  .node p { font-size:0.82rem; color:var(--muted); line-height:1.6; }
+  .node.core { border-color:rgba(168,85,247,0.7); background:linear-gradient(160deg,rgba(124,58,237,0.22),rgba(18,18,31,0.95)); flex:1; display:flex; flex-direction:column; justify-content:center; }
+  .node.core h4 { font-size:1.2rem; color:#d8b4fe; }
+  .node.mem { border-color:rgba(6,182,212,0.55); }
+  .node.out { border-color:rgba(6,182,212,0.35); }
+  .arrow { display:flex; align-items:center; justify-content:center; color:var(--accent2); font-size:1.4rem; opacity:0.8; }
+  .chips { display:flex; flex-wrap:wrap; gap:0.4rem; margin-top:0.7rem; }
+  .chip { font-size:0.72rem; padding:0.2rem 0.6rem; border-radius:999px; border:1px solid var(--border); color:#c4b5fd; background:rgba(124,58,237,0.1); }
+  .chip.c { color:#67e8f9; border-color:rgba(6,182,212,0.4); background:rgba(6,182,212,0.08); }
+
+  /* 模組區 */
+  .feature { display:grid; grid-template-columns:1fr 1.35fr; gap:2.5rem; align-items:center; }
+  .feature.rev { grid-template-columns:1.35fr 1fr; }
+  .feature.rev .shot { order:-1; }
+  .points { list-style:none; display:flex; flex-direction:column; gap:0.8rem; margin-top:1.2rem; }
+  .points li { padding-left:1.3rem; position:relative; color:#cbd5e1; font-size:0.95rem; }
+  .points li::before { content:''; position:absolute; left:0; top:0.65em; width:7px; height:7px; border-radius:50%; background:var(--accent3); }
+  .shot { border-radius:14px; overflow:hidden; border:1px solid var(--border); background:var(--bg2); box-shadow:0 20px 60px rgba(0,0,0,0.45); }
+  .shot img { width:100%; display:block; }
+  .shot-note { font-size:0.75rem; color:#64748b; margin-top:0.6rem; }
+  .duo { display:grid; grid-template-columns:1fr 0.36fr; gap:1rem; align-items:start; }
+
+  /* 產出 */
+  .outputs { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1.2rem; }
+  .out-card { background:var(--card); border:1px solid var(--border); border-radius:14px; overflow:hidden; text-decoration:none; transition:transform .3s, border-color .3s; }
+  .out-card:hover { transform:translateY(-4px); border-color:var(--accent2); }
+  .out-card .thumb { aspect-ratio:16/9; background:var(--bg2); }
+  .out-card .thumb img, .out-card .thumb video { width:100%; height:100%; object-fit:cover; display:block; }
+  .out-card .txt { padding:1rem 1.1rem 1.2rem; }
+  .out-card h4 { font-size:0.98rem; margin-bottom:0.3rem; }
+  .out-card p { font-size:0.82rem; color:var(--muted); line-height:1.6; }
+
+  /* 角色 / 原則 */
+  .roles { display:grid; grid-template-columns:1fr 1fr; gap:1.2rem; }
+  .role { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:1.5rem; }
+  .role h3 { font-size:1.05rem; margin-bottom:0.8rem; }
+  .role.me h3 { color:var(--accent2); }
+  .role.ai h3 { color:var(--accent3); }
+  .role ul { list-style:none; display:flex; flex-direction:column; gap:0.55rem; }
+  .role li { color:#cbd5e1; font-size:0.92rem; padding-left:1.1rem; position:relative; }
+  .role li::before { content:'›'; position:absolute; left:0; color:var(--muted); }
+  .honest { margin-top:1.4rem; color:var(--muted); font-size:0.92rem; border-left:2px solid var(--accent2); padding-left:1rem; }
+  .principles { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1.2rem; }
+  .principle { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:1.4rem; }
+  .principle .ico { font-size:1.5rem; margin-bottom:0.6rem; }
+  .principle h4 { margin-bottom:0.4rem; }
+  .principle p { font-size:0.88rem; color:var(--muted); }
+
+  .cta { text-align:center; padding:4rem 0 6rem; }
+  .btn {
+    display:inline-block; padding:0.9rem 2rem; border-radius:999px; text-decoration:none; font-weight:700;
+    background:linear-gradient(90deg,var(--accent),var(--accent2)); color:#fff; box-shadow:0 10px 30px rgba(124,58,237,0.35);
+  }
+  footer { text-align:center; padding:2rem; color:#475569; font-size:0.8rem; border-top:1px solid rgba(124,58,237,0.15); position:relative; z-index:1; }
+
+  @media (max-width: 900px) {
+    nav { padding:1rem 1.5rem; }
+    .wrap { padding:0 1.5rem; }
+    .hero { padding-top:8rem; }
+    .stats { grid-template-columns:repeat(2,minmax(0,1fr)); }
+    .arch { grid-template-columns:1fr; }
+    .arrow { transform:rotate(90deg); height:1.6rem; }
+    .feature, .feature.rev { grid-template-columns:1fr; gap:1.5rem; }
+    .feature.rev .shot { order:0; }
+    .outputs, .roles, .principles { grid-template-columns:1fr; }
+    .duo { grid-template-columns:1fr 0.5fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">Kevin Chen</a>
+  <div class="nav-right">
+    <a class="nav-back" href="index.html#portfolio" data-i18n="nav.back">← 回作品集</a>
+    <button class="lang-switch" id="lang-toggle" type="button" aria-label="Switch language"><span data-lang-current>中</span><span class="muted">/</span><span data-lang-next>EN</span></button>
+  </div>
+</nav>
+
+<main>
+  <!-- HERO -->
+  <header class="hero">
+    <div class="wrap">
+      <div class="tag" data-i18n="hero.tag">✦ CASE STUDY · AI WORKFLOW SYSTEM</div>
+      <h1><span data-i18n="hero.t1">阿福系統：</span><br><span class="grad" data-i18n="hero.t2">我為自己打造的 AI 創作作業系統</span></h1>
+      <p class="lead" data-i18n="hero.lead">我把 AI Agent、創作工具與個人知識庫串成一套每天都在用的系統。Hermes 負責思考與排程，工作台負責動手，圖書館負責記住，產出最後回到作品裡。這一頁是它的介紹。</p>
+      <div class="stats">
+        <div class="stat"><b>4</b><span data-i18n="stat.models">模型來源・自動備援</span></div>
+        <div class="stat"><b>113</b><span data-i18n="stat.cron">次排程任務執行</span></div>
+        <div class="stat"><b>15</b><span data-i18n="stat.tools">個整合的創作工具</span></div>
+        <div class="stat"><b>81</b><span data-i18n="stat.docs">篇知識文件・入庫合規 100%</span></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- 架構 -->
+  <section>
+    <div class="wrap">
+      <div class="eyebrow" data-i18n="arch.eyebrow">SYSTEM MAP</div>
+      <h2 data-i18n="arch.title">一句話進來，作品出去</h2>
+      <p class="intro" data-i18n="arch.intro">不管是從 Discord 丟一句話、在 Claude Code 裡下指令，還是打開工作台點一個工具，任務都會經過同一個核心，用同一份記憶，交給適合的工具完成。</p>
+      <div class="arch">
+        <div class="arch-col">
+          <div class="node"><h4 data-i18n="arch.in1">💬 Discord</h4><p data-i18n="arch.in1d">隨時丟任務、問進度</p></div>
+          <div class="node"><h4 data-i18n="arch.in2">⌨️ Claude Code / Codex</h4><p data-i18n="arch.in2d">在專案裡直接動手</p></div>
+          <div class="node"><h4 data-i18n="arch.in3">🛠 工作台</h4><p data-i18n="arch.in3d">點一下就開工具</p></div>
+        </div>
+        <div class="arrow">→</div>
+        <div class="arch-col">
+          <div class="node core">
+            <h4 data-i18n="arch.core">Hermes Agent</h4>
+            <p data-i18n="arch.cored">架在本機的 AI Agent 核心：判斷任務、挑模型、排程執行，並把結果寫回記憶。</p>
+            <div class="chips"><span class="chip">Codex</span><span class="chip">Claude</span><span class="chip">DeepSeek</span><span class="chip">Kimi</span><span class="chip" data-i18n="arch.chip.cron">排程 Cron</span><span class="chip" data-i18n="arch.chip.profiles">3 個 Profile</span></div>
+          </div>
+          <div class="node mem">
+            <h4 data-i18n="arch.mem">📚 阿福圖書館</h4>
+            <p data-i18n="arch.memd">共用記憶：規則、工作流、專案紀錄與研究筆記，人和 AI 讀同一份。</p>
+          </div>
+        </div>
+        <div class="arrow">→</div>
+        <div class="arch-col">
+          <div class="node out"><h4 data-i18n="arch.out1">🎬 影像與 3D</h4><p data-i18n="arch.out1d">Unreal Engine 5、Blender、TouchDesigner、影片工具鏈</p></div>
+          <div class="node out"><h4 data-i18n="arch.out2">🎮 遊戲原型</h4><p data-i18n="arch.out2d">Godot 4 與瀏覽器遊戲</p></div>
+          <div class="node out"><h4 data-i18n="arch.out3">🗂 文件與研究</h4><p data-i18n="arch.out3d">知識卡、學習地圖、作品集網站</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Hermes -->
+  <section>
+    <div class="wrap feature">
+      <div>
+        <div class="eyebrow purple" data-i18n="hermes.eyebrow">01 · HERMES AGENT</div>
+        <h2 data-i18n="hermes.title">一個住在我電腦裡的 AI 助理</h2>
+        <p class="intro" style="margin-bottom:0" data-i18n="hermes.intro">以 Nous Research 開源的 Hermes Agent 為核心，架在本機的 WSL 裡，再依照自己的工作方式擴充。</p>
+        <ul class="points">
+          <li data-i18n="hermes.p1">串接 Codex、Claude、DeepSeek、Kimi 四個模型來源，主模型出問題時自動切換備援。</li>
+          <li data-i18n="hermes.p2">排程任務定時跑：每日雲端備份、對話封存、每週系統健康評估、校務追蹤，至今累計執行 113 次。</li>
+          <li data-i18n="hermes.p3">3 個 profile 分工，各自有獨立的設定與記憶；主助理接上 Discord，手機上也能隨時交代事情。</li>
+          <li data-i18n="hermes.p4">自己寫了中控台外掛：模型額度、服務狀態與知識庫健康度集中在一頁。</li>
+          <li data-i18n="hermes.p5">設計原則寫在最上面：只讀・本機優先・不自動行動。</li>
+        </ul>
+      </div>
+      <div>
+        <div class="shot"><img src="images/case_afu/console_top.jpg?v=20261005" alt="阿福中控台" loading="lazy" decoding="async"></div>
+        <p class="shot-note" data-i18n="hermes.note">阿福中控台（Hermes 外掛）。金額與額度百分比已遮蔽。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 工作台 -->
+  <section>
+    <div class="wrap feature rev">
+      <div>
+        <div class="eyebrow" data-i18n="wb.eyebrow">02 · WORKBENCH</div>
+        <h2 data-i18n="wb.title">十幾個工具，一個入口</h2>
+        <p class="intro" style="margin-bottom:0" data-i18n="wb.intro">以前每個工具都是一個資料夾、一個黑視窗、一個埠號。現在一鍵啟動，全部收進同一個工作台。</p>
+        <ul class="points">
+          <li data-i18n="wb.p1">媒體處理：多平台影片下載、去浮水印、影片轉分鏡板、對比動畫、縮圖打包。</li>
+          <li data-i18n="wb.p2">AI 生成：生圖與生影片、音樂轉 prompt、主播影片組裝。</li>
+          <li data-i18n="wb.p3">Prompt 工具：線上與離線翻譯、prompt 打包成 JSON，離線版免網路也免金鑰。</li>
+          <li data-i18n="wb.p4">左側圖示欄快速切換，每個工具都有狀態燈，後端掛了一眼就看得到。</li>
+        </ul>
+      </div>
+      <div>
+        <div class="shot"><img src="images/case_afu/workbench.jpg?v=20261005" alt="工作台" loading="lazy" decoding="async"></div>
+        <p class="shot-note" data-i18n="wb.note">工作台首頁。截圖時後端未啟動，已隱藏狀態燈與一組工作用連結。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 圖書館 -->
+  <section>
+    <div class="wrap feature">
+      <div>
+        <div class="eyebrow purple" data-i18n="lib.eyebrow">03 · AFU LIBRARY</div>
+        <h2 data-i18n="lib.title">讓 AI 記得我做過什麼</h2>
+        <p class="intro" style="margin-bottom:0" data-i18n="lib.intro">每次對話結束，AI 就會忘記一切。所以我建了一座知識庫，把方法、判斷和研究留下來，讓下一次不用從零開始。</p>
+        <ul class="points">
+          <li data-i18n="lib.p1">Markdown 當主資料，SQLite 建全文索引，中文與英文都搜得到。</li>
+          <li data-i18n="lib.p2">有入庫規則：每張資料卡的欄位都要合規，中控台即時顯示合規率，目前 100%。</li>
+          <li data-i18n="lib.p3">8 個書架：核心規則、工作流、專案紀錄、工具筆記、研究整理，連碩士課程也整理在裡面。</li>
+          <li data-i18n="lib.p4">手機版 PWA 可以加到主畫面，透過私人連線閱讀，離線也能看最近讀過的文章。</li>
+        </ul>
+      </div>
+      <div class="duo">
+        <div class="shot"><img src="images/case_afu/library_home.jpg?v=20261005" alt="阿福圖書館" loading="lazy" decoding="async"></div>
+        <div class="shot"><img src="images/case_afu/library_mobile.jpg?v=20261005" alt="阿福圖書館手機版" loading="lazy" decoding="async"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 產出 -->
+  <section>
+    <div class="wrap">
+      <div class="eyebrow" data-i18n="out.eyebrow">04 · WHAT IT MAKES</div>
+      <h2 data-i18n="out.title">用這套系統做出來的東西</h2>
+      <p class="intro" data-i18n="out.intro">系統本身不是目的，重點是它能不能讓作品更快、更穩地做出來。</p>
+      <div class="outputs">
+        <a class="out-card" href="index.html#portfolio">
+          <div class="thumb"><div class="hover-video" style="position:relative;width:100%;height:100%;"><img src="images/thumb_ue5_forest.jpg?v=20261005ue" alt="UE5 森林與城堡" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;display:block;"><video muted loop playsinline preload="none" aria-label="UE5 森林與城堡運鏡" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .35s ease;"><source src="videos/ue5_forest_castle.mp4?v=20261005ue" type="video/mp4"></video></div></div>
+          <div class="txt"><h4 data-i18n="out.ue5">UE5 森林與城堡</h4><p data-i18n="out.ue5d">AI Agent 透過 Unreal MCP 從空白專案蓋出場景、打光並規劃運鏡。</p></div>
+        </a>
+        <a class="out-card" href="index.html#portfolio">
+          <div class="thumb"><img src="images/thumb_game_aether_duel.jpg?v=20260914a" alt="AETHER DUEL" loading="lazy" decoding="async"></div>
+          <div class="txt"><h4 data-i18n="out.aether">AETHER DUEL｜月蝕決鬥</h4><p data-i18n="out.aetherd">Webcam 手勢辨識的魔法格鬥原型，影像只在本機判讀。</p></div>
+        </a>
+        <a class="out-card" href="index.html#portfolio">
+          <div class="thumb"><img src="images/thumb_game_lantern.jpg?v=20260821g" alt="小燈籠騎士" loading="lazy" decoding="async"></div>
+          <div class="txt"><h4 data-i18n="out.games">五款 Godot 遊戲原型</h4><p data-i18n="out.gamesd">從企劃、像素美術、程式到自動化測試，用同一套流程反覆產出。</p></div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 角色 -->
+  <section>
+    <div class="wrap">
+      <div class="eyebrow purple" data-i18n="role.eyebrow">05 · MY ROLE</div>
+      <h2 data-i18n="role.title">我做什麼，AI 做什麼</h2>
+      <div class="roles">
+        <div class="role me">
+          <h3 data-i18n="role.me">我負責</h3>
+          <ul>
+            <li data-i18n="role.me1">系統架構：入口、核心、記憶、工具怎麼分工</li>
+            <li data-i18n="role.me2">工具選型與安全審查，新東西先審再裝</li>
+            <li data-i18n="role.me3">工作規則與知識結構的設計</li>
+            <li data-i18n="role.me4">每一輪產出的審美、品質與取捨判斷</li>
+          </ul>
+        </div>
+        <div class="role ai">
+          <h3 data-i18n="role.ai">AI 負責</h3>
+          <ul>
+            <li data-i18n="role.ai1">大部分的程式實作與除錯</li>
+            <li data-i18n="role.ai2">資料整理、文件撰寫與知識入庫</li>
+            <li data-i18n="role.ai3">排程任務與重複性的執行工作</li>
+            <li data-i18n="role.ai4">操作 3D、影像與遊戲引擎等工具</li>
+          </ul>
+        </div>
+      </div>
+      <p class="honest" data-i18n="role.honest">這不是一套給別人安裝的產品，而是我每天實際在用、持續迭代的個人工作系統。它證明的不是我會寫多少程式，而是我能把 AI 變成真正可以落地、可以重複的創作流程。</p>
+    </div>
+  </section>
+
+  <!-- 原則 -->
+  <section>
+    <div class="wrap">
+      <div class="eyebrow" data-i18n="pr.eyebrow">06 · PRINCIPLES</div>
+      <h2 data-i18n="pr.title">三個設計原則</h2>
+      <div class="principles">
+        <div class="principle"><div class="ico">🏠</div><h4 data-i18n="pr.1">本機優先</h4><p data-i18n="pr.1d">核心、知識庫和大部分工具都跑在自己的電腦上，資料不必外送。</p></div>
+        <div class="principle"><div class="ico">🛡️</div><h4 data-i18n="pr.2">先審查，再安裝</h4><p data-i18n="pr.2d">新的外掛、MCP 和腳本都先做安全檢查，確認會讀什麼、連去哪，才放進系統。</p></div>
+        <div class="principle"><div class="ico">🔁</div><h4 data-i18n="pr.3">做過的事要能延續</h4><p data-i18n="pr.3d">踩過的坑、做過的決定都寫進知識庫，下一次對話接得上，不用重新開始。</p></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="cta">
+    <a class="btn" href="index.html#portfolio" data-i18n="cta">← 回到作品集</a>
+  </div>
+</main>
+
+<footer><p data-i18n="footer">© 2026 陳品愷 Kevin Chen · All Rights Reserved</p></footer>
+
+<script>
+  const translations = {
+    "nav.back": ["← 回作品集", "← Back to Portfolio"],
+    "hero.tag": ["✦ CASE STUDY · AI WORKFLOW SYSTEM", "✦ CASE STUDY · AI WORKFLOW SYSTEM"],
+    "hero.t1": ["阿福系統：", "AFU System:"],
+    "hero.t2": ["我為自己打造的 AI 創作作業系統", "The AI Creative Operating System I Built for Myself"],
+    "hero.lead": ["我把 AI Agent、創作工具與個人知識庫串成一套每天都在用的系統。Hermes 負責思考與排程，工作台負責動手，圖書館負責記住，產出最後回到作品裡。這一頁是它的介紹。", "I connected an AI agent, my creative tools and a personal knowledge base into one system I use every day. Hermes thinks and schedules, the Workbench does the hands-on work, the Library remembers, and the output ends up in real work. This page walks through it."],
+    "stat.models": ["模型來源・自動備援", "model providers · auto fallback"],
+    "stat.cron": ["次排程任務執行", "scheduled task runs"],
+    "stat.tools": ["個整合的創作工具", "integrated creative tools"],
+    "stat.docs": ["篇知識文件・入庫合規 100%", "knowledge docs · 100% schema-compliant"],
+    "arch.eyebrow": ["SYSTEM MAP", "SYSTEM MAP"],
+    "arch.title": ["一句話進來，作品出去", "A Sentence In, a Piece of Work Out"],
+    "arch.intro": ["不管是從 Discord 丟一句話、在 Claude Code 裡下指令，還是打開工作台點一個工具，任務都會經過同一個核心，用同一份記憶，交給適合的工具完成。", "Whether a task starts as a message on Discord, a command in Claude Code or a click in the Workbench, it goes through the same core, uses the same memory and ends up with the right tool."],
+    "arch.in1": ["💬 Discord", "💬 Discord"],
+    "arch.in1d": ["隨時丟任務、問進度", "Send tasks and check progress anytime"],
+    "arch.in2": ["⌨️ Claude Code / Codex", "⌨️ Claude Code / Codex"],
+    "arch.in2d": ["在專案裡直接動手", "Work directly inside projects"],
+    "arch.in3": ["🛠 工作台", "🛠 Workbench"],
+    "arch.in3d": ["點一下就開工具", "Open any tool with one click"],
+    "arch.core": ["Hermes Agent", "Hermes Agent"],
+    "arch.cored": ["架在本機的 AI Agent 核心：判斷任務、挑模型、排程執行，並把結果寫回記憶。", "A locally hosted AI agent core: it reads the task, picks a model, runs scheduled jobs and writes results back to memory."],
+    "arch.chip.cron": ["排程 Cron", "Cron jobs"],
+    "arch.chip.profiles": ["3 個 Profile", "3 profiles"],
+    "arch.mem": ["📚 阿福圖書館", "📚 AFU Library"],
+    "arch.memd": ["共用記憶：規則、工作流、專案紀錄與研究筆記，人和 AI 讀同一份。", "Shared memory: rules, workflows, project logs and research notes that both people and AI read."],
+    "arch.out1": ["🎬 影像與 3D", "🎬 Video & 3D"],
+    "arch.out1d": ["Unreal Engine 5、Blender、TouchDesigner、影片工具鏈", "Unreal Engine 5, Blender, TouchDesigner, video toolchain"],
+    "arch.out2": ["🎮 遊戲原型", "🎮 Game Prototypes"],
+    "arch.out2d": ["Godot 4 與瀏覽器遊戲", "Godot 4 and browser games"],
+    "arch.out3": ["🗂 文件與研究", "🗂 Docs & Research"],
+    "arch.out3d": ["知識卡、學習地圖、作品集網站", "Knowledge cards, study maps, this portfolio"],
+    "hermes.eyebrow": ["01 · HERMES AGENT", "01 · HERMES AGENT"],
+    "hermes.title": ["一個住在我電腦裡的 AI 助理", "An AI Assistant That Lives on My Computer"],
+    "hermes.intro": ["以 Nous Research 開源的 Hermes Agent 為核心，架在本機的 WSL 裡，再依照自己的工作方式擴充。", "Built on Nous Research's open-source Hermes Agent, self-hosted in WSL on my own machine and extended to fit the way I work."],
+    "hermes.p1": ["串接 Codex、Claude、DeepSeek、Kimi 四個模型來源，主模型出問題時自動切換備援。", "Connected to four model providers (Codex, Claude, DeepSeek and Kimi), with automatic fallback when the main model fails."],
+    "hermes.p2": ["排程任務定時跑：每日雲端備份、對話封存、每週系統健康評估、校務追蹤，至今累計執行 113 次。", "Scheduled jobs handle daily cloud backups, conversation archiving, weekly system health checks and school-affairs tracking. They have run 113 times so far."],
+    "hermes.p3": ["3 個 profile 分工，各自有獨立的設定與記憶；主助理接上 Discord，手機上也能隨時交代事情。", "3 profiles split the work, each with its own settings and memory. The main assistant is connected to Discord, so I can hand off tasks from my phone."],
+    "hermes.p4": ["自己寫了中控台外掛：模型額度、服務狀態與知識庫健康度集中在一頁。", "A custom dashboard plugin puts model quotas, service status and knowledge-base health on one page."],
+    "hermes.p5": ["設計原則寫在最上面：只讀・本機優先・不自動行動。", "The design rule sits right at the top: read-only, local-first, no autonomous actions."],
+    "hermes.note": ["阿福中控台（Hermes 外掛）。金額與額度百分比已遮蔽。", "AFU Console (a Hermes plugin). Balances and quota percentages are masked."],
+    "wb.eyebrow": ["02 · WORKBENCH", "02 · WORKBENCH"],
+    "wb.title": ["十幾個工具，一個入口", "A Dozen Tools, One Entry Point"],
+    "wb.intro": ["以前每個工具都是一個資料夾、一個黑視窗、一個埠號。現在一鍵啟動，全部收進同一個工作台。", "Each tool used to mean its own folder, its own console window and its own port. Now one launcher starts them all inside a single workbench."],
+    "wb.p1": ["媒體處理：多平台影片下載、去浮水印、影片轉分鏡板、對比動畫、縮圖打包。", "Media: multi-platform video download, watermark removal, video-to-storyboard, before/after animations, thumbnail packs."],
+    "wb.p2": ["AI 生成：生圖與生影片、音樂轉 prompt、主播影片組裝。", "AI generation: image and video generation, music-to-prompt, presenter video assembly."],
+    "wb.p3": ["Prompt 工具：線上與離線翻譯、prompt 打包成 JSON，離線版免網路也免金鑰。", "Prompt tools: online and offline translation and prompt-to-JSON packing. The offline version needs no internet and no API key."],
+    "wb.p4": ["左側圖示欄快速切換，每個工具都有狀態燈，後端掛了一眼就看得到。", "A side icon bar for fast switching, and a status light on every tool so a dead backend is obvious at a glance."],
+    "wb.note": ["工作台首頁。截圖時後端未啟動，已隱藏狀態燈與一組工作用連結。", "Workbench home. Backends were off during capture, so status lights and one group of work links are hidden."],
+    "lib.eyebrow": ["03 · AFU LIBRARY", "03 · AFU LIBRARY"],
+    "lib.title": ["讓 AI 記得我做過什麼", "Making AI Remember What I've Done"],
+    "lib.intro": ["每次對話結束，AI 就會忘記一切。所以我建了一座知識庫，把方法、判斷和研究留下來，讓下一次不用從零開始。", "An AI forgets everything when a conversation ends. So I built a knowledge base that keeps methods, decisions and research, so the next session doesn't start from zero."],
+    "lib.p1": ["Markdown 當主資料，SQLite 建全文索引，中文與英文都搜得到。", "Markdown as the source of truth, with a SQLite full-text index that searches both Chinese and English."],
+    "lib.p2": ["有入庫規則：每張資料卡的欄位都要合規，中控台即時顯示合規率，目前 100%。", "Ingest rules check every card's fields, and the console shows the compliance rate live. It is currently 100%."],
+    "lib.p3": ["8 個書架：核心規則、工作流、專案紀錄、工具筆記、研究整理，連碩士課程也整理在裡面。", "8 shelves: core rules, workflows, project logs, tool notes and research, plus my master's coursework."],
+    "lib.p4": ["手機版 PWA 可以加到主畫面，透過私人連線閱讀，離線也能看最近讀過的文章。", "A mobile PWA that installs to the home screen, reads over a private connection and keeps recent articles available offline."],
+    "out.eyebrow": ["04 · WHAT IT MAKES", "04 · WHAT IT MAKES"],
+    "out.title": ["用這套系統做出來的東西", "What This System Has Made"],
+    "out.intro": ["系統本身不是目的，重點是它能不能讓作品更快、更穩地做出來。", "The system isn't the goal. What matters is whether it gets real work made faster and more reliably."],
+    "out.ue5": ["UE5 森林與城堡", "UE5 Forest & Castle"],
+    "out.ue5d": ["AI Agent 透過 Unreal MCP 從空白專案蓋出場景、打光並規劃運鏡。", "An AI agent built the scene from an empty project through Unreal MCP, then lit it and planned the camera move."],
+    "out.aether": ["AETHER DUEL｜月蝕決鬥", "AETHER DUEL | Eclipse Trial"],
+    "out.aetherd": ["Webcam 手勢辨識的魔法格鬥原型，影像只在本機判讀。", "A magic combat prototype driven by webcam gestures, with video processed only on the device."],
+    "out.games": ["五款 Godot 遊戲原型", "Five Godot Game Prototypes"],
+    "out.gamesd": ["從企劃、像素美術、程式到自動化測試，用同一套流程反覆產出。", "From design, pixel art and code to automated tests, all made with the same repeatable workflow."],
+    "role.eyebrow": ["05 · MY ROLE", "05 · MY ROLE"],
+    "role.title": ["我做什麼，AI 做什麼", "What I Do, What AI Does"],
+    "role.me": ["我負責", "I handle"],
+    "role.me1": ["系統架構：入口、核心、記憶、工具怎麼分工", "System architecture: how entry points, core, memory and tools divide the work"],
+    "role.me2": ["工具選型與安全審查，新東西先審再裝", "Tool selection and security review. Nothing gets installed before it's checked"],
+    "role.me3": ["工作規則與知識結構的設計", "Designing the working rules and the knowledge structure"],
+    "role.me4": ["每一輪產出的審美、品質與取捨判斷", "The aesthetic, quality and trade-off calls on every iteration"],
+    "role.ai": ["AI 負責", "AI handles"],
+    "role.ai1": ["大部分的程式實作與除錯", "Most of the implementation and debugging"],
+    "role.ai2": ["資料整理、文件撰寫與知識入庫", "Organizing data, writing docs and filing knowledge"],
+    "role.ai3": ["排程任務與重複性的執行工作", "Scheduled jobs and repetitive execution"],
+    "role.ai4": ["操作 3D、影像與遊戲引擎等工具", "Operating 3D, video and game-engine tools"],
+    "role.honest": ["這不是一套給別人安裝的產品，而是我每天實際在用、持續迭代的個人工作系統。它證明的不是我會寫多少程式，而是我能把 AI 變成真正可以落地、可以重複的創作流程。", "This isn't a product for others to install. It's the personal working system I actually use every day and keep improving. What it shows isn't how much code I can write, but that I can turn AI into a creative workflow that really ships and can be repeated."],
+    "pr.eyebrow": ["06 · PRINCIPLES", "06 · PRINCIPLES"],
+    "pr.title": ["三個設計原則", "Three Design Principles"],
+    "pr.1": ["本機優先", "Local first"],
+    "pr.1d": ["核心、知識庫和大部分工具都跑在自己的電腦上，資料不必外送。", "The core, the knowledge base and most tools run on my own machine, so data doesn't have to leave it."],
+    "pr.2": ["先審查，再安裝", "Review before install"],
+    "pr.2d": ["新的外掛、MCP 和腳本都先做安全檢查，確認會讀什麼、連去哪，才放進系統。", "Every new plugin, MCP server or script gets a security check first: what it reads and where it connects, before it joins the system."],
+    "pr.3": ["做過的事要能延續", "Work should carry forward"],
+    "pr.3d": ["踩過的坑、做過的決定都寫進知識庫，下一次對話接得上，不用重新開始。", "Every pitfall and decision goes into the knowledge base, so the next conversation picks up where the last one left off."],
+    "cta": ["← 回到作品集", "← Back to Portfolio"],
+    "footer": ["© 2026 陳品愷 Kevin Chen · All Rights Reserved", "© 2026 Kevin Chen · All Rights Reserved"]
+  };
+
+  const langToggle = document.getElementById('lang-toggle');
+  const currentLangEl = document.querySelector('[data-lang-current]');
+  const nextLangEl = document.querySelector('[data-lang-next]');
+
+  function setLanguage(lang) {
+    const safeLang = lang === 'en' ? 'en' : 'zh';
+    document.documentElement.lang = safeLang === 'en' ? 'en' : 'zh-TW';
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const item = translations[el.dataset.i18n];
+      if (item) el.textContent = safeLang === 'en' ? item[1] : item[0];
+    });
+    if (currentLangEl && nextLangEl) {
+      currentLangEl.textContent = safeLang === 'en' ? 'EN' : '中';
+      nextLangEl.textContent = safeLang === 'en' ? '中' : 'EN';
+    }
+    try { localStorage.setItem('portfolioLang', safeLang); } catch (e) {}
+  }
+
+  if (langToggle) {
+    langToggle.addEventListener('click', () => {
+      setLanguage(document.documentElement.lang === 'en' ? 'zh' : 'en');
+    });
+  }
+
+  let saved = 'zh';
+  try { saved = localStorage.getItem('portfolioLang') || 'zh'; } catch (e) {}
+  const urlLang = new URLSearchParams(window.location.search).get('lang');
+  setLanguage(urlLang === 'en' ? 'en' : saved);
+</script>
+<script>
+  // 滑鼠移上去才播放影片，平常顯示靜態圖
+  document.querySelectorAll('.hover-video').forEach(function(box) {
+    var v = box.querySelector('video');
+    var host = box.closest('.portfolio-card, .out-card') || box;
+    host.addEventListener('mouseenter', function() {
+      var p = v.play(); if (p && p.catch) p.catch(function(){});
+      v.style.opacity = '1';
+    });
+    host.addEventListener('mouseleave', function() {
+      v.style.opacity = '0'; v.pause(); v.currentTime = 0;
+    });
+  });
+</script></body>
+</html>
