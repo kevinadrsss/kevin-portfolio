@@ -124,7 +124,7 @@
   }
   .reel-play.hidden { display:none; }
   .reel-pill {
-    display:flex; align-items:center; gap:0.8rem; padding:0.55rem 1.3rem 0.55rem 0.55rem; border-radius:50px;
+    display:flex; align-items:center; gap:0.8rem; padding:0.55rem; border-radius:50px;
     background:rgba(10,10,15,0.75); border:1px solid rgba(6,182,212,0.55); box-shadow:0 0 24px rgba(6,182,212,0.35);
     color:#e2e8f0; font-size:0.9rem; font-weight:600; letter-spacing:0.08em; transition:transform 0.2s, box-shadow 0.2s;
   }
@@ -135,7 +135,7 @@
   @media (max-width: 768px) {
     .reel-title { font-size:1.4rem; }
     .reel-play { padding:0.6rem; }
-    .reel-pill { gap:0.45rem; padding:0.3rem 0.8rem 0.3rem 0.3rem; font-size:0.72rem; letter-spacing:0.04em; }
+    .reel-pill { gap:0.45rem; padding:0.3rem; font-size:0.72rem; letter-spacing:0.04em; }
     .reel-ring { width:28px; height:28px; }
     .reel-tri { border-top-width:6px; border-bottom-width:6px; border-left-width:9px; margin-left:3px; }
   }
@@ -434,8 +434,6 @@
     <button class="reel-play" id="reel-play" type="button" aria-label="Play showreel">
       <span class="reel-pill">
         <span class="reel-ring"><span class="reel-tri"></span></span>
-        <span data-i18n="reel.play">播放（有聲）</span>
-        <span class="reel-len">0:29</span>
       </span>
     </button>
   </div>
