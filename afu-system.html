@@ -94,6 +94,9 @@
   .shot img { width:100%; display:block; }
   .shot-note { font-size:0.75rem; color:#64748b; margin-top:0.6rem; }
   .duo { display:grid; grid-template-columns:1fr 0.36fr; gap:1rem; align-items:start; }
+  /* 02、03：截圖放大（文字窄、圖寬，版面放寬到 1280） */
+  .wrap.wide { max-width:1280px; }
+  .feature.wide, .feature.rev.wide { grid-template-columns:1fr 1.9fr; gap:2.5rem; }
 
   /* 產出 */
   .outputs { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1.2rem; }
@@ -135,7 +138,7 @@
     .stats { grid-template-columns:repeat(2,minmax(0,1fr)); }
     .arch { grid-template-columns:1fr; }
     .arrow { transform:rotate(90deg); height:1.6rem; }
-    .feature, .feature.rev { grid-template-columns:1fr; gap:1.5rem; }
+    .feature, .feature.rev, .feature.wide, .feature.rev.wide { grid-template-columns:1fr; gap:1.5rem; }
     .feature.rev .shot { order:0; }
     .outputs, .roles, .principles { grid-template-columns:1fr; }
     .duo { grid-template-columns:1fr 0.5fr; }
@@ -226,7 +229,7 @@
 
   <!-- 工作台 -->
   <section>
-    <div class="wrap feature rev">
+    <div class="wrap feature rev wide">
       <div>
         <div class="eyebrow" data-i18n="wb.eyebrow">02 · WORKBENCH</div>
         <h2 data-i18n="wb.title">十幾個工具，一個入口</h2>
@@ -247,7 +250,7 @@
 
   <!-- 圖書館 -->
   <section>
-    <div class="wrap feature">
+    <div class="wrap feature wide">
       <div>
         <div class="eyebrow purple" data-i18n="lib.eyebrow">03 · AFU LIBRARY</div>
         <h2 data-i18n="lib.title">讓 AI 記得我做過什麼</h2>
