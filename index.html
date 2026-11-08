@@ -318,40 +318,175 @@
     .about-grid { grid-template-columns:1fr; }
     .contact-grid { grid-template-columns:1fr; }
     .hero h1 { font-size:3rem; }
-    #what-i-do > div,
-    #portfolio > div,
-    #skills > div,
-    #contact > div { padding:0 1.5rem !important; }
-    #what-i-do div[style*="grid-template-columns:repeat(2,minmax(0,1fr))"] { grid-template-columns:1fr !important; }
     .games-grid, .ai-grid { grid-template-columns:1fr !important; }
     .game-featured { grid-column:auto; display:block; }
     .game-featured .portfolio-thumb { min-height:0; }
-    .game-featured .portfolio-info { padding:1.2rem; }
-    .game-featured .portfolio-title { font-size:1rem; }
-    #skills div[style*="grid-template-columns:1fr 1fr"] {
-      grid-template-columns:1fr !important;
-      gap:1.25rem !important;
-      padding:1.5rem !important;
-      align-items:flex-start !important;
-    }
-    #skills div[style*="grid-template-columns:1fr 1fr"] > div:first-child {
-      min-width:0;
-    }
-    #skills div[style*="grid-template-columns:1fr 1fr"] > div:first-child > div:first-child {
-      align-items:flex-start !important;
-    }
-    #skills div[style*="grid-template-columns:1fr 1fr"] > div:first-child > div:first-child span:last-child {
-      line-height:1.35 !important;
-    }
-    #skills .skill-tags {
-      width:100%;
-      gap:0.45rem !important;
-    }
-    #skills .tag {
-      max-width:100%;
-      white-space:normal;
-      overflow-wrap:anywhere;
-    }
+  }
+  /* ═══════════ design-system-v1（2026-11-08）═══════════
+     字級 4 層（首屏另計）：12 標籤 / 16 內文 / 18 卡片標題 / 32 區塊標題
+     圓角 3 種：8 小元件 / 14 卡片 / 999 膠囊
+     間距：8 的倍數（8、16、24、32、48、64、96）
+     區塊標題一律靠左：eyebrow（青色短線、大寫 12px）＋實白標題＋引言
+     圖示：同一套 24px、線寬 1.5 的 inline SVG，放在 48px 圓角小方塊，紫青交錯
+     要調整就改這個區塊，不要再加 inline style 或 nth-child 覆蓋。 */
+  :root {
+    --fs-label:0.75rem; --fs-body:1rem; --fs-card:1.125rem; --fs-section:2rem;
+    --r-sm:8px; --r-card:14px; --r-pill:999px;
+    --text-2:#aab4c3; --title:#f1f5f9; --line:rgba(148,163,184,0.12); --line-hover:rgba(168,85,247,0.55);
+  }
+  .ds-band { background:var(--bg2); max-width:100%; padding:96px 0; }
+  .ds-wrap { max-width:1200px; margin:0 auto; padding:0 64px; }
+  .ds-head { max-width:760px; margin-bottom:48px; }
+  .ds-eyebrow {
+    display:flex; align-items:center; gap:12px; margin-bottom:16px;
+    font-size:var(--fs-label); font-weight:600; letter-spacing:0.16em; text-transform:uppercase; color:var(--accent3);
+  }
+  .ds-eyebrow::before { content:''; width:24px; height:2px; border-radius:2px; background:currentColor; flex-shrink:0; }
+  .ds-title { font-size:var(--fs-section); line-height:1.3; font-weight:700; color:var(--title); }
+  .ds-lead { font-size:var(--fs-body); line-height:1.8; color:var(--text-2); margin-top:16px; }
+  .ds-group {
+    display:flex; align-items:center; gap:12px; margin-bottom:24px;
+    font-size:var(--fs-card); font-weight:700; color:var(--title);
+  }
+  .ds-group::before { content:''; width:24px; height:2px; border-radius:2px; background:var(--accent2); flex-shrink:0; }
+  .ds-group.cyan::before { background:var(--accent3); }
+  .ds-group-lead { font-size:var(--fs-body); line-height:1.75; color:var(--text-2); max-width:760px; margin:-8px 0 24px; }
+
+  .ds-card {
+    position:relative; background:var(--card); border:1px solid var(--line); border-radius:var(--r-card); padding:32px;
+    transition:border-color .25s ease, background .25s ease, transform .25s ease;
+  }
+  .ds-card:hover { border-color:var(--line-hover); background:#151526; transform:translateY(-2px); }
+  .ds-card-title { font-size:var(--fs-card); line-height:1.4; font-weight:700; color:var(--title); margin-bottom:8px; }
+  .ds-card-text { font-size:var(--fs-body); line-height:1.75; color:var(--text-2); }
+  .ds-num { position:absolute; top:32px; right:32px; font-size:var(--fs-label); letter-spacing:0.12em; color:#475569; font-variant-numeric:tabular-nums; }
+
+  .ds-icon {
+    width:48px; height:48px; flex-shrink:0; border-radius:var(--r-sm); display:grid; place-items:center;
+    color:var(--accent2); background:rgba(124,58,237,0.12); border:1px solid rgba(124,58,237,0.28);
+  }
+  .ds-icon.cyan { color:var(--accent3); background:rgba(6,182,212,0.10); border-color:rgba(6,182,212,0.28); }
+  .ds-icon svg { width:24px; height:24px; fill:none; stroke:currentColor; stroke-width:1.5; stroke-linecap:round; stroke-linejoin:round; }
+
+  .ds-pill {
+    display:inline-block; padding:4px 12px; border-radius:var(--r-pill); font-size:var(--fs-label);
+    color:var(--accent2); background:rgba(124,58,237,0.12); border:1px solid rgba(124,58,237,0.3);
+  }
+  .ds-pill.cyan { color:var(--accent3); background:rgba(6,182,212,0.08); border-color:rgba(6,182,212,0.28); }
+  .ds-more { margin-top:16px; font-size:var(--fs-body); font-weight:600; color:var(--accent3); }
+
+  /* Showreel */
+  .reel-head { text-align:left; max-width:1100px; margin:0 auto 48px; }
+  .reel-head .ds-lead { max-width:760px; }
+
+  /* 我正在做的事情 */
+  .what-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:24px; }
+  .what-grid .ds-icon { margin-bottom:24px; }
+
+  /* 電視牆標題 */
+  .tv-wall { padding:96px 0 0; overflow:hidden; background:var(--bg); position:relative; }
+  .tv-head { position:relative; z-index:3; margin-bottom:24px; }
+  .tv-head .ds-eyebrow { margin-bottom:16px; }
+  .tv-legend { display:flex; gap:24px; flex-wrap:wrap; }
+  .tv-legend span { display:flex; align-items:center; gap:8px; font-size:var(--fs-label); letter-spacing:0.08em; color:var(--text-2); }
+  .tv-legend i { width:24px; height:2px; border-radius:2px; background:var(--c); }
+
+  /* 作品集卡片 */
+  .portfolio-grid { gap:24px; }
+  .games-grid { gap:24px; }
+  .portfolio-group { margin-bottom:48px; }
+  .portfolio-group:last-child { margin-bottom:0; }
+  .portfolio-card { border:1px solid var(--line); border-radius:var(--r-card); transition:border-color .25s ease, background .25s ease, transform .25s ease; }
+  .portfolio-card:hover { transform:translateY(-2px); box-shadow:none; border-color:var(--line-hover); }
+  .portfolio-info { padding:24px; }
+  .portfolio-title { font-size:var(--fs-card); line-height:1.4; font-weight:700; color:var(--title); margin-bottom:8px; }
+  .portfolio-desc { font-size:var(--fs-body); line-height:1.75; color:var(--text-2); margin-bottom:0; }
+  .game-featured .portfolio-title { font-size:var(--fs-card); }
+  .game-featured .portfolio-info { padding:32px; }
+
+  /* 關於我 */
+  .about-text p { font-size:var(--fs-body); line-height:1.8; color:var(--text-2); margin-bottom:16px; }
+  .about-text p strong { color:var(--accent2); }
+  .about-stats { display:flex; gap:32px; margin-top:32px; flex-wrap:wrap; }
+  .about-stat b { display:block; font-size:var(--fs-section); line-height:1.2; font-weight:800; color:var(--title); }
+  .about-stat span { font-size:var(--fs-label); letter-spacing:0.08em; color:var(--text-2); }
+  .about-stat-sep { width:1px; background:var(--line); }
+  .info-grid { gap:16px; margin-top:24px; }
+  .info-label { font-size:var(--fs-label); color:var(--accent3); letter-spacing:0.12em; }
+  .info-value { font-size:var(--fs-body); }
+  .about-pills { display:flex; flex-wrap:wrap; gap:8px; justify-content:center; max-width:280px; }
+
+  /* 能力範疇 */
+  .skills-list { display:flex; flex-direction:column; gap:24px; }
+  .skill-block { display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:center; padding:40px; }
+  .skill-head { display:flex; align-items:center; gap:16px; margin-bottom:16px; }
+  .skill-head .ds-card-title { margin-bottom:0; }
+  .skill-label { font-size:var(--fs-label); font-weight:600; letter-spacing:0.12em; text-transform:uppercase; color:var(--accent2); margin-bottom:12px; }
+  .skill-label.cyan { color:var(--accent3); }
+  .skill-tags { gap:8px; }
+  .skill-tags + .skill-label { margin-top:24px; }
+  .tag { font-size:var(--fs-label); padding:4px 12px; border-radius:var(--r-pill); }
+
+  /* 工作經歷 */
+  .timeline-item { margin-bottom:24px; }
+  .timeline-card { border:1px solid var(--line); border-radius:var(--r-card); padding:32px; transition:border-color .25s ease, background .25s ease, transform .25s ease; }
+  .timeline-card:hover { transform:translateY(-2px); box-shadow:none; border-color:var(--line-hover); }
+  .timeline-header { margin-bottom:16px; gap:8px; }
+  .timeline-company { font-size:var(--fs-card); color:var(--title); }
+  .timeline-role { font-size:var(--fs-body); margin-top:4px; }
+  .timeline-period { font-size:var(--fs-label); padding:4px 12px; border-radius:var(--r-pill); border-color:var(--line); background:rgba(148,163,184,0.06); color:var(--text-2); }
+  .timeline-tasks { margin-top:0; }
+  .timeline-tasks li { font-size:var(--fs-body); line-height:1.75; color:var(--text-2); padding:4px 0 4px 20px; }
+
+  /* 認證 */
+  .certs-row { max-width:1200px; margin:0 auto; padding:32px 64px; display:flex; align-items:center; gap:24px; flex-wrap:wrap; }
+  .certs-row .ds-eyebrow { margin-bottom:0; }
+  .certs-row .pills { display:flex; gap:8px; flex-wrap:wrap; }
+
+  /* 聯絡 */
+  .contact-grid { gap:48px; align-items:start; }
+  .contact-info p { font-size:var(--fs-body); line-height:1.8; color:var(--text-2); margin-bottom:32px; }
+  .contact-links { gap:16px; }
+  .contact-link { gap:16px; padding:16px 24px; border:1px solid var(--line); border-radius:var(--r-card); }
+  .contact-link:hover { border-color:var(--line-hover); background:#151526; }
+  .contact-link-label { font-size:var(--fs-label); letter-spacing:0.12em; color:var(--text-2); }
+  .contact-link-value { font-size:var(--fs-body); }
+  .contact-cta .ds-icon { margin-bottom:24px; }
+  .contact-cta .ds-card-text { margin-bottom:24px; }
+  .contact-cta .btn-primary { display:inline-block; font-size:var(--fs-body); }
+
+  footer { font-size:var(--fs-label); letter-spacing:0.04em; padding:32px; border-top:1px solid var(--line); }
+
+  /* 去光暈＋按鈕對比：零偏移紫光一律拿掉；白字改壓 #7c3aed（5.7:1，原漸層尾端 #a855f7 只有 4.0:1） */
+  .btn-primary { background:var(--accent); box-shadow:none; }
+  .btn-primary:hover { background:#6d28d9; box-shadow:none; }
+  .reel-frame { box-shadow:none; }
+  .reel-pill, .reel-play:hover .reel-pill { box-shadow:none; }
+  .timeline-dot { box-shadow:none; }
+  .skill-card:hover { box-shadow:none; }
+
+  /* 可拆開關：Kevin 若決定不要圖示方塊／區塊小標／編號，在 <body> 加 class 即可，不用動 markup
+     ds-no-icons → 拿掉 48px 圖示方塊；ds-no-kicker → 拿掉 eyebrow 小標；ds-no-num → 拿掉 01–04 編號 */
+  .ds-no-icons .ds-icon, .ds-no-kicker .ds-eyebrow, .ds-no-num .ds-num { display:none; }
+
+  @media (max-width: 768px) {
+    .ds-band { padding:64px 0; }
+    .ds-wrap { padding:0 24px; }
+    .ds-head { margin-bottom:32px; }
+    .ds-card { padding:24px; }
+    .ds-num { top:24px; right:24px; }
+    .what-grid { grid-template-columns:1fr; gap:16px; }
+    .what-grid .ds-icon { margin-bottom:16px; }
+    .tv-wall { padding-top:64px; }
+    .tv-legend { gap:16px; }
+    .portfolio-group { margin-bottom:32px; }
+    .game-featured .portfolio-info { padding:24px; }
+    .skills-list { gap:16px; }
+    .skill-block { grid-template-columns:1fr; gap:24px; padding:24px; align-items:start; }
+    .skills-list .tag { max-width:100%; white-space:normal; overflow-wrap:anywhere; }
+    .timeline-card { padding:24px; }
+    .certs-row { padding:24px; gap:16px; }
+    .contact-link { padding:16px; }
   }
 </style>
 </head>
@@ -423,9 +558,9 @@
 <!-- SHOWREEL -->
 <section id="showreel">
   <div class="reel-head">
-    <span class="reel-eyebrow" data-i18n="reel.eyebrow">✦ Showreel 2026</span>
-    <div class="reel-title" data-i18n="reel.title">30 秒認識我</div>
-    <p class="reel-desc" data-i18n="reel.desc">遊戲廣告、AI 影像、3D 動態。這支 showreel 本身也是我的工作流：用程式排版剪輯、AI 生成配樂、對齊節拍後一次渲染完成。</p>
+    <div class="ds-eyebrow" data-i18n="reel.eyebrow">Showreel 2026</div>
+    <h2 class="ds-title" data-i18n="reel.title">30 秒認識我</h2>
+    <p class="ds-lead" data-i18n="reel.desc">遊戲廣告、AI 影像、3D 動態。這支 showreel 本身也是我的工作流：用程式排版剪輯、AI 生成配樂、對齊節拍後一次渲染完成。</p>
   </div>
   <div class="reel-frame">
     <video id="reel-video" playsinline preload="none" poster="images/showreel-2026-poster.jpg?v=20260929reel">
@@ -440,63 +575,51 @@
 </section>
 
 <!-- WHAT I DO -->
-<section id="what-i-do" style="background:var(--bg2); max-width:100%; padding:5rem 0;">
-<div style="max-width:1200px; margin:0 auto; padding:0 4rem;">
-  <div style="text-align:center; margin-bottom:3rem;">
-    <span style="font-size:0.8rem;color:#a855f7;letter-spacing:0.15em;text-transform:uppercase;" data-i18n="what.eyebrow">✦ What I'm Working On</span>
-    <div style="font-size:1.8rem;font-weight:700;margin-top:0.8rem;background:linear-gradient(90deg,#fff,var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;" data-i18n="what.title">我正在做的事情</div>
-    <p style="color:#94a3b8;margin-top:0.6rem;font-size:0.95rem;max-width:760px;margin-left:auto;margin-right:auto;line-height:1.8;">
-      <span data-i18n="what.desc">我關注的不只是單一作品形式，而是創作在 AI 時代裡，如何從靈感走到真正落地。</span>
-    </p>
+<section id="what-i-do" class="ds-band">
+<div class="ds-wrap">
+  <div class="ds-head">
+    <div class="ds-eyebrow" data-i18n="what.eyebrow">What I'm Working On</div>
+    <h2 class="ds-title" data-i18n="what.title">我正在做的事情</h2>
+    <p class="ds-lead" data-i18n="what.desc">我關注的不只是單一作品形式，而是創作在 AI 時代裡，如何從靈感走到真正落地。</p>
   </div>
-  <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.5rem;align-items:stretch;">
-
-    <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:2rem;min-height:260px;display:flex;flex-direction:column;justify-content:flex-start;transition:transform 0.3s,box-shadow 0.3s;" onmouseover="this.style.transform='translateY(-6px)';this.style.boxShadow='0 0 35px rgba(124,58,237,0.2)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
-      <div style="font-size:2rem;margin-bottom:1rem;">🎬</div>
-      <div style="font-size:1.1rem;font-weight:700;color:var(--text);margin-bottom:0.6rem;"> <span data-i18n="what.card1.title">AI 與內容工作流</span></div>
-      <p style="font-size:0.88rem;color:#94a3b8;line-height:1.7;"> <span data-i18n="what.card1.desc">我在意的不是工具本身有多新，而是它能不能真正幫助內容從想法走到完成，並讓流程變得更穩定、更可重複。</span></p>
-    </div>
-
-    <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:2rem;min-height:260px;display:flex;flex-direction:column;justify-content:flex-start;transition:transform 0.3s,box-shadow 0.3s;" onmouseover="this.style.transform='translateY(-6px)';this.style.boxShadow='0 0 35px rgba(6,182,212,0.2)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
-      <div style="font-size:2rem;margin-bottom:1rem;">🎞️</div>
-      <div style="font-size:1.1rem;font-weight:700;color:var(--text);margin-bottom:0.6rem;"> <span data-i18n="what.card2.title">影像與轉場設計</span></div>
-      <p style="font-size:0.88rem;color:#94a3b8;line-height:1.7;"> <span data-i18n="what.card2.desc">我關注不同類型的影片創作者，在節奏、風格與觀眾感受上的差異，並思考轉場如何真正服務內容，而不是只成為效果本身。</span></p>
-    </div>
-
-    <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:2rem;min-height:260px;display:flex;flex-direction:column;justify-content:flex-start;transition:transform 0.3s,box-shadow 0.3s;" onmouseover="this.style.transform='translateY(-6px)';this.style.boxShadow='0 0 35px rgba(124,58,237,0.2)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
-      <div style="font-size:2rem;margin-bottom:1rem;">🧠</div>
-      <div style="font-size:1.1rem;font-weight:700;color:var(--text);margin-bottom:0.6rem;"> <span data-i18n="what.card3.title">知識整理與系統化</span></div>
-      <p style="font-size:0.88rem;color:#94a3b8;line-height:1.7;"> <span data-i18n="what.card3.desc">除了作品本身，我也持續整理創作過程中的方法、判斷與研究資料，希望讓做過的事可以被延續，而不是每次重新開始。</span></p>
-    </div>
-
-    <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:2rem;min-height:260px;display:flex;flex-direction:column;justify-content:flex-start;transition:transform 0.3s,box-shadow 0.3s;" onmouseover="this.style.transform='translateY(-6px)';this.style.boxShadow='0 0 35px rgba(6,182,212,0.2)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
-      <div style="font-size:2rem;margin-bottom:1rem;">🧪</div>
-      <div style="font-size:1.1rem;font-weight:700;color:var(--text);margin-bottom:0.6rem;"> <span data-i18n="what.card4.title">AI 輔助創作與實驗</span></div>
-      <p style="font-size:0.88rem;color:#94a3b8;line-height:1.7;"> <span data-i18n="what.card4.desc">我持續把 AI 放進影像、3D、知識整理與工作流程中，測試它在真實創作情境裡的位置與限制，並把實驗轉化成更實際的方法。</span></p>
-    </div>
-
+  <div class="what-grid">
+    <article class="ds-card">
+      <span class="ds-num">01</span>
+      <span class="ds-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="5" cy="6" r="2.5"/><circle cx="19" cy="6" r="2.5"/><circle cx="12" cy="18" r="2.5"/><path d="M7.5 6h9"/><path d="M17.6 8.2 13.4 15.8"/><path d="M6.4 8.2 10.6 15.8"/></svg></span>
+      <h3 class="ds-card-title" data-i18n="what.card1.title">AI 與內容工作流</h3>
+      <p class="ds-card-text" data-i18n="what.card1.desc">我在意的不是工具本身有多新，而是它能不能真正幫助內容從想法走到完成，並讓流程變得更穩定、更可重複。</p>
+    </article>
+    <article class="ds-card">
+      <span class="ds-num">02</span>
+      <span class="ds-icon cyan" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="12" height="10" rx="1.5"/><path d="M9 14v4.5a1.5 1.5 0 0 0 1.5 1.5h9a1.5 1.5 0 0 0 1.5-1.5v-7a1.5 1.5 0 0 0-1.5-1.5H15"/></svg></span>
+      <h3 class="ds-card-title" data-i18n="what.card2.title">影像與轉場設計</h3>
+      <p class="ds-card-text" data-i18n="what.card2.desc">我關注不同類型的影片創作者，在節奏、風格與觀眾感受上的差異，並思考轉場如何真正服務內容，而不是只成為效果本身。</p>
+    </article>
+    <article class="ds-card">
+      <span class="ds-num">03</span>
+      <span class="ds-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m12 3 9 4.5-9 4.5-9-4.5z"/><path d="m3 12 9 4.5 9-4.5"/><path d="m3 16.5 9 4.5 9-4.5"/></svg></span>
+      <h3 class="ds-card-title" data-i18n="what.card3.title">知識整理與系統化</h3>
+      <p class="ds-card-text" data-i18n="what.card3.desc">除了作品本身，我也持續整理創作過程中的方法、判斷與研究資料，希望讓做過的事可以被延續，而不是每次重新開始。</p>
+    </article>
+    <article class="ds-card">
+      <span class="ds-num">04</span>
+      <span class="ds-icon cyan" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9.5 3h5"/><path d="M10.5 3v6.2L4.8 18.4A1.7 1.7 0 0 0 6.3 21h11.4a1.7 1.7 0 0 0 1.5-2.6L13.5 9.2V3"/><path d="M7.4 15h9.2"/></svg></span>
+      <h3 class="ds-card-title" data-i18n="what.card4.title">AI 輔助創作與實驗</h3>
+      <p class="ds-card-text" data-i18n="what.card4.desc">我持續把 AI 放進影像、3D、知識整理與工作流程中，測試它在真實創作情境裡的位置與限制，並把實驗轉化成更實際的方法。</p>
+    </article>
   </div>
 </div>
 </section>
 
 <!-- TV WALL -->
-<div style="padding:4rem 0 0; overflow:hidden; background:var(--bg); position:relative;">
-  <div style="text-align:center; margin-bottom:1.5rem;">
-    <span style="font-size:0.8rem;color:#94a3b8;letter-spacing:0.15em;text-transform:uppercase;">✦ Works Showcase</span>
-  </div>
-  <div style="display:flex;justify-content:center;gap:3rem;margin-bottom:1.5rem;flex-wrap:wrap;">
-    <span style="font-size:0.78rem;color:#a855f7;letter-spacing:0.1em;display:flex;align-items:center;gap:0.4rem;">
-      <span style="width:24px;height:2px;background:#a855f7;display:inline-block;border-radius:2px;"></span>
-      <span data-i18n="showcase.ad">廣告動畫作品</span>
-    </span>
-    <span style="font-size:0.78rem;color:#06b6d4;letter-spacing:0.1em;display:flex;align-items:center;gap:0.4rem;">
-      <span style="width:24px;height:2px;background:#06b6d4;display:inline-block;border-radius:2px;"></span>
-      <span data-i18n="showcase.ai">AI 生成影片</span>
-    </span>
-    <span style="font-size:0.78rem;color:#f97316;letter-spacing:0.1em;display:flex;align-items:center;gap:0.4rem;">
-      <span style="width:24px;height:2px;background:#f97316;display:inline-block;border-radius:2px;"></span>
-      <span data-i18n="showcase.latest">最新作品</span>
-    </span>
+<div class="tv-wall">
+  <div class="ds-wrap tv-head">
+    <div class="ds-eyebrow">Works Showcase</div>
+    <div class="tv-legend">
+      <span><i style="--c:#a855f7"></i><span data-i18n="showcase.ad">廣告動畫作品</span></span>
+      <span><i style="--c:#06b6d4"></i><span data-i18n="showcase.ai">AI 生成影片</span></span>
+      <span><i style="--c:#f97316"></i><span data-i18n="showcase.latest">最新作品</span></span>
+    </div>
   </div>
 
     <!-- Row 1: 左移 (廣告作品 16:9) -->
@@ -567,17 +690,16 @@
   <div style="position:absolute;top:0;right:0;bottom:0;width:120px;background:linear-gradient(270deg,var(--bg) 0%,transparent 100%);pointer-events:none;z-index:2;"></div>
 </div>
 <!-- PORTFOLIO -->
-<section id="portfolio" style="background:var(--bg2); max-width:100%; padding:6rem 0;">
-<div style="max-width:1200px; margin:0 auto; padding:0 4rem;">
-  <div class="section-title" data-i18n="portfolio.title">作品集</div>
-  <div class="section-line"></div>
+<section id="portfolio" class="ds-band">
+<div class="ds-wrap">
+  <div class="ds-head">
+    <div class="ds-eyebrow">Selected Work</div>
+    <h2 class="ds-title" data-i18n="portfolio.title">作品集</h2>
+  </div>
 
   <!-- 精選作品 -->
-  <div style="margin-bottom:2.5rem;">
-    <div style="font-size:0.85rem;color:#a855f7;letter-spacing:0.1em;margin-bottom:1.2rem;display:flex;align-items:center;gap:0.6rem;">
-      <span style="width:24px;height:2px;background:#a855f7;display:inline-block;border-radius:2px;"></span>
-      <span data-i18n="portfolio.featured">精選作品</span>
-    </div>
+  <div class="portfolio-group">
+    <h3 class="ds-group" data-i18n="portfolio.featured">精選作品</h3>
     <div class="portfolio-grid">
       <div class="portfolio-card">
         <div class="portfolio-thumb" style="background:none;"><img loading="lazy" decoding="async" src="images/thumb_motion_ai.jpg?v=20260421r" style="width:100%;height:100%;object-fit:cover;"></div>
@@ -597,11 +719,8 @@
   </div>
 
   <!-- 商業專案 -->
-  <div style="margin-bottom:2.5rem;">
-    <div style="font-size:0.85rem;color:#06b6d4;letter-spacing:0.1em;margin-bottom:1.2rem;display:flex;align-items:center;gap:0.6rem;">
-      <span style="width:24px;height:2px;background:#06b6d4;display:inline-block;border-radius:2px;"></span>
-      <span data-i18n="portfolio.commercial">商業專案</span>
-    </div>
+  <div class="portfolio-group">
+    <h3 class="ds-group cyan" data-i18n="portfolio.commercial">商業專案</h3>
     <div class="portfolio-grid">
       <div class="portfolio-card">
         <div class="portfolio-thumb" style="background:none;"><img loading="lazy" decoding="async" src="images/thumb_tv_ai.jpg?v=20260421r" style="width:100%;height:100%;object-fit:cover;"></div>
@@ -621,11 +740,8 @@
   </div>
 
   <!-- AI 實驗 -->
-  <div>
-    <div style="font-size:0.85rem;color:#a855f7;letter-spacing:0.1em;margin-bottom:1.2rem;display:flex;align-items:center;gap:0.6rem;">
-      <span style="width:24px;height:2px;background:#a855f7;display:inline-block;border-radius:2px;"></span>
-      <span data-i18n="portfolio.ai">AI 實驗</span>
-    </div>
+  <div class="portfolio-group">
+    <h3 class="ds-group" data-i18n="portfolio.ai">AI 實驗</h3>
     <div class="portfolio-grid ai-grid">
       <div class="portfolio-card game-featured">
         <div class="portfolio-thumb" style="background:none;"><img src="images/case_afu/thumb_afu_hermes.jpg?v=20261006" alt="阿福：我的 AI 夥伴" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;"></div>
@@ -652,12 +768,9 @@
   </div>
 
   <!-- 遊戲開發 -->
-  <div style="margin-top:3.5rem;">
-    <div style="font-size:0.85rem;color:#06b6d4;letter-spacing:0.1em;margin-bottom:0.9rem;display:flex;align-items:center;gap:0.6rem;">
-      <span style="width:24px;height:2px;background:#06b6d4;display:inline-block;border-radius:2px;"></span>
-      <span data-i18n="portfolio.games">遊戲開發</span>
-    </div>
-    <p style="font-size:0.88rem;color:#94a3b8;line-height:1.7;margin-bottom:1.2rem;max-width:760px;" data-i18n="portfolio.games.desc">用 Godot 4 與瀏覽器技術開發的個人遊戲原型。從互動設計、視覺與動畫到程式邏輯、自動化測試，透過 Hermes AI 工作流串成可重複的製作流程。五款皆已有可實際操作的版本。</p>
+  <div class="portfolio-group">
+    <h3 class="ds-group cyan" data-i18n="portfolio.games">遊戲開發</h3>
+    <p class="ds-group-lead" data-i18n="portfolio.games.desc">用 Godot 4 與瀏覽器技術開發的個人遊戲原型。從互動設計、視覺與動畫到程式邏輯、自動化測試，透過 Hermes AI 工作流串成可重複的製作流程。五款皆已有可實際操作的版本。</p>
     <div class="portfolio-grid games-grid">
       <div class="portfolio-card game-featured">
         <div class="portfolio-thumb" style="background:none;"><img src="images/thumb_game_aether_duel.jpg?v=20260914a" alt="AETHER DUEL 月蝕決鬥" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;"></div>
@@ -702,31 +815,24 @@
 
 <!-- ABOUT -->
 <section id="about">
-  <div class="section-title" data-i18n="about.title">關於我</div>
-  <div class="section-line"></div>
+  <div class="ds-head">
+    <div class="ds-eyebrow">Who I Am</div>
+    <h2 class="ds-title" data-i18n="about.title">關於我</h2>
+  </div>
   <div class="about-grid">
     <div class="about-text">
-      <p data-i18n-html="about.p1">我是品愷。做動態設計和 3D 出身，近年把重心放在一件事：<strong style="color:#a855f7;">怎麼讓 AI 真正融入創作工作流。</strong></p>
+      <p data-i18n-html="about.p1">我是品愷。做動態設計和 3D 出身，近年把重心放在一件事：<strong>怎麼讓 AI 真正融入創作工作流。</strong></p>
       <p data-i18n="about.p2">從民視、鏡電視到訊連科技，我做過電視廣告、CG 動畫、遊戲 PV、AR 物件。這些經驗讓我理解製作流程裡哪些環節可以被 AI 加速，哪些不行。</p>
       <p data-i18n="about.p3">現在我同時在做兩件事：用 AI 工具提升影像製作效率，以及把 Claude、MCP、本地模型串成一套真正能跑的工作系統。</p>
       <!-- 數據統計（從 Hero 搬來） -->
-      <div style="display:flex;gap:2rem;margin-top:2rem;flex-wrap:wrap;">
-        <div style="text-align:center;">
-          <div style="font-size:1.8rem;font-weight:800;background:linear-gradient(135deg,#fff,#a855f7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">5+</div>
-          <div style="font-size:0.75rem;color:#94a3b8;letter-spacing:0.05em;"> <span data-i18n="about.years">年經驗</span></div>
-        </div>
-        <div style="width:1px;background:rgba(124,58,237,0.3);"></div>
-        <div style="text-align:center;">
-          <div style="font-size:1.8rem;font-weight:800;background:linear-gradient(135deg,#fff,#06b6d4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">5</div>
-          <div style="font-size:0.75rem;color:#94a3b8;letter-spacing:0.05em;"> <span data-i18n="about.companies">間企業</span></div>
-        </div>
-        <div style="width:1px;background:rgba(124,58,237,0.3);"></div>
-        <div style="text-align:center;">
-          <div style="font-size:1.8rem;font-weight:800;background:linear-gradient(135deg,#fff,#a855f7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">10+</div>
-          <div style="font-size:0.75rem;color:#94a3b8;letter-spacing:0.05em;"> <span data-i18n="about.tools">工具</span></div>
-        </div>
+      <div class="about-stats">
+        <div class="about-stat"><b>5+</b><span data-i18n="about.years">年經驗</span></div>
+        <div class="about-stat-sep"></div>
+        <div class="about-stat"><b>5</b><span data-i18n="about.companies">間企業</span></div>
+        <div class="about-stat-sep"></div>
+        <div class="about-stat"><b>10+</b><span data-i18n="about.tools">工具</span></div>
       </div>
-      <div class="info-grid" style="margin-top:1.5rem;">
+      <div class="info-grid">
         <div class="info-item">
           <span class="info-label" data-i18n="about.location.label">所在地</span>
           <span class="info-value" data-i18n="about.location.value">新北市林口</span>
@@ -743,35 +849,37 @@
         <img loading="lazy" decoding="async" src="images/avatar.jpg?v=20260914perf" alt="Kevin Chen"
           style="position:relative;width:320px;height:320px;border-radius:50%;object-fit:cover;object-position:top center;border:4px solid var(--bg);z-index:2;display:block;">
       </div>
-      <div style="display:flex;flex-wrap:wrap;gap:0.6rem;justify-content:center;max-width:260px;">
-        <span style="padding:0.3rem 0.8rem;border-radius:50px;background:rgba(124,58,237,0.15);border:1px solid rgba(124,58,237,0.4);font-size:0.75rem;color:#a855f7;">Motion Designer</span>
-        <span style="padding:0.3rem 0.8rem;border-radius:50px;background:rgba(6,182,212,0.1);border:1px solid rgba(6,182,212,0.3);font-size:0.75rem;color:#06b6d4;">3D Artist</span>
-        <span style="padding:0.3rem 0.8rem;border-radius:50px;background:rgba(124,58,237,0.15);border:1px solid rgba(124,58,237,0.4);font-size:0.75rem;color:#a855f7;">AI Creator</span>
-        <span style="padding:0.3rem 0.8rem;border-radius:50px;background:rgba(6,182,212,0.1);border:1px solid rgba(6,182,212,0.3);font-size:0.75rem;color:#06b6d4;">System Builder</span>
+      <div class="about-pills">
+        <span class="ds-pill">Motion Designer</span>
+        <span class="ds-pill cyan">3D Artist</span>
+        <span class="ds-pill">AI Creator</span>
+        <span class="ds-pill cyan">System Builder</span>
       </div>
     </div>
   </div>
 </section>
 
 <!-- SKILLS -->
-<section id="skills" style="background:var(--bg2); max-width:100%; padding:6rem 0;">
-<div style="max-width:1200px; margin:0 auto; padding:0 4rem;">
-  <div class="section-title" data-i18n="skills.title">能力範疇</div>
-  <div class="section-line"></div>
-  <div style="display:flex;flex-direction:column;gap:2rem;">
+<section id="skills" class="ds-band">
+<div class="ds-wrap">
+  <div class="ds-head">
+    <div class="ds-eyebrow">What I Can Do</div>
+    <h2 class="ds-title" data-i18n="skills.title">能力範疇</h2>
+  </div>
+  <div class="skills-list">
 
     <!-- 區塊 1：影像與動態設計 -->
-    <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:2.5rem;display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;align-items:center;">
+    <div class="ds-card skill-block">
       <div>
-        <div style="display:flex;align-items:center;gap:0.8rem;margin-bottom:1rem;">
-          <span style="font-size:1.6rem;">🎬</span>
-          <span style="font-size:1.2rem;font-weight:700;color:var(--text);"> <span data-i18n="skills.motion.title">影像與動態設計</span></span>
+        <div class="skill-head">
+          <span class="ds-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m10 9 5 3-5 3z"/></svg></span>
+          <h3 class="ds-card-title" data-i18n="skills.motion.title">影像與動態設計</h3>
         </div>
-        <p style="font-size:0.9rem;color:#94a3b8;line-height:1.8;" data-i18n="skills.motion.desc">從腳本規劃、CG 動畫、棚內動態到影片後製的完整製作能力。曾為電視台、遊戲公司、科技品牌製作廣告與宣傳影片。</p>
+        <p class="ds-card-text" data-i18n="skills.motion.desc">從腳本規劃、CG 動畫、棚內動態到影片後製的完整製作能力。曾為電視台、遊戲公司、科技品牌製作廣告與宣傳影片。</p>
       </div>
       <div>
-        <div style="font-size:0.75rem;color:#a855f7;letter-spacing:0.1em;margin-bottom:0.8rem;"> <span data-i18n="skills.mainTools">主要工具</span></div>
-        <div class="skill-tags" style="gap:0.5rem;">
+        <div class="skill-label" data-i18n="skills.mainTools">主要工具</div>
+        <div class="skill-tags">
           <span class="tag">After Effects</span>
           <span class="tag">Premiere</span>
           <span class="tag">DaVinci Resolve</span>
@@ -783,17 +891,17 @@
     </div>
 
     <!-- 區塊 2：3D 場景構建 -->
-    <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:2.5rem;display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;align-items:center;">
+    <div class="ds-card skill-block">
       <div>
-        <div style="display:flex;align-items:center;gap:0.8rem;margin-bottom:1rem;">
-          <span style="font-size:1.6rem;">🧊</span>
-          <span style="font-size:1.2rem;font-weight:700;color:var(--text);"> <span data-i18n="skills.3d.title">3D 場景構建</span></span>
+        <div class="skill-head">
+          <span class="ds-icon cyan" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3 20 7.5v9L12 21l-8-4.5v-9z"/><path d="m4 7.5 8 4.5 8-4.5"/><path d="M12 12v9"/></svg></span>
+          <h3 class="ds-card-title" data-i18n="skills.3d.title">3D 場景構建</h3>
         </div>
-        <p style="font-size:0.9rem;color:#94a3b8;line-height:1.8;" data-i18n="skills.3d.desc">產品視覺化、場景搭建、角色建模與渲染。近期透過 Blender MCP 實現對話式 AI 建模，用自然語言驅動 3D 創作。</p>
+        <p class="ds-card-text" data-i18n="skills.3d.desc">產品視覺化、場景搭建、角色建模與渲染。近期透過 Blender MCP 實現對話式 AI 建模，用自然語言驅動 3D 創作。</p>
       </div>
       <div>
-        <div style="font-size:0.75rem;color:#06b6d4;letter-spacing:0.1em;margin-bottom:0.8rem;"> <span data-i18n="skills.mainTools">主要工具</span></div>
-        <div class="skill-tags" style="gap:0.5rem;">
+        <div class="skill-label cyan" data-i18n="skills.mainTools">主要工具</div>
+        <div class="skill-tags">
           <span class="tag">C4D</span>
           <span class="tag">Blender</span>
           <span class="tag">MAYA</span>
@@ -804,23 +912,23 @@
     </div>
 
     <!-- 區塊 3：AI 創作整合 -->
-    <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:2.5rem;display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;align-items:center;">
+    <div class="ds-card skill-block">
       <div>
-        <div style="display:flex;align-items:center;gap:0.8rem;margin-bottom:1rem;">
-          <span style="font-size:1.6rem;">🤖</span>
-          <span style="font-size:1.2rem;font-weight:700;color:var(--text);"> <span data-i18n="skills.ai.title">AI 創作整合</span></span>
+        <div class="skill-head">
+          <span class="ds-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 4 13.8 10.2 20 12l-6.2 1.8L12 20l-1.8-6.2L4 12l6.2-1.8z"/><path d="M19 2.5v4"/><path d="M17 4.5h4"/></svg></span>
+          <h3 class="ds-card-title" data-i18n="skills.ai.title">AI 創作整合</h3>
         </div>
-        <p style="font-size:0.9rem;color:#94a3b8;line-height:1.8;" data-i18n="skills.ai.desc">把 AI 生成工具嵌入傳統製作流程。圖像、影片、音訊全鏈路 AI 輔助，從素材生成到最終輸出都能用 AI 加速。</p>
+        <p class="ds-card-text" data-i18n="skills.ai.desc">把 AI 生成工具嵌入傳統製作流程。圖像、影片、音訊全鏈路 AI 輔助，從素材生成到最終輸出都能用 AI 加速。</p>
       </div>
       <div>
-        <div style="font-size:0.75rem;color:#a855f7;letter-spacing:0.1em;margin-bottom:0.8rem;"> <span data-i18n="skills.imageGen">圖像生成</span></div>
-        <div class="skill-tags" style="gap:0.5rem;margin-bottom:1rem;">
+        <div class="skill-label" data-i18n="skills.imageGen">圖像生成</div>
+        <div class="skill-tags">
           <span class="tag">Stable Diffusion</span>
           <span class="tag">MidJourney</span>
           <span class="tag">Nano Banana</span>
         </div>
-        <div style="font-size:0.75rem;color:#a855f7;letter-spacing:0.1em;margin-bottom:0.8rem;"> <span data-i18n="skills.videoGen">影片生成</span></div>
-        <div class="skill-tags" style="gap:0.5rem;">
+        <div class="skill-label" data-i18n="skills.videoGen">影片生成</div>
+        <div class="skill-tags">
           <span class="tag">Runway</span>
           <span class="tag">Kling</span>
           <span class="tag">Seedance</span>
@@ -831,17 +939,17 @@
     </div>
 
     <!-- 區塊 4：工作流系統化 -->
-    <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:2.5rem;display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;align-items:center;">
+    <div class="ds-card skill-block">
       <div>
-        <div style="display:flex;align-items:center;gap:0.8rem;margin-bottom:1rem;">
-          <span style="font-size:1.6rem;">🔧</span>
-          <span style="font-size:1.2rem;font-weight:700;color:var(--text);"> <span data-i18n="skills.workflow.title">工作流系統化</span></span>
+        <div class="skill-head">
+          <span class="ds-icon cyan" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 6h10"/><path d="M18 6h2"/><path d="M4 12h4"/><path d="M12 12h8"/><path d="M4 18h12"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="18" r="2"/></svg></span>
+          <h3 class="ds-card-title" data-i18n="skills.workflow.title">工作流系統化</h3>
         </div>
-        <p style="font-size:0.9rem;color:#94a3b8;line-height:1.8;" data-i18n="skills.workflow.desc">不只會用工具，更把工具串成系統。AI Agent 串接、多模型分工路由、流程自動化、知識庫管理，建立真正能持續運作的 AI 工作流。</p>
+        <p class="ds-card-text" data-i18n="skills.workflow.desc">不只會用工具，更把工具串成系統。AI Agent 串接、多模型分工路由、流程自動化、知識庫管理，建立真正能持續運作的 AI 工作流。</p>
       </div>
       <div>
-        <div style="font-size:0.75rem;color:#06b6d4;letter-spacing:0.1em;margin-bottom:0.8rem;"> <span data-i18n="skills.coreTools">核心工具</span></div>
-        <div class="skill-tags" style="gap:0.5rem;">
+        <div class="skill-label cyan" data-i18n="skills.coreTools">核心工具</div>
+        <div class="skill-tags">
           <span class="tag">Claude Code</span>
           <span class="tag">ChatGPT</span>
           <span class="tag">Gemini</span>
@@ -861,8 +969,10 @@
 <!-- EXPERIENCE -->
 <section id="experience">
 <div style="max-width:1200px; margin:0 auto;">
-  <div class="section-title" data-i18n="experience.title">工作經歷</div>
-  <div class="section-line"></div>
+  <div class="ds-head">
+    <div class="ds-eyebrow">Career Path</div>
+    <h2 class="ds-title" data-i18n="experience.title">工作經歷</h2>
+  </div>
   <div class="timeline">
 
     <div class="timeline-item">
@@ -962,47 +1072,49 @@
 </section>
 
 <!-- CERTS (compact) -->
-<div style="max-width:1200px;margin:0 auto;padding:2rem 4rem;display:flex;align-items:center;gap:2rem;flex-wrap:wrap;">
-  <span style="font-size:0.8rem;color:#94a3b8;letter-spacing:0.1em;"> <span data-i18n="certs.title">認證</span></span>
-  <div style="display:flex;gap:1rem;flex-wrap:wrap;">
-    <span style="padding:0.4rem 1rem;border-radius:50px;background:rgba(124,58,237,0.1);border:1px solid rgba(124,58,237,0.25);font-size:0.78rem;color:#a855f7;">Adobe Certified Flash Designer</span>
-    <span style="padding:0.4rem 1rem;border-radius:50px;background:rgba(6,182,212,0.08);border:1px solid rgba(6,182,212,0.25);font-size:0.78rem;color:#06b6d4;">MOS Microsoft Office Specialist</span>
-    <span style="padding:0.4rem 1rem;border-radius:50px;background:rgba(124,58,237,0.1);border:1px solid rgba(124,58,237,0.25);font-size:0.78rem;color:#a855f7;">Adobe Illustrator SSE</span>
+<div class="certs-row">
+  <div class="ds-eyebrow" data-i18n="certs.title">認證</div>
+  <div class="pills">
+    <span class="ds-pill">Adobe Certified Flash Designer</span>
+    <span class="ds-pill cyan">MOS Microsoft Office Specialist</span>
+    <span class="ds-pill">Adobe Illustrator SSE</span>
   </div>
 </div>
 
 <!-- CONTACT -->
-<section id="contact" style="background:var(--bg2); max-width:100%; padding:6rem 0;">
-<div style="max-width:1200px; margin:0 auto; padding:0 4rem;">
-  <div class="section-title" data-i18n="contact.title">聯絡我</div>
-  <div class="section-line"></div>
+<section id="contact" class="ds-band">
+<div class="ds-wrap">
+  <div class="ds-head">
+    <div class="ds-eyebrow">Get in Touch</div>
+    <h2 class="ds-title" data-i18n="contact.title">聯絡我</h2>
+  </div>
   <div class="contact-grid">
     <div class="contact-info">
       <p data-i18n="contact.desc">不管你是想做影片、探索 AI 工作流、或只是想聊聊這個領域的可能性——歡迎隨時聯絡。</p>
       <div class="contact-links">
         <a href="mailto:gold51008@gmail.com" class="contact-link">
-          <span class="contact-link-icon">📧</span>
+          <span class="ds-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span>
           <div>
             <div class="contact-link-label">EMAIL</div>
             <div class="contact-link-value">gold51008@gmail.com</div>
           </div>
         </a>
         <a href="tel:0911489293" class="contact-link">
-          <span class="contact-link-icon">📱</span>
+          <span class="ds-icon cyan" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="7" y="3" width="10" height="18" rx="2"/><path d="M11 17.5h2"/></svg></span>
           <div>
             <div class="contact-link-label">PHONE</div>
             <div class="contact-link-value">0911-489-293</div>
           </div>
         </a>
         <a href="https://drive.google.com/drive/folders/1fW4Z-Xd_IVPiHLrYe0R-x6TRg6BUph-Z?usp=drive_link" target="_blank" class="contact-link">
-          <span class="contact-link-icon">📁</span>
+          <span class="ds-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 7.5A1.5 1.5 0 0 1 4.5 6H9l2 2h8.5A1.5 1.5 0 0 1 21 9.5v8a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 17.5z"/></svg></span>
           <div>
             <div class="contact-link-label">PORTFOLIO</div>
             <div class="contact-link-value" data-i18n="contact.drive">Google Drive 作品集</div>
           </div>
         </a>
         <a href="https://www.instagram.com/ms0681565/" target="_blank" rel="noopener noreferrer" class="contact-link">
-          <span class="contact-link-icon">📷</span>
+          <span class="ds-icon cyan" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17 7h.01"/></svg></span>
           <div>
             <div class="contact-link-label">INSTAGRAM</div>
             <div class="contact-link-value" data-i18n="contact.instagram">@ms0681565</div>
@@ -1010,13 +1122,11 @@
         </a>
       </div>
     </div>
-    <div style="display:flex; align-items:center; justify-content:center;">
-      <div style="text-align:center;">
-        <div style="font-size:5rem; margin-bottom:1rem;">🚀</div>
-        <div style="font-size:1.2rem; font-weight:700; color:var(--text); margin-bottom:0.5rem;" data-i18n="contact.ready">準備好合作了嗎？</div>
-        <div style="color:var(--muted); margin-bottom:1.5rem;" data-i18n="contact.line">讓我們一起打造令人驚豔的作品</div>
-        <a href="mailto:gold51008@gmail.com" class="btn-primary" data-i18n="contact.cta">立即聯絡 →</a>
-      </div>
+    <div class="ds-card contact-cta">
+      <span class="ds-icon cyan" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M21 3 10 14"/><path d="m21 3-7 18-4-7-7-4z"/></svg></span>
+      <h3 class="ds-card-title" data-i18n="contact.ready">準備好合作了嗎？</h3>
+      <p class="ds-card-text" data-i18n="contact.line">讓我們一起打造令人驚豔的作品</p>
+      <a href="mailto:gold51008@gmail.com" class="btn-primary" data-i18n="contact.cta">立即聯絡 →</a>
     </div>
   </div>
 </div>
@@ -1032,8 +1142,11 @@
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(e => {
       if(e.isIntersecting) {
-        e.target.style.opacity = '1';
-        e.target.style.transform = 'translateY(0)';
+        const el = e.target;
+        el.style.opacity = '1';
+        el.style.transform = '';
+        observer.unobserve(el);
+        setTimeout(() => { el.style.transition = ''; }, 650);
       }
     });
   }, { threshold: 0.1 });
@@ -1102,7 +1215,7 @@
   }
 
   // Bilingual language switch
-  const translations = {"nav.reel":["Showreel","Showreel"],"hero.reel":["▶ 看 30 秒 Showreel","▶ Watch the 30s Showreel"],"reel.eyebrow":["✦ Showreel 2026","✦ Showreel 2026"],"reel.title":["30 秒認識我","Get to know me in 30 seconds"],"reel.desc":["遊戲廣告、AI 影像、3D 動態。這支 showreel 本身也是我的工作流：用程式排版剪輯、AI 生成配樂、對齊節拍後一次渲染完成。","Game ads, AI video, 3D motion. The reel itself is part of my workflow: edited as code, scored with AI-generated music, beat-synced and rendered in a single pass."],"reel.play":["播放（有聲）","Play with sound"],"nav.direction":["方向","Direction"],"nav.portfolio":["作品集","Portfolio"],"nav.about":["關於我","About"],"nav.skills":["能力","Skills"],"nav.experience":["經歷","Experience"],"nav.contact":["聯絡","Contact"],"hero.tag":["✦ Motion Design × 3D × AI Workflow","✦ Motion Design × 3D × AI Workflow"],"hero.name":["陳品愷 Kevin Chen","Kevin Chen"],"hero.headline":["我不只是使用 AI，<br>我把 AI 變成真正能工作的系統。","I don't just use AI.<br>I turn AI into working creative systems."],"hero.sub":["從動態設計、3D 視覺到 AI 工作流整合，我持續把零散的工具、靈感與製作流程，整理成更能真正落地的創作方式。","From motion design and 3D visuals to AI workflow integration, I turn scattered tools, ideas, and production steps into practical creative systems."],"hero.cta":["我正在做的事情","What I'm Working On"],"what.eyebrow":["✦ What I'm Working On","✦ What I'm Working On"],"what.title":["我正在做的事情","What I'm Working On"],"what.desc":["我關注的不只是單一作品形式，而是創作在 AI 時代裡，如何從靈感走到真正落地。","I focus on how creative work can move from ideas to real execution in the age of AI — not just on a single format."],"what.card1.title":["AI 與內容工作流","AI & Content Workflow"],"what.card1.desc":["我在意的不是工具本身有多新，而是它能不能真正幫助內容從想法走到完成，並讓流程變得更穩定、更可重複。","I care less about how new a tool is, and more about whether it helps content move from idea to completion with a stable, repeatable process."],"what.card2.title":["影像與轉場設計","Video & Transition Design"],"what.card2.desc":["我關注不同類型的影片創作者，在節奏、風格與觀眾感受上的差異，並思考轉場如何真正服務內容，而不是只成為效果本身。","I study rhythm, style, and audience experience across video formats, and design transitions that serve the content rather than just showing effects."],"what.card3.title":["知識整理與系統化","Knowledge & Systems"],"what.card3.desc":["除了作品本身，我也持續整理創作過程中的方法、判斷與研究資料，希望讓做過的事可以被延續，而不是每次重新開始。","Beyond the final work, I organize methods, decisions, and research so each project can build on the last instead of starting over."],"what.card4.title":["AI 輔助創作與實驗","AI-Assisted Creation"],"what.card4.desc":["我持續把 AI 放進影像、3D、知識整理與工作流程中，測試它在真實創作情境裡的位置與限制，並把實驗轉化成更實際的方法。","I test AI across video, 3D, knowledge management, and workflow design, turning experiments into practical production methods."],"showcase.ad":["廣告動畫作品","Commercial Motion"],"showcase.ai":["AI 生成影片","AI Video"],"showcase.latest":["最新作品","Latest Works"],"portfolio.title":["作品集","Portfolio"],"portfolio.featured":["精選作品","Featured Works"],"portfolio.motion.title":["動態影片作品集","Motion Design Reel"],"portfolio.motion.desc":["CG 動畫、AR 物件、廣告動態 — 從鏡電視到訊連科技的商業製作精選。","Selected commercial work including CG animation, AR assets, and motion graphics for brands and media companies."],"portfolio.3d.title":["3D 建模與渲染","3D Modeling & Rendering"],"portfolio.3d.desc":["C4D、Blender、MAYA 製作的 3D 場景、角色與產品視覺化。","3D scenes, characters, and product visuals created with C4D, Blender, and Maya."],"portfolio.commercial":["商業專案","Commercial Projects"],"portfolio.tv.title":["電視台廣告動畫","TV Commercial Motion"],"portfolio.tv.desc":["鏡電視時期的電視廣告動畫、CG 特效與棚內動態設計。","Commercial motion graphics, CG effects, and studio animation work created for television production."],"portfolio.game.title":["遊戲廣告製作","Game Advertising"],"portfolio.game.desc":["真好玩娛樂科技的遊戲 PV、廣告動畫與宣傳素材。","Game PVs, advertising motion, and promotional assets for entertainment products."],"portfolio.ai":["AI 實驗","AI Experiments"],"portfolio.aigen.title":["AI 生成創作","AI-Generated Creation"],"portfolio.aigen.desc":["整合 Stable Diffusion、MidJourney、Runway 等 AI 工具的實驗性創作與應用。","Experimental creative work using tools such as Stable Diffusion, MidJourney, Runway, and other AI systems."],"portfolio.personal.title":["個人創作實驗","Personal Creative Experiments"],"portfolio.personal.desc":["風格探索、新技術實驗與跨媒介創作。","Style exploration, new technical experiments, and cross-media creative work."],"portfolio.afu.title":["阿福｜我的 AI 夥伴，也是日常裡的朋友","Afu | My AI Partner and Everyday Friend"],"portfolio.afu.desc":["陪我聊生活、整理想法，也一起摸索創作。這不只是一套工具，更是我在日常對話中，慢慢建立起來的陪伴與協作方式。","Afu talks with me about everyday life, helps me sort out ideas, and explores creative work alongside me. It's more than a set of tools: it's a way of companionship and collaboration I've built up gradually through everyday conversations."],"portfolio.games":["遊戲開發","Game Development"],"portfolio.games.desc":["用 Godot 4 與瀏覽器技術開發的個人遊戲原型。從互動設計、視覺與動畫到程式邏輯、自動化測試，透過 Hermes AI 工作流串成可重複的製作流程。五款皆已有可實際操作的版本。","Personal game prototypes built with Godot 4 and browser technologies. Interaction design, visuals, animation, gameplay code, and automated tests are connected through a repeatable Hermes AI workflow. All five have working, interactive builds."],"portfolio.aether.title":["AETHER DUEL｜月蝕決鬥","AETHER DUEL | Eclipse Trial"],"portfolio.aether.desc":["HTML5 體感魔法格鬥研究原型。用三角剋制把手勢攻防轉成五回合決鬥，支援鍵盤、觸控與 Webcam 手勢；影像只在本機即時判讀，不錄影、不上傳。","An HTML5 motion-controlled magic combat research prototype. A three-way counter system turns gestures into a five-round duel, with keyboard, touch, and webcam gesture input. Camera frames are processed locally in real time—never recorded or uploaded."],"portfolio.lantern.title":["小燈籠騎士","Little Lantern Knight"],"portfolio.lantern.desc":["Godot 4 橫向動作遊戲。四張關卡場景、五種怪物行為與「破曉斬」特殊技，打倒不死者、集滿四顆靈魂寶石後開啟傳送門。像素美術與動畫序列自製。","A side-scrolling action game in Godot 4. Four level scenes, five monster behaviours, and the Dawn Break special move: defeat the undead, collect four soul gems, then open the portal. Pixel art and animation sequences created in-house."],"portfolio.midnight.title":["午夜怪棧","Midnight Inn"],"portfolio.midnight.desc":["Godot 4 敘事經營／驚悚原型。白天讀規則安排房客，午夜依燈號判斷接電話、關房燈或保持安靜；四種房型各有風險與收益，撐過六個事件才能換到失蹤案線索。","A narrative management and horror prototype in Godot 4. Read the house rules and assign guests by day; at midnight, read the signals to answer the phone, kill the lights, or stay silent. Four room types trade risk against reward, and surviving six events earns a lead on the disappearance."],"portfolio.gemfighter.title":["寶石格鬥","Gem Fighter"],"portfolio.gemfighter.desc":["Godot 4 對戰動作原型。輕擊、重擊、防禦、跳躍與消耗能量的寶石必殺技，含回合計時、體力與勝負判定，對手為 Gem Ninja CPU。","A versus action prototype in Godot 4. Light and heavy attacks, guarding, jumping, and an energy-costing gem special, with a round timer, health, and win conditions against the Gem Ninja CPU."],"portfolio.alchemist.title":["撿破爛煉金術師","Trash Alchemist"],"portfolio.alchemist.desc":["Godot 4 探索戰鬥原型。蒐集廢料、對抗五種敵人與「垃圾公爵」，合成裝備、取得坩堝核心並修復坩堝。","An exploration and combat prototype in Godot 4. Collect scrap, fight five enemy types and the Trash Duke, craft equipment, recover the cauldron core, and repair the cauldron."],"about.title":["關於我","About"],"about.p1":["我是品愷。做動態設計和 3D 出身，近年把重心放在一件事：<strong style=\"color:#a855f7;\">怎麼讓 AI 真正融入創作工作流。</strong>","I'm Kevin Chen. My background is in motion design and 3D, and recently I focus on one thing: <strong style=\"color:#a855f7;\">how to make AI truly fit into creative production workflows.</strong>"],"about.p2":["從民視、鏡電視到訊連科技，我做過電視廣告、CG 動畫、遊戲 PV、AR 物件。這些經驗讓我理解製作流程裡哪些環節可以被 AI 加速，哪些不行。","From FTV and Mirror TV to CyberLink, I have worked on TV commercials, CG animation, game PVs, and AR assets. That experience helps me understand which parts of production AI can accelerate — and which still need human judgment."],"about.p3":["現在我同時在做兩件事：用 AI 工具提升影像製作效率，以及把 Claude、MCP、本地模型串成一套真正能跑的工作系統。","Now I work on two things at the same time: using AI tools to improve video production efficiency, and connecting Claude, MCP, and local models into a real working system."],"about.years":["年經驗","Years Experience"],"about.companies":["間企業","Companies"],"about.tools":["工具","Tools"],"about.location.label":["所在地","Location"],"about.location.value":["新北市林口","Linkou, New Taipei City"],"about.education.label":["學歷","Education"],"about.education.value":["銘傳大學 數位媒體設計系","Ming Chuan University, Digital Media Design"],"skills.title":["能力範疇","Skills"],"skills.motion.title":["影像與動態設計","Video & Motion Design"],"skills.motion.desc":["從腳本規劃、CG 動畫、棚內動態到影片後製的完整製作能力。曾為電視台、遊戲公司、科技品牌製作廣告與宣傳影片。","Full production capability from script planning and CG animation to studio motion graphics and post-production. Experience creating commercials and promotional videos for TV, gaming, and technology brands."],"skills.mainTools":["主要工具","Main Tools"],"skills.3d.title":["3D 場景構建","3D Scene Building"],"skills.3d.desc":["產品視覺化、場景搭建、角色建模與渲染。近期透過 Blender MCP 實現對話式 AI 建模，用自然語言驅動 3D 創作。","Product visualization, scene building, character modeling, and rendering. Recently exploring conversational AI modeling through Blender MCP, using natural language to drive 3D creation."],"skills.ai.title":["AI 創作整合","AI Creative Integration"],"skills.ai.desc":["把 AI 生成工具嵌入傳統製作流程。圖像、影片、音訊全鏈路 AI 輔助，從素材生成到最終輸出都能用 AI 加速。","Integrating generative AI tools into traditional production pipelines, using AI across image, video, and audio workflows from asset generation to final output."],"skills.imageGen":["圖像生成","Image Generation"],"skills.videoGen":["影片生成","Video Generation"],"skills.workflow.title":["工作流系統化","Workflow Systemization"],"skills.workflow.desc":["不只會用工具，更把工具串成系統。AI Agent 串接、多模型分工路由、流程自動化、知識庫管理，建立真正能持續運作的 AI 工作流。","Beyond using tools, I connect them into systems: AI agents, multi-model routing, workflow automation, and knowledge-base management that can keep running over time."],"skills.coreTools":["核心工具","Core Tools"],"experience.title":["工作經歷","Experience"],"exp.cyberlink.role":["多媒體動畫師","Multimedia Animator"],"exp.cyberlink.1":["AI 素材製作與應用","AI asset creation and application"],"exp.cyberlink.2":["動態轉場設計與製作","Motion transition design and production"],"exp.cyberlink.3":["多媒體內容專案協助","Multimedia content project support"],"exp.mirror.role":["動畫師","Animator"],"exp.mirror.1":["CG 動畫製作","CG animation production"],"exp.mirror.2":["棚內動態製作","Studio motion graphics production"],"exp.mirror.3":["專案動畫製作","Project-based animation production"],"exp.mirror.4":["AR 物件設計與製作","AR asset design and production"],"exp.game.role":["影音製作專員","Video Production Specialist"],"exp.game.1":["AE 廣告動畫製作","After Effects advertising animation"],"exp.game.2":["C4D / MAYA / 3DMAX 動畫製作","C4D / Maya / 3ds Max animation production"],"exp.game.3":["PV 廣告影片製作","PV and advertising video production"],"exp.game.4":["Premiere 影片後製","Video post-production in Premiere"],"exp.hy.role":["攝影剪輯助理","Camera & Editing Assistant"],"exp.hy.1":["轉播攝影機器架設與拍攝","Broadcast camera setup and shooting"],"exp.hy.2":["影片剪輯後製","Video editing and post-production"],"exp.ftv.role":["專案執行製作助理","Project Production Assistant"],"exp.ftv.1":["專案執行與廣告規劃","Project execution and ad planning"],"exp.ftv.2":["協助棚內外拍攝作業","Assisted studio and location shoots"],"exp.ftv.3":["廣告拍攝協助","Commercial shoot support"],"exp.ftv.4":["書面整理與修圖","Documentation and image retouching"],"certs.title":["認證","Certifications"],"contact.title":["聯絡我","Contact"],"contact.desc":["不管你是想做影片、探索 AI 工作流、或只是想聊聊這個領域的可能性——歡迎隨時聯絡。","Whether you want to create a video, explore AI workflows, or simply talk about what is possible in this field — feel free to reach out."],"contact.drive":["Google Drive 作品集","Google Drive Portfolio"],"contact.instagram":["@ms0681565","@ms0681565"],"contact.ready":["準備好合作了嗎？","Ready to collaborate?"],"contact.line":["讓我們一起打造令人驚豔的作品","Let's build something impressive together."],"contact.cta":["立即聯絡 →","Contact Me →"],"footer.copy":["© 2026 陳品愷 Kevin Chen · All Rights Reserved · bilingual v2026.04.27","© 2026 Kevin Chen · All Rights Reserved · bilingual v2026.04.27"]};
+  const translations = {"nav.reel":["Showreel","Showreel"],"hero.reel":["▶ 看 30 秒 Showreel","▶ Watch the 30s Showreel"],"reel.eyebrow":["Showreel 2026","Showreel 2026"],"reel.title":["30 秒認識我","Get to know me in 30 seconds"],"reel.desc":["遊戲廣告、AI 影像、3D 動態。這支 showreel 本身也是我的工作流：用程式排版剪輯、AI 生成配樂、對齊節拍後一次渲染完成。","Game ads, AI video, 3D motion. The reel itself is part of my workflow: edited as code, scored with AI-generated music, beat-synced and rendered in a single pass."],"reel.play":["播放（有聲）","Play with sound"],"nav.direction":["方向","Direction"],"nav.portfolio":["作品集","Portfolio"],"nav.about":["關於我","About"],"nav.skills":["能力","Skills"],"nav.experience":["經歷","Experience"],"nav.contact":["聯絡","Contact"],"hero.tag":["✦ Motion Design × 3D × AI Workflow","✦ Motion Design × 3D × AI Workflow"],"hero.name":["陳品愷 Kevin Chen","Kevin Chen"],"hero.headline":["我不只是使用 AI，<br>我把 AI 變成真正能工作的系統。","I don't just use AI.<br>I turn AI into working creative systems."],"hero.sub":["從動態設計、3D 視覺到 AI 工作流整合，我持續把零散的工具、靈感與製作流程，整理成更能真正落地的創作方式。","From motion design and 3D visuals to AI workflow integration, I turn scattered tools, ideas, and production steps into practical creative systems."],"hero.cta":["我正在做的事情","What I'm Working On"],"what.eyebrow":["What I'm Working On","What I'm Working On"],"what.title":["我正在做的事情","What I'm Working On"],"what.desc":["我關注的不只是單一作品形式，而是創作在 AI 時代裡，如何從靈感走到真正落地。","I focus on how creative work can move from ideas to real execution in the age of AI — not just on a single format."],"what.card1.title":["AI 與內容工作流","AI & Content Workflow"],"what.card1.desc":["我在意的不是工具本身有多新，而是它能不能真正幫助內容從想法走到完成，並讓流程變得更穩定、更可重複。","I care less about how new a tool is, and more about whether it helps content move from idea to completion with a stable, repeatable process."],"what.card2.title":["影像與轉場設計","Video & Transition Design"],"what.card2.desc":["我關注不同類型的影片創作者，在節奏、風格與觀眾感受上的差異，並思考轉場如何真正服務內容，而不是只成為效果本身。","I study rhythm, style, and audience experience across video formats, and design transitions that serve the content rather than just showing effects."],"what.card3.title":["知識整理與系統化","Knowledge & Systems"],"what.card3.desc":["除了作品本身，我也持續整理創作過程中的方法、判斷與研究資料，希望讓做過的事可以被延續，而不是每次重新開始。","Beyond the final work, I organize methods, decisions, and research so each project can build on the last instead of starting over."],"what.card4.title":["AI 輔助創作與實驗","AI-Assisted Creation"],"what.card4.desc":["我持續把 AI 放進影像、3D、知識整理與工作流程中，測試它在真實創作情境裡的位置與限制，並把實驗轉化成更實際的方法。","I test AI across video, 3D, knowledge management, and workflow design, turning experiments into practical production methods."],"showcase.ad":["廣告動畫作品","Commercial Motion"],"showcase.ai":["AI 生成影片","AI Video"],"showcase.latest":["最新作品","Latest Works"],"portfolio.title":["作品集","Portfolio"],"portfolio.featured":["精選作品","Featured Works"],"portfolio.motion.title":["動態影片作品集","Motion Design Reel"],"portfolio.motion.desc":["CG 動畫、AR 物件、廣告動態 — 從鏡電視到訊連科技的商業製作精選。","Selected commercial work including CG animation, AR assets, and motion graphics for brands and media companies."],"portfolio.3d.title":["3D 建模與渲染","3D Modeling & Rendering"],"portfolio.3d.desc":["C4D、Blender、MAYA 製作的 3D 場景、角色與產品視覺化。","3D scenes, characters, and product visuals created with C4D, Blender, and Maya."],"portfolio.commercial":["商業專案","Commercial Projects"],"portfolio.tv.title":["電視台廣告動畫","TV Commercial Motion"],"portfolio.tv.desc":["鏡電視時期的電視廣告動畫、CG 特效與棚內動態設計。","Commercial motion graphics, CG effects, and studio animation work created for television production."],"portfolio.game.title":["遊戲廣告製作","Game Advertising"],"portfolio.game.desc":["真好玩娛樂科技的遊戲 PV、廣告動畫與宣傳素材。","Game PVs, advertising motion, and promotional assets for entertainment products."],"portfolio.ai":["AI 實驗","AI Experiments"],"portfolio.aigen.title":["AI 生成創作","AI-Generated Creation"],"portfolio.aigen.desc":["整合 Stable Diffusion、MidJourney、Runway 等 AI 工具的實驗性創作與應用。","Experimental creative work using tools such as Stable Diffusion, MidJourney, Runway, and other AI systems."],"portfolio.personal.title":["個人創作實驗","Personal Creative Experiments"],"portfolio.personal.desc":["風格探索、新技術實驗與跨媒介創作。","Style exploration, new technical experiments, and cross-media creative work."],"portfolio.afu.title":["阿福｜我的 AI 夥伴，也是日常裡的朋友","Afu | My AI Partner and Everyday Friend"],"portfolio.afu.desc":["陪我聊生活、整理想法，也一起摸索創作。這不只是一套工具，更是我在日常對話中，慢慢建立起來的陪伴與協作方式。","Afu talks with me about everyday life, helps me sort out ideas, and explores creative work alongside me. It's more than a set of tools: it's a way of companionship and collaboration I've built up gradually through everyday conversations."],"portfolio.games":["遊戲開發","Game Development"],"portfolio.games.desc":["用 Godot 4 與瀏覽器技術開發的個人遊戲原型。從互動設計、視覺與動畫到程式邏輯、自動化測試，透過 Hermes AI 工作流串成可重複的製作流程。五款皆已有可實際操作的版本。","Personal game prototypes built with Godot 4 and browser technologies. Interaction design, visuals, animation, gameplay code, and automated tests are connected through a repeatable Hermes AI workflow. All five have working, interactive builds."],"portfolio.aether.title":["AETHER DUEL｜月蝕決鬥","AETHER DUEL | Eclipse Trial"],"portfolio.aether.desc":["HTML5 體感魔法格鬥研究原型。用三角剋制把手勢攻防轉成五回合決鬥，支援鍵盤、觸控與 Webcam 手勢；影像只在本機即時判讀，不錄影、不上傳。","An HTML5 motion-controlled magic combat research prototype. A three-way counter system turns gestures into a five-round duel, with keyboard, touch, and webcam gesture input. Camera frames are processed locally in real time—never recorded or uploaded."],"portfolio.lantern.title":["小燈籠騎士","Little Lantern Knight"],"portfolio.lantern.desc":["Godot 4 橫向動作遊戲。四張關卡場景、五種怪物行為與「破曉斬」特殊技，打倒不死者、集滿四顆靈魂寶石後開啟傳送門。像素美術與動畫序列自製。","A side-scrolling action game in Godot 4. Four level scenes, five monster behaviours, and the Dawn Break special move: defeat the undead, collect four soul gems, then open the portal. Pixel art and animation sequences created in-house."],"portfolio.midnight.title":["午夜怪棧","Midnight Inn"],"portfolio.midnight.desc":["Godot 4 敘事經營／驚悚原型。白天讀規則安排房客，午夜依燈號判斷接電話、關房燈或保持安靜；四種房型各有風險與收益，撐過六個事件才能換到失蹤案線索。","A narrative management and horror prototype in Godot 4. Read the house rules and assign guests by day; at midnight, read the signals to answer the phone, kill the lights, or stay silent. Four room types trade risk against reward, and surviving six events earns a lead on the disappearance."],"portfolio.gemfighter.title":["寶石格鬥","Gem Fighter"],"portfolio.gemfighter.desc":["Godot 4 對戰動作原型。輕擊、重擊、防禦、跳躍與消耗能量的寶石必殺技，含回合計時、體力與勝負判定，對手為 Gem Ninja CPU。","A versus action prototype in Godot 4. Light and heavy attacks, guarding, jumping, and an energy-costing gem special, with a round timer, health, and win conditions against the Gem Ninja CPU."],"portfolio.alchemist.title":["撿破爛煉金術師","Trash Alchemist"],"portfolio.alchemist.desc":["Godot 4 探索戰鬥原型。蒐集廢料、對抗五種敵人與「垃圾公爵」，合成裝備、取得坩堝核心並修復坩堝。","An exploration and combat prototype in Godot 4. Collect scrap, fight five enemy types and the Trash Duke, craft equipment, recover the cauldron core, and repair the cauldron."],"about.title":["關於我","About"],"about.p1":["我是品愷。做動態設計和 3D 出身，近年把重心放在一件事：<strong>怎麼讓 AI 真正融入創作工作流。</strong>","I'm Kevin Chen. My background is in motion design and 3D, and recently I focus on one thing: <strong>how to make AI truly fit into creative production workflows.</strong>"],"about.p2":["從民視、鏡電視到訊連科技，我做過電視廣告、CG 動畫、遊戲 PV、AR 物件。這些經驗讓我理解製作流程裡哪些環節可以被 AI 加速，哪些不行。","From FTV and Mirror TV to CyberLink, I have worked on TV commercials, CG animation, game PVs, and AR assets. That experience helps me understand which parts of production AI can accelerate — and which still need human judgment."],"about.p3":["現在我同時在做兩件事：用 AI 工具提升影像製作效率，以及把 Claude、MCP、本地模型串成一套真正能跑的工作系統。","Now I work on two things at the same time: using AI tools to improve video production efficiency, and connecting Claude, MCP, and local models into a real working system."],"about.years":["年經驗","Years Experience"],"about.companies":["間企業","Companies"],"about.tools":["工具","Tools"],"about.location.label":["所在地","Location"],"about.location.value":["新北市林口","Linkou, New Taipei City"],"about.education.label":["學歷","Education"],"about.education.value":["銘傳大學 數位媒體設計系","Ming Chuan University, Digital Media Design"],"skills.title":["能力範疇","Skills"],"skills.motion.title":["影像與動態設計","Video & Motion Design"],"skills.motion.desc":["從腳本規劃、CG 動畫、棚內動態到影片後製的完整製作能力。曾為電視台、遊戲公司、科技品牌製作廣告與宣傳影片。","Full production capability from script planning and CG animation to studio motion graphics and post-production. Experience creating commercials and promotional videos for TV, gaming, and technology brands."],"skills.mainTools":["主要工具","Main Tools"],"skills.3d.title":["3D 場景構建","3D Scene Building"],"skills.3d.desc":["產品視覺化、場景搭建、角色建模與渲染。近期透過 Blender MCP 實現對話式 AI 建模，用自然語言驅動 3D 創作。","Product visualization, scene building, character modeling, and rendering. Recently exploring conversational AI modeling through Blender MCP, using natural language to drive 3D creation."],"skills.ai.title":["AI 創作整合","AI Creative Integration"],"skills.ai.desc":["把 AI 生成工具嵌入傳統製作流程。圖像、影片、音訊全鏈路 AI 輔助，從素材生成到最終輸出都能用 AI 加速。","Integrating generative AI tools into traditional production pipelines, using AI across image, video, and audio workflows from asset generation to final output."],"skills.imageGen":["圖像生成","Image Generation"],"skills.videoGen":["影片生成","Video Generation"],"skills.workflow.title":["工作流系統化","Workflow Systemization"],"skills.workflow.desc":["不只會用工具，更把工具串成系統。AI Agent 串接、多模型分工路由、流程自動化、知識庫管理，建立真正能持續運作的 AI 工作流。","Beyond using tools, I connect them into systems: AI agents, multi-model routing, workflow automation, and knowledge-base management that can keep running over time."],"skills.coreTools":["核心工具","Core Tools"],"experience.title":["工作經歷","Experience"],"exp.cyberlink.role":["多媒體動畫師","Multimedia Animator"],"exp.cyberlink.1":["AI 素材製作與應用","AI asset creation and application"],"exp.cyberlink.2":["動態轉場設計與製作","Motion transition design and production"],"exp.cyberlink.3":["多媒體內容專案協助","Multimedia content project support"],"exp.mirror.role":["動畫師","Animator"],"exp.mirror.1":["CG 動畫製作","CG animation production"],"exp.mirror.2":["棚內動態製作","Studio motion graphics production"],"exp.mirror.3":["專案動畫製作","Project-based animation production"],"exp.mirror.4":["AR 物件設計與製作","AR asset design and production"],"exp.game.role":["影音製作專員","Video Production Specialist"],"exp.game.1":["AE 廣告動畫製作","After Effects advertising animation"],"exp.game.2":["C4D / MAYA / 3DMAX 動畫製作","C4D / Maya / 3ds Max animation production"],"exp.game.3":["PV 廣告影片製作","PV and advertising video production"],"exp.game.4":["Premiere 影片後製","Video post-production in Premiere"],"exp.hy.role":["攝影剪輯助理","Camera & Editing Assistant"],"exp.hy.1":["轉播攝影機器架設與拍攝","Broadcast camera setup and shooting"],"exp.hy.2":["影片剪輯後製","Video editing and post-production"],"exp.ftv.role":["專案執行製作助理","Project Production Assistant"],"exp.ftv.1":["專案執行與廣告規劃","Project execution and ad planning"],"exp.ftv.2":["協助棚內外拍攝作業","Assisted studio and location shoots"],"exp.ftv.3":["廣告拍攝協助","Commercial shoot support"],"exp.ftv.4":["書面整理與修圖","Documentation and image retouching"],"certs.title":["認證","Certifications"],"contact.title":["聯絡我","Contact"],"contact.desc":["不管你是想做影片、探索 AI 工作流、或只是想聊聊這個領域的可能性——歡迎隨時聯絡。","Whether you want to create a video, explore AI workflows, or simply talk about what is possible in this field — feel free to reach out."],"contact.drive":["Google Drive 作品集","Google Drive Portfolio"],"contact.instagram":["@ms0681565","@ms0681565"],"contact.ready":["準備好合作了嗎？","Ready to collaborate?"],"contact.line":["讓我們一起打造令人驚豔的作品","Let's build something impressive together."],"contact.cta":["立即聯絡 →","Contact Me →"],"footer.copy":["© 2026 陳品愷 Kevin Chen · All Rights Reserved · bilingual v2026.04.27","© 2026 Kevin Chen · All Rights Reserved · bilingual v2026.04.27"]};
   const langToggle = document.getElementById('lang-toggle');
   const currentLangEl = document.querySelector('[data-lang-current]');
   const nextLangEl = document.querySelector('[data-lang-next]');
