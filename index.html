@@ -262,6 +262,20 @@
   }
   .portfolio-thumb video { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0; transition:opacity 0.5s; }
   .portfolio-card:hover .portfolio-thumb video { opacity:1; }
+  /* 遊戲卡片：平常顯示封面，滑鼠移上去（手機點一下）才播實機片段 */
+  .hover-play .hp-cover { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+  .portfolio-card .hover-play video,
+  .portfolio-card:hover .hover-play video { opacity:0; transition:opacity 0.35s; }
+  .portfolio-card .hover-play.is-playing video,
+  .portfolio-card:hover .hover-play.is-playing video { opacity:1; }
+  .hover-play .hp-hint {
+    position:absolute; right:10px; bottom:10px; width:34px; height:34px; border-radius:50%;
+    background:rgba(8,8,16,0.6); border:1px solid rgba(255,255,255,0.35);
+    display:flex; align-items:center; justify-content:center; pointer-events:none;
+    transition:opacity 0.3s;
+  }
+  .hover-play .hp-hint::after { content:''; margin-left:3px; border-style:solid; border-width:7px 0 7px 11px; border-color:transparent transparent transparent #fff; }
+  .hover-play.is-playing .hp-hint { opacity:0; }
   .portfolio-info { padding:1.2rem; }
   .portfolio-title { font-size:1rem; font-weight:600; color:var(--text); margin-bottom:0.4rem; }
   .portfolio-desc { font-size:0.85rem; color:var(--muted); line-height:1.6; margin-bottom:0.8rem; }
@@ -780,7 +794,7 @@
         </div>
       </div>
       <div class="portfolio-card">
-        <div class="portfolio-thumb" style="background:none;"><video class="tv-video" muted loop playsinline preload="none" poster="gifs/mp4/game_lantern.jpg?v=20261110" aria-label="小燈籠騎士實機遊玩" style="width:100%;height:100%;object-fit:cover;display:block;opacity:1;"><source src="gifs/mp4/game_lantern.mp4?v=20261110" type="video/mp4"><img src="gifs/game_lantern.gif?v=20261110" alt="小燈籠騎士實機遊玩" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;"></video></div>
+        <div class="portfolio-thumb hover-play" style="background:none;"><img class="hp-cover" src="images/cover_lantern.jpg?v=20261112b" alt="小燈籠騎士封面" loading="lazy" decoding="async"><video muted loop playsinline preload="none" aria-label="小燈籠騎士實機遊玩"><source src="gifs/mp4/game_lantern.mp4?v=20261110" type="video/mp4"></video><span class="hp-hint" aria-hidden="true"></span></div>
         <div class="portfolio-info">
           <div class="portfolio-title" data-i18n="portfolio.lantern.title">小燈籠騎士</div>
           <div class="portfolio-desc" data-i18n="portfolio.lantern.desc">Godot 4 橫向動作遊戲。五張關卡場景、五種怪物行為與「破曉斬」特殊技，打倒不死者、集滿四顆靈魂寶石後開啟傳送門。像素美術與動畫序列自製。</div>
@@ -794,7 +808,7 @@
         </div>
       </div>
       <div class="portfolio-card">
-        <div class="portfolio-thumb" style="background:none;"><video class="tv-video" muted loop playsinline preload="none" poster="gifs/mp4/game_gemfighter.jpg?v=20261112" aria-label="寶石格鬥實機遊玩" style="width:100%;height:100%;object-fit:cover;display:block;opacity:1;"><source src="gifs/mp4/game_gemfighter.mp4?v=20261112" type="video/mp4"><img src="gifs/game_gemfighter.gif?v=20261112" alt="寶石格鬥實機遊玩" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;"></video></div>
+        <div class="portfolio-thumb hover-play" style="background:none;"><img class="hp-cover" src="images/cover_gemfighter.jpg?v=20261112b" alt="寶石格鬥封面" loading="lazy" decoding="async"><video muted loop playsinline preload="none" aria-label="寶石格鬥實機遊玩"><source src="gifs/mp4/game_gemfighter.mp4?v=20261112" type="video/mp4"></video><span class="hp-hint" aria-hidden="true"></span></div>
         <div class="portfolio-info">
           <div class="portfolio-title" data-i18n="portfolio.gemfighter.title">寶石格鬥</div>
           <div class="portfolio-desc" data-i18n="portfolio.gemfighter.desc">Godot 4 對戰動作原型。輕擊、重擊、防禦、跳躍與消耗能量的寶石必殺技，含回合計時、體力與勝負判定，對手為 Gem Ninja CPU。</div>
@@ -1195,6 +1209,32 @@
       });
     }
   }
+
+  // 遊戲卡片：滑鼠移上去才載入＋播放，移開回到封面；觸控裝置點一下切換
+  document.querySelectorAll('.hover-play').forEach(function(box) {
+    const v = box.querySelector('video');
+    const card = box.closest('.portfolio-card') || box;
+    if (!v) return;
+    function start() {
+      v.preload = 'auto';
+      const p = v.play();
+      if (p && p.catch) p.catch(function(){});
+    }
+    function stop() {
+      box.classList.remove('is-playing');
+      v.pause();
+      try { v.currentTime = 0; } catch (e) {}
+    }
+    v.addEventListener('playing', function() { box.classList.add('is-playing'); });
+    card.addEventListener('pointerenter', function(e) { if (e.pointerType === 'mouse') start(); });
+    card.addEventListener('pointerleave', function(e) { if (e.pointerType === 'mouse') stop(); });
+    let lastPointer = 'mouse';
+    card.addEventListener('pointerdown', function(e) { lastPointer = e.pointerType; });
+    card.addEventListener('click', function() {
+      if (lastPointer === 'mouse') return;
+      if (v.paused) start(); else stop();
+    });
+  });
 
   // Showreel：點了才載入、有聲播放，播完回到封面
   const reelVideo = document.getElementById('reel-video');
