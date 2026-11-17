@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AETHER DUEL 月蝕決鬥 | 陳品愷 Kevin Chen</title>
+<meta name="description" content="AETHER DUEL 互動設計案例：讓站姿、坐姿、不開鏡頭的玩家，都能讀懂一場體感魔法對決。">
+<style>
+  :root {
+    --bg: #0a0a0f; --bg2: #0f0f1a;
+    --accent: #7c3aed; --accent2: #a855f7; --accent3: #06b6d4;
+    --text: #e2e8f0; --muted: #94a3b8; --card: #12121f;
+    --border: rgba(124,58,237,0.3);
+    --quick: #22d3ee; --heavy: #ec4899; --shield: #a78bfa;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { background:var(--bg); color:var(--text); font-family:'Segoe UI','Microsoft JhengHei',sans-serif; overflow-x:hidden; line-height:1.7; }
+  body::before {
+    content:''; position:fixed; inset:0; pointer-events:none; z-index:0;
+    background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  }
+  a { color:inherit; }
+
+  nav {
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    display:flex; justify-content:space-between; align-items:center;
+    padding:1.2rem 4rem; background:rgba(10,10,15,0.8); backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--border);
+  }
+  .nav-logo { font-size:1.4rem; font-weight:700; color:var(--accent2); letter-spacing:0.05em; text-decoration:none; }
+  .nav-back { color:var(--muted); text-decoration:none; font-size:0.9rem; letter-spacing:0.05em; transition:color .3s; }
+  .nav-back:hover { color:var(--accent2); }
+  .nav-right { display:flex; align-items:center; gap:1.5rem; }
+  .lang-switch {
+    display:flex; align-items:center; gap:0.35rem; padding:0.45rem 0.8rem; border-radius:999px;
+    border:1px solid var(--border); background:rgba(124,58,237,0.12); color:var(--text);
+    font-size:0.78rem; font-weight:700; letter-spacing:0.06em; cursor:pointer; transition:all .2s ease;
+  }
+  .lang-switch:hover { border-color:var(--accent2); background:rgba(124,58,237,0.22); transform:translateY(-1px); }
+  .lang-switch .muted { color:var(--muted); font-weight:600; }
+
+  main { position:relative; z-index:1; }
+  .wrap { max-width:1120px; margin:0 auto; padding:0 2rem; }
+  section { padding:4.5rem 0; }
+
+  .hero { padding:9.5rem 0 3rem; position:relative; overflow:hidden; }
+  .hero::after {
+    content:''; position:absolute; top:4rem; right:-10%; width:min(620px,90vw); height:620px; z-index:-1;
+    background:radial-gradient(circle, rgba(124,58,237,0.22), rgba(6,182,212,0.08) 45%, transparent 70%);
+    filter:blur(10px);
+  }
+  .tag {
+    display:inline-block; padding:0.4rem 1rem; border:1px solid var(--border); border-radius:999px;
+    font-size:0.78rem; letter-spacing:0.12em; color:var(--accent2); margin-bottom:1.5rem; background:rgba(124,58,237,0.08);
+  }
+  h1 { font-size:clamp(2.1rem,5vw,3.4rem); line-height:1.2; font-weight:800; margin-bottom:1.3rem; }
+  h1 .grad { background:linear-gradient(90deg,var(--accent2),var(--accent3)); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .lead { font-size:1.12rem; color:var(--muted); max-width:760px; }
+  .meta { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1rem; margin:2.4rem 0 2.6rem; }
+  .meta div { border-left:2px solid var(--border); padding-left:1rem; }
+  .meta b { display:block; font-size:0.75rem; letter-spacing:0.12em; color:var(--accent3); font-weight:600; margin-bottom:0.2rem; }
+  .meta span { font-size:0.92rem; color:#cbd5e1; }
+
+  .eyebrow { font-size:0.85rem; color:var(--accent3); letter-spacing:0.12em; margin-bottom:0.8rem; display:flex; align-items:center; gap:0.6rem; }
+  .eyebrow::before { content:''; width:24px; height:2px; background:currentColor; border-radius:2px; }
+  .eyebrow.purple { color:var(--accent2); }
+  h2 { font-size:clamp(1.6rem,3vw,2.2rem); margin-bottom:1rem; line-height:1.3; }
+  .intro { color:var(--muted); max-width:780px; margin-bottom:2rem; }
+  .intro strong { color:var(--text); }
+
+  .shot { border-radius:14px; overflow:hidden; border:1px solid var(--border); background:var(--bg2); box-shadow:0 20px 60px rgba(0,0,0,0.45); }
+  .shot img { width:100%; display:block; }
+  .shot-note { font-size:0.78rem; color:#64748b; margin-top:0.6rem; }
+
+  .quote { font-size:clamp(1.15rem,2.2vw,1.45rem); line-height:1.6; border-left:3px solid var(--accent2); padding:0.4rem 0 0.4rem 1.3rem; max-width:820px; }
+
+  .principles { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:1rem; }
+  .principle { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:1.2rem 1.1rem; }
+  .principle .num { font-size:0.75rem; color:var(--accent3); letter-spacing:0.1em; margin-bottom:0.5rem; }
+  .principle h4 { font-size:0.98rem; margin-bottom:0.35rem; line-height:1.45; }
+  .principle p { font-size:0.82rem; color:var(--muted); line-height:1.6; }
+
+  .loop { display:flex; flex-wrap:wrap; align-items:center; gap:0.5rem; margin-bottom:2.2rem; }
+  .step { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:0.7rem 1rem; min-width:118px; }
+  .step b { display:block; font-size:0.98rem; }
+  .step span { font-size:0.78rem; color:var(--muted); }
+  .loop .arr { color:var(--accent2); opacity:0.8; }
+
+  .split { display:grid; grid-template-columns:1fr 1.25fr; gap:2.5rem; align-items:center; }
+  table.matrix { width:100%; border-collapse:separate; border-spacing:0; font-size:0.9rem; background:var(--card); border:1px solid var(--border); border-radius:14px; overflow:hidden; }
+  .matrix th, .matrix td { padding:0.75rem 0.8rem; text-align:center; border-bottom:1px solid rgba(124,58,237,0.15); }
+  .matrix tr:last-child td { border-bottom:none; }
+  .matrix th { font-size:0.78rem; font-weight:600; color:var(--muted); letter-spacing:0.04em; }
+  .matrix td:first-child { text-align:left; font-weight:700; }
+  .matrix .win { color:#fde68a; font-weight:700; }
+  .matrix .no { color:#475569; }
+  .c-quick { color:var(--quick); } .c-heavy { color:var(--heavy); } .c-shield { color:var(--shield); }
+  .matrix-note { font-size:0.82rem; color:var(--muted); margin-top:0.9rem; }
+
+  .before-after { display:flex; flex-direction:column; gap:1.4rem; margin:0.5rem 0 2.6rem; }
+  .ba-label { font-size:0.8rem; letter-spacing:0.1em; margin-bottom:0.5rem; color:var(--muted); }
+  .ba-label b { color:var(--text); margin-right:0.5rem; }
+  .ba-label.after b { color:var(--accent3); }
+  .ba img { width:100%; display:block; border-radius:10px; border:1px solid var(--border); }
+
+  .changes { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1rem; }
+  .change { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:1.2rem 1.3rem; }
+  .change .saw { font-size:0.85rem; color:var(--muted); margin-bottom:0.55rem; }
+  .change .saw::before { content:'看到的問題'; display:block; font-size:0.7rem; letter-spacing:0.12em; color:#f472b6; margin-bottom:0.2rem; }
+  .change .did { font-size:0.92rem; color:#e2e8f0; }
+  .change .did::before { content:'改法'; display:block; font-size:0.7rem; letter-spacing:0.12em; color:var(--accent3); margin-bottom:0.2rem; }
+  html[lang="en"] .change .saw::before { content:'WHAT I SAW'; }
+  html[lang="en"] .change .did::before { content:'WHAT I CHANGED'; }
+
+  .layout-row { display:grid; grid-template-columns:1.6fr 0.55fr; gap:2rem; align-items:center; margin-top:2.6rem; }
+  .points { list-style:none; display:flex; flex-direction:column; gap:0.8rem; }
+  .points li { padding-left:1.3rem; position:relative; color:#cbd5e1; font-size:0.95rem; }
+  .points li::before { content:''; position:absolute; left:0; top:0.65em; width:7px; height:7px; border-radius:50%; background:var(--accent3); }
+  .points.x li::before { background:none; content:'✕'; top:0; width:auto; height:auto; color:#64748b; font-size:0.85rem; }
+
+  .next { background:linear-gradient(160deg,rgba(124,58,237,0.16),rgba(18,18,31,0.95)); border:1px solid rgba(168,85,247,0.55); border-radius:16px; padding:1.8rem 2rem; }
+  .next p { color:#cbd5e1; margin-bottom:0.8rem; }
+  .next p:last-child { margin-bottom:0; }
+  .next .gate { border-left:2px solid var(--accent3); padding-left:1rem; color:var(--text); }
+
+  .roles { display:grid; grid-template-columns:1fr 1fr; gap:1.2rem; }
+  .role { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:1.5rem; }
+  .role h3 { font-size:1.05rem; margin-bottom:0.8rem; }
+  .role.me h3 { color:var(--accent2); }
+  .role.ai h3 { color:var(--accent3); }
+  .role ul { list-style:none; display:flex; flex-direction:column; gap:0.55rem; }
+  .role li { color:#cbd5e1; font-size:0.92rem; padding-left:1.1rem; position:relative; }
+  .role li::before { content:'›'; position:absolute; left:0; color:var(--muted); }
+
+  .cta { text-align:center; padding:3rem 0 6rem; }
+  .btn {
+    display:inline-block; padding:0.9rem 2rem; border-radius:999px; text-decoration:none; font-weight:700;
+    background:linear-gradient(90deg,var(--accent),var(--accent2)); color:#fff; box-shadow:0 10px 30px rgba(124,58,237,0.35);
+  }
+  footer { text-align:center; padding:2rem; color:#475569; font-size:0.8rem; border-top:1px solid rgba(124,58,237,0.15); position:relative; z-index:1; }
+
+  @media (max-width: 1000px) {
+    .principles { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  }
+  @media (max-width: 900px) {
+    nav { padding:1rem 1.25rem; }
+    .nav-right { gap:0.9rem; }
+    .wrap { padding:0 1.25rem; }
+    .hero { padding-top:7.5rem; }
+    .meta { grid-template-columns:1fr; gap:0.8rem; }
+    .split, .layout-row, .roles, .changes { grid-template-columns:1fr; }
+    .layout-row .shot { max-width:260px; margin:0 auto; }
+    .loop .arr { display:none; }
+    .step { flex:1 1 40%; }
+    .next { padding:1.4rem 1.3rem; }
+  }
+  @media (max-width: 520px) {
+    .principles { grid-template-columns:1fr; }
+    .matrix th, .matrix td { padding:0.6rem 0.45rem; font-size:0.8rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">Kevin Chen</a>
+  <div class="nav-right">
+    <a class="nav-back" href="index.html#portfolio" data-i18n="nav.back">← 回作品集</a>
+    <button class="lang-switch" id="lang-toggle" type="button" aria-label="Switch language"><span data-lang-current>中</span><span class="muted">/</span><span data-lang-next>EN</span></button>
+  </div>
+</nav>
+
+<main>
+  <!-- HERO -->
+  <header class="hero">
+    <div class="wrap">
+      <div class="tag" data-i18n="hero.tag">✦ CASE STUDY · INTERACTION DESIGN</div>
+      <h1><span data-i18n="hero.t1">AETHER DUEL 月蝕決鬥：</span><br><span class="grad" data-i18n="hero.t2">讓每個人都讀得懂的體感對決</span></h1>
+      <p class="lead" data-i18n="hero.lead">一款全年齡的體感魔法格鬥原型。坐著的人、活動範圍小的人、不想開攝影機的人，都應該玩得完，而且贏得了。這一頁記錄我怎麼定義問題、設下邊界，再一輪一輪把規則修到「看得懂」。</p>
+      <div class="meta">
+        <div><b data-i18n="meta.role.k">我的角色</b><span data-i18n="meta.role.v">遊戲與互動設計：問題定義、規則、介面層級、試玩判斷</span></div>
+        <div><b data-i18n="meta.form.k">形式</b><span data-i18n="meta.form.v">HTML5 原型，支援鍵盤、觸控、Webcam 手勢</span></div>
+        <div><b data-i18n="meta.status.k">狀態</b><span data-i18n="meta.status.v">2026 碩士研究專案，持續進行中</span></div>
+      </div>
+      <div class="shot"><img src="images/case_aether/battle.jpg?v=20261108" alt="AETHER DUEL 戰鬥畫面" decoding="async"></div>
+      <p class="shot-note" data-i18n="hero.note">戰鬥畫面：敵人放出快速魔法，上方倒數盤顯示距離命中的時間。</p>
+    </div>
+  </header>
+
+  <!-- 問題 -->
+  <section>
+    <div class="wrap">
+      <div class="eyebrow purple" data-i18n="problem.eyebrow">01 · PROBLEM</div>
+      <h2 data-i18n="problem.title">體感遊戲預設了「誰能玩」</h2>
+      <p class="intro" data-i18n="problem.intro">多數體感遊戲預設玩家站得起來、動得很大、也願意被拍。我想做的是一款全年齡的魔法格鬥，所以真正的問題不是「手勢辨識準不準」，而是：</p>
+      <p class="quote" data-i18n="problem.q">在不保存玩家影像的前提下，怎麼讓不同身體條件的玩家，不靠長篇說明也能理解規則、做出判斷？</p>
+    </div>
+  </section>
+
+  <!-- 原則 -->
+  <section>
+    <div class="wrap">
+      <div class="eyebrow" data-i18n="pr.eyebrow">02 · PRINCIPLES</div>
+      <h2 data-i18n="pr.title">開工前先定下五條邊界</h2>
+      <p class="intro" data-i18n="pr.intro">後面每一個取捨，都回來對照這五條。</p>
+      <div class="principles">
+        <div class="principle"><div class="num">01</div><h4 data-i18n="pr.1">不以動作幅度給分</h4><p data-i18n="pr.1d">揮得大不會比較強，判定只看選對沒有。</p></div>
+        <div class="principle"><div class="num">02</div><h4 data-i18n="pr.2">站姿、坐姿都要能玩</h4><p data-i18n="pr.2d">兩種姿勢都列入測試，不只顧站著的人。</p></div>
+        <div class="principle"><div class="num">03</div><h4 data-i18n="pr.3">Webcam 是選配</h4><p data-i18n="pr.3d">只用鍵盤或觸控，也能完整通關。</p></div>
+        <div class="principle"><div class="num">04</div><h4 data-i18n="pr.4">不錄影、不上傳</h4><p data-i18n="pr.4d">影像只在瀏覽器本機即時判讀，不做人臉辨識。</p></div>
+        <div class="principle"><div class="num">05</div><h4 data-i18n="pr.5">一回合只收一個動作</h4><p data-i18n="pr.5d">不讓玩家用連按去猜答案。</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 核心互動 -->
+  <section>
+    <div class="wrap">
+      <div class="eyebrow purple" data-i18n="loop.eyebrow">03 · CORE LOOP</div>
+      <h2 data-i18n="loop.title">先讀預兆，再反制</h2>
+      <p class="intro" data-i18n="loop.intro">每次交鋒都走同一個循環。敵人先露出意圖，玩家從三種術式裡選一個，系統依剋制關係結算，最後留一段時間告訴玩家為什麼成功、為什麼失敗。</p>
+      <div class="loop">
+        <div class="step"><b data-i18n="loop.s1">預兆</b><span data-i18n="loop.s1d">敵人露出意圖</span></div><span class="arr">→</span>
+        <div class="step"><b data-i18n="loop.s2">判斷</b><span data-i18n="loop.s2d">選一種術式</span></div><span class="arr">→</span>
+        <div class="step"><b data-i18n="loop.s3">鎖定</b><span data-i18n="loop.s3d">一回合只收一次</span></div><span class="arr">→</span>
+        <div class="step"><b data-i18n="loop.s4">碰撞</b><span data-i18n="loop.s4d">依剋制結算</span></div><span class="arr">→</span>
+        <div class="step"><b data-i18n="loop.s5">後座</b><span data-i18n="loop.s5d">說明成敗原因</span></div>
+      </div>
+      <div class="split">
+        <div>
+          <table class="matrix">
+            <thead><tr><th></th><th class="c-quick" data-i18n="mx.h1">敵：快速魔法</th><th class="c-heavy" data-i18n="mx.h2">敵：重型蓄力</th><th class="c-shield" data-i18n="mx.h3">敵：護盾</th></tr></thead>
+            <tbody>
+              <tr><td data-i18n="mx.r1">元素斬</td><td class="no">✕</td><td class="win" data-i18n="mx.interrupt">打斷</td><td class="no">✕</td></tr>
+              <tr><td data-i18n="mx.r2">掌盾</td><td class="win" data-i18n="mx.counter">反制</td><td class="no">✕</td><td class="no">—</td></tr>
+              <tr><td data-i18n="mx.r3">星核彈</td><td class="no">✕</td><td class="no">✕</td><td class="win" data-i18n="mx.break">破盾</td></tr>
+            </tbody>
+          </table>
+          <p class="matrix-note" data-i18n="mx.note">一局只有五次交鋒，順序固定：前三回合各教一個剋制關係，第四回合回頭驗收，第五回合讓前面做對的人，有機會用終局術式收尾。</p>
+        </div>
+        <div>
+          <div class="shot"><img src="images/case_aether/recover.jpg?v=20261108" alt="答錯後的後座回饋" loading="lazy" decoding="async"></div>
+          <p class="shot-note" data-i18n="loop.note">後座：選錯時直接說明「反制選擇錯誤」，並標出正解是哪一顆。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 迭代一 -->
+  <section>
+    <div class="wrap">
+      <div class="eyebrow" data-i18n="it1.eyebrow">04 · ITERATION 1</div>
+      <h2 data-i18n="it1.title">修掉「中間斷層」</h2>
+      <p class="intro" data-i18n="it1.p1">早期版本只有掌盾一個能練習的動作，而且體感攻擊會繞過戰鬥規則直接扣血。也就是說，用手勢玩和用鍵盤玩，其實是兩套不同的遊戲。</p>
+      <p class="intro" data-i18n-html="it1.p2"><strong>我的決定：</strong>把鍵盤、觸控、Webcam 三種輸入全部接到同一套規則。傷害只由「你選了什麼、敵人做了什麼」決定，跟你用哪種方式輸入無關。這是原則 01 和 03 能成立的前提。</p>
+    </div>
+  </section>
+
+  <!-- 迭代二 -->
+  <section>
+    <div class="wrap">
+      <div class="eyebrow purple" data-i18n="it2.eyebrow">05 · ITERATION 2</div>
+      <h2 data-i18n="it2.title">讓規則「被看見」</h2>
+      <p class="intro" data-i18n-html="it2.intro">這一輪<strong>一個戰鬥數值都沒動</strong>，只改玩家看不看得懂。最明顯的是倒數盤：</p>
+      <div class="before-after">
+        <div class="ba">
+          <div class="ba-label"><b data-i18n="ba.before">BEFORE</b><span data-i18n="ba.before.d">蓄力和飛行各跑一條進度，倒數到 0.2 秒又跳回 0.6 秒，進度條歸零重來。</span></div>
+          <img src="images/case_aether/clock_before.jpg?v=20261108" alt="調整前的倒數盤" loading="lazy" decoding="async">
+        </div>
+        <div class="ba">
+          <div class="ba-label after"><b data-i18n="ba.after">AFTER</b><span data-i18n="ba.after.d">一條連續的時間軸，只顯示「距離命中還有幾秒」；右端金色斜紋是精準掌盾的時機。</span></div>
+          <img src="images/case_aether/clock_after.jpg?v=20261108" alt="調整後的倒數盤" loading="lazy" decoding="async">
+        </div>
+      </div>
+      <div class="changes">
+        <div class="change"><p class="saw" data-i18n="ch.1s">「精準掌盾」的判定早就存在，但畫面上看不到。</p><p class="did" data-i18n="ch.1d">在進度條上用金色斜紋，把命中前那 0.35 秒畫出來。</p></div>
+        <div class="change"><p class="saw" data-i18n="ch.2s">三種預兆要讀字才分得出來。</p><p class="did" data-i18n="ch.2d">色彩編碼：快速＝青、重型＝洋紅、護盾＝紫，競技場邊緣跟著變色；只有重型會脈動，用餘光就感覺得到份量。</p></div>
+        <div class="change"><p class="saw" data-i18n="ch.3s">受擊時，玩家不一定注意到是誰被打中。</p><p class="did" data-i18n="ch.3d">血條加上命中閃光，餘光就看得到。</p></div>
+        <div class="change"><p class="saw" data-i18n="ch.4s">筆電分割畫面會把血條和回合數捲出視野。</p><p class="did" data-i18n="ch.4d">矮螢幕時壓縮頁首與操作列，讓整個戰鬥區留在同一屏。</p></div>
+      </div>
+      <div class="layout-row">
+        <div>
+          <h3 style="font-size:1.15rem;margin-bottom:0.8rem;" data-i18n="lay.title">四種螢幕實測</h3>
+          <ul class="points">
+            <li data-i18n="lay.1">在 1440×900、1280×620、900×470、375×812 四種尺寸檢查，都沒有水平溢出。</li>
+            <li data-i18n="lay.2">前三種尺寸下，戰鬥區都完整落在一屏內。</li>
+            <li data-i18n="lay.3">手機版把四顆術式鍵排成兩欄；乙太共鳴獨立一列，不再被擠成一行一個字。</li>
+          </ul>
+        </div>
+        <div>
+          <div class="shot"><img src="images/case_aether/mobile.jpg?v=20261108" alt="手機版畫面" loading="lazy" decoding="async"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 不做 -->
+  <section>
+    <div class="wrap">
+      <div class="eyebrow" data-i18n="no.eyebrow">06 · WHAT I LEFT OUT</div>
+      <h2 data-i18n="no.title">刻意不做的事</h2>
+      <p class="intro" data-i18n="no.intro">原型階段最容易犯的錯，是用更多內容掩蓋核心沒有成立。</p>
+      <ul class="points x">
+        <li data-i18n="no.1">不加更多招式：先確認三角剋制本身成立。</li>
+        <li data-i18n="no.2">不做養成、掉寶、商城和大型劇情。</li>
+        <li data-i18n="no.3">不把大動作當成高分。</li>
+        <li data-i18n="no.4">不儲存任何攝影機畫面。</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 下一步 -->
+  <section>
+    <div class="wrap">
+      <div class="eyebrow purple" data-i18n="next.eyebrow">07 · NEXT</div>
+      <h2 data-i18n="next.title">下一步：交給真人驗證</h2>
+      <div class="next">
+        <p data-i18n="next.p1">到目前為止，判斷都來自我自己的逐輪試玩，還沒有做正式的真人測試。</p>
+        <p data-i18n="next.p2">下一輪會找 5～10 位玩家，分站姿和坐姿各完成一局，記錄反制成功次數、誤判次數，以及每種術式的使用次數。</p>
+        <p class="gate" data-i18n="next.p3">判斷門檻：如果多數人沒讀長說明就說不出三角關係，優先修預兆和回饋，不加新內容。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 分工 -->
+  <section>
+    <div class="wrap">
+      <div class="eyebrow" data-i18n="role.eyebrow">08 · MY ROLE</div>
+      <h2 data-i18n="role.title">我做什麼，AI 做什麼</h2>
+      <div class="roles">
+        <div class="role me">
+          <h3 data-i18n="role.me">我負責</h3>
+          <ul>
+            <li data-i18n="role.me1">定義作品要解決的問題，以及要納入哪些玩家</li>
+            <li data-i18n="role.me2">玩法、剋制規則與五回合節奏</li>
+            <li data-i18n="role.me3">隱私邊界：攝影機資料能不能保存</li>
+            <li data-i18n="role.me4">每一輪的試玩判斷，以及建議要採用、修改還是拒絕</li>
+          </ul>
+        </div>
+        <div class="role ai">
+          <h3 data-i18n="role.ai">AI 協助</h3>
+          <ul>
+            <li data-i18n="role.ai1">依我定的規則撰寫與重構程式</li>
+            <li data-i18n="role.ai2">建立自動測試、檢查異常</li>
+            <li data-i18n="role.ai3">整理設計文件與測試表</li>
+            <li data-i18n="role.ai4">提出介面層級與提示文案的方案，由我挑選</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="cta">
+    <a class="btn" href="index.html#portfolio" data-i18n="cta">← 回到作品集</a>
+  </div>
+</main>
+
+<footer><p data-i18n="footer">© 2026 陳品愷 Kevin Chen · All Rights Reserved</p></footer>
+
+<script>
+  const translations = {
+    "nav.back": ["← 回作品集", "← Back to Portfolio"],
+    "hero.tag": ["✦ CASE STUDY · INTERACTION DESIGN", "✦ CASE STUDY · INTERACTION DESIGN"],
+    "hero.t1": ["AETHER DUEL 月蝕決鬥：", "AETHER DUEL:"],
+    "hero.t2": ["讓每個人都讀得懂的體感對決", "A Motion-Controlled Duel Anyone Can Read"],
+    "hero.lead": ["一款全年齡的體感魔法格鬥原型。坐著的人、活動範圍小的人、不想開攝影機的人，都應該玩得完，而且贏得了。這一頁記錄我怎麼定義問題、設下邊界，再一輪一輪把規則修到「看得懂」。", "An all-ages, motion-controlled magic duel prototype. Players who are seated, who have a limited range of movement, or who would rather not turn on a camera should all be able to finish it — and win. This page shows how I framed the problem, set the boundaries, and iterated until the rules were readable."],
+    "meta.role.k": ["我的角色", "MY ROLE"],
+    "meta.role.v": ["遊戲與互動設計：問題定義、規則、介面層級、試玩判斷", "Game & interaction design: problem framing, rules, UI hierarchy, playtest calls"],
+    "meta.form.k": ["形式", "FORMAT"],
+    "meta.form.v": ["HTML5 原型，支援鍵盤、觸控、Webcam 手勢", "HTML5 prototype with keyboard, touch and webcam gesture input"],
+    "meta.status.k": ["狀態", "STATUS"],
+    "meta.status.v": ["2026 碩士研究專案，持續進行中", "2026 master's research project, in progress"],
+    "hero.note": ["戰鬥畫面：敵人放出快速魔法，上方倒數盤顯示距離命中的時間。", "In battle: the enemy fires a fast spell, and the timer above shows how long until it hits."],
+    "problem.eyebrow": ["01 · PROBLEM", "01 · PROBLEM"],
+    "problem.title": ["體感遊戲預設了「誰能玩」", "Motion Games Assume Who Gets to Play"],
+    "problem.intro": ["多數體感遊戲預設玩家站得起來、動得很大、也願意被拍。我想做的是一款全年齡的魔法格鬥，所以真正的問題不是「手勢辨識準不準」，而是：", "Most motion games assume the player can stand up, move big and is happy to be filmed. I wanted an all-ages magic duel, so the real question wasn't how accurate the gesture recognition is. It was this:"],
+    "problem.q": ["在不保存玩家影像的前提下，怎麼讓不同身體條件的玩家，不靠長篇說明也能理解規則、做出判斷？", "Without storing any camera footage, how can players with different physical abilities understand the rules and make decisions — without reading a long tutorial?"],
+    "pr.eyebrow": ["02 · PRINCIPLES", "02 · PRINCIPLES"],
+    "pr.title": ["開工前先定下五條邊界", "Five Boundaries, Set Before Building"],
+    "pr.intro": ["後面每一個取捨，都回來對照這五條。", "Every trade-off afterwards was checked against these five."],
+    "pr.1": ["不以動作幅度給分", "Bigger moves don't score higher"],
+    "pr.1d": ["揮得大不會比較強，判定只看選對沒有。", "Only the choice counts, not how far you swing."],
+    "pr.2": ["站姿、坐姿都要能玩", "Playable standing or seated"],
+    "pr.2d": ["兩種姿勢都列入測試，不只顧站著的人。", "Both postures are part of testing, not just standing players."],
+    "pr.3": ["Webcam 是選配", "The webcam is optional"],
+    "pr.3d": ["只用鍵盤或觸控，也能完整通關。", "You can finish the game with keyboard or touch alone."],
+    "pr.4": ["不錄影、不上傳", "Nothing recorded or uploaded"],
+    "pr.4d": ["影像只在瀏覽器本機即時判讀，不做人臉辨識。", "Frames are read locally in the browser in real time. No face recognition."],
+    "pr.5": ["一回合只收一個動作", "One action per round"],
+    "pr.5d": ["不讓玩家用連按去猜答案。", "No mashing buttons to guess the answer."],
+    "loop.eyebrow": ["03 · CORE LOOP", "03 · CORE LOOP"],
+    "loop.title": ["先讀預兆，再反制", "Read the Tell, Then Counter"],
+    "loop.intro": ["每次交鋒都走同一個循環。敵人先露出意圖，玩家從三種術式裡選一個，系統依剋制關係結算，最後留一段時間告訴玩家為什麼成功、為什麼失敗。", "Every exchange follows the same loop. The enemy shows its intent, the player picks one of three spells, the counter rules resolve the clash, and then there's a pause that explains why it worked or didn't."],
+    "loop.s1": ["預兆", "Tell"], "loop.s1d": ["敵人露出意圖", "Enemy shows intent"],
+    "loop.s2": ["判斷", "Decide"], "loop.s2d": ["選一種術式", "Pick a spell"],
+    "loop.s3": ["鎖定", "Lock"], "loop.s3d": ["一回合只收一次", "One input per round"],
+    "loop.s4": ["碰撞", "Clash"], "loop.s4d": ["依剋制結算", "Counter rules resolve"],
+    "loop.s5": ["後座", "Recover"], "loop.s5d": ["說明成敗原因", "Explain the outcome"],
+    "mx.h1": ["敵：快速魔法", "vs. Fast spell"],
+    "mx.h2": ["敵：重型蓄力", "vs. Heavy charge"],
+    "mx.h3": ["敵：護盾", "vs. Shield"],
+    "mx.r1": ["元素斬", "Elemental Slash"],
+    "mx.r2": ["掌盾", "Palm Shield"],
+    "mx.r3": ["星核彈", "Star Core"],
+    "mx.interrupt": ["打斷", "Interrupt"],
+    "mx.counter": ["反制", "Counter"],
+    "mx.break": ["破盾", "Break"],
+    "mx.note": ["一局只有五次交鋒，順序固定：前三回合各教一個剋制關係，第四回合回頭驗收，第五回合讓前面做對的人，有機會用終局術式收尾。", "A match is just five exchanges in a fixed order: the first three each teach one counter, the fourth checks what you learned, and the fifth lets players who did well finish with the ultimate spell."],
+    "loop.note": ["後座：選錯時直接說明「反制選擇錯誤」，並標出正解是哪一顆。", "Recovery: a wrong pick is called out directly, with the correct spell highlighted."],
+    "it1.eyebrow": ["04 · ITERATION 1", "04 · ITERATION 1"],
+    "it1.title": ["修掉「中間斷層」", "Closing the Gap in the Middle"],
+    "it1.p1": ["早期版本只有掌盾一個能練習的動作，而且體感攻擊會繞過戰鬥規則直接扣血。也就是說，用手勢玩和用鍵盤玩，其實是兩套不同的遊戲。", "Early builds had only one move to practise — the palm shield — and gesture attacks skipped the combat rules and dealt damage directly. Playing with gestures and playing with a keyboard were effectively two different games."],
+    "it1.p2": ["<strong>我的決定：</strong>把鍵盤、觸控、Webcam 三種輸入全部接到同一套規則。傷害只由「你選了什麼、敵人做了什麼」決定，跟你用哪種方式輸入無關。這是原則 01 和 03 能成立的前提。", "<strong>My call:</strong> route keyboard, touch and webcam input through one shared set of rules. Damage depends only on what you chose and what the enemy did — never on how you entered it. Principles 01 and 03 only hold because of this."],
+    "it2.eyebrow": ["05 · ITERATION 2", "05 · ITERATION 2"],
+    "it2.title": ["讓規則「被看見」", "Making the Rules Visible"],
+    "it2.intro": ["這一輪<strong>一個戰鬥數值都沒動</strong>，只改玩家看不看得懂。最明顯的是倒數盤：", "This round <strong>didn't change a single combat number</strong>. It only changed whether players could read what was happening. The clearest example is the timer:"],
+    "ba.before": ["BEFORE", "BEFORE"],
+    "ba.before.d": ["蓄力和飛行各跑一條進度，倒數到 0.2 秒又跳回 0.6 秒，進度條歸零重來。", "Wind-up and flight each ran their own bar, so the countdown hit 0.2s, jumped back to 0.6s and the bar restarted from zero."],
+    "ba.after": ["AFTER", "AFTER"],
+    "ba.after.d": ["一條連續的時間軸，只顯示「距離命中還有幾秒」；右端金色斜紋是精準掌盾的時機。", "One continuous timeline showing only the time left until impact. The gold stripes on the right mark the perfect-shield window."],
+    "ch.1s": ["「精準掌盾」的判定早就存在，但畫面上看不到。", "The perfect-shield timing already existed in the rules, but you couldn't see it."],
+    "ch.1d": ["在進度條上用金色斜紋，把命中前那 0.35 秒畫出來。", "Drew the last 0.35 seconds before impact on the bar as gold stripes."],
+    "ch.2s": ["三種預兆要讀字才分得出來。", "You had to read text to tell the three tells apart."],
+    "ch.2d": ["色彩編碼：快速＝青、重型＝洋紅、護盾＝紫，競技場邊緣跟著變色；只有重型會脈動，用餘光就感覺得到份量。", "Colour coding: fast = cyan, heavy = magenta, shield = violet, with the arena's edge glow changing to match. Only the heavy charge pulses, so you can feel its weight in your peripheral vision."],
+    "ch.3s": ["受擊時，玩家不一定注意到是誰被打中。", "When a hit landed, players didn't always notice who took it."],
+    "ch.3d": ["血條加上命中閃光，餘光就看得到。", "Added a hit flash to the health bars so it reads in peripheral vision."],
+    "ch.4s": ["筆電分割畫面會把血條和回合數捲出視野。", "On a split laptop screen, the health bars and round count scrolled out of view."],
+    "ch.4d": ["矮螢幕時壓縮頁首與操作列，讓整個戰鬥區留在同一屏。", "On short screens the header and action bar compress, so the whole battle area stays on one screen."],
+    "lay.title": ["四種螢幕實測", "Tested on Four Screen Sizes"],
+    "lay.1": ["在 1440×900、1280×620、900×470、375×812 四種尺寸檢查，都沒有水平溢出。", "Checked at 1440×900, 1280×620, 900×470 and 375×812, with no horizontal overflow on any of them."],
+    "lay.2": ["前三種尺寸下，戰鬥區都完整落在一屏內。", "On the first three, the battle area fits entirely on one screen."],
+    "lay.3": ["手機版把四顆術式鍵排成兩欄；乙太共鳴獨立一列，不再被擠成一行一個字。", "On phones the four spell buttons sit in two columns, and the Aether meter gets its own row instead of being squeezed to one character per line."],
+    "no.eyebrow": ["06 · WHAT I LEFT OUT", "06 · WHAT I LEFT OUT"],
+    "no.title": ["刻意不做的事", "What I Deliberately Left Out"],
+    "no.intro": ["原型階段最容易犯的錯，是用更多內容掩蓋核心沒有成立。", "The easiest mistake at prototype stage is piling on content to hide a core that doesn't work yet."],
+    "no.1": ["不加更多招式：先確認三角剋制本身成立。", "No extra moves until the three-way counter is proven."],
+    "no.2": ["不做養成、掉寶、商城和大型劇情。", "No progression, loot, shop or big story."],
+    "no.3": ["不把大動作當成高分。", "No extra points for bigger movements."],
+    "no.4": ["不儲存任何攝影機畫面。", "No camera footage stored, ever."],
+    "next.eyebrow": ["07 · NEXT", "07 · NEXT"],
+    "next.title": ["下一步：交給真人驗證", "Next: Testing with Real Players"],
+    "next.p1": ["到目前為止，判斷都來自我自己的逐輪試玩，還沒有做正式的真人測試。", "So far every call has come from my own round-by-round playtesting. There hasn't been a formal test with other players yet."],
+    "next.p2": ["下一輪會找 5～10 位玩家，分站姿和坐姿各完成一局，記錄反制成功次數、誤判次數，以及每種術式的使用次數。", "Next I'll recruit 5–10 players to finish a match standing and seated, recording successful counters, misreads and how often each spell is used."],
+    "next.p3": ["判斷門檻：如果多數人沒讀長說明就說不出三角關係，優先修預兆和回饋，不加新內容。", "Decision rule: if most players can't explain the three-way counter without a long tutorial, fix the tells and feedback first — no new content."],
+    "role.eyebrow": ["08 · MY ROLE", "08 · MY ROLE"],
+    "role.title": ["我做什麼，AI 做什麼", "What I Did, What AI Did"],
+    "role.me": ["我負責", "I was responsible for"],
+    "role.me1": ["定義作品要解決的問題，以及要納入哪些玩家", "Defining the problem and which players to design for"],
+    "role.me2": ["玩法、剋制規則與五回合節奏", "Gameplay, the counter rules and the five-round pacing"],
+    "role.me3": ["隱私邊界：攝影機資料能不能保存", "The privacy boundary: whether camera data can be kept"],
+    "role.me4": ["每一輪的試玩判斷，以及建議要採用、修改還是拒絕", "Every playtest call, and which suggestions to accept, change or reject"],
+    "role.ai": ["AI 協助", "AI helped with"],
+    "role.ai1": ["依我定的規則撰寫與重構程式", "Writing and refactoring code to the rules I set"],
+    "role.ai2": ["建立自動測試、檢查異常", "Building automated tests and checking for issues"],
+    "role.ai3": ["整理設計文件與測試表", "Organising design docs and test sheets"],
+    "role.ai4": ["提出介面層級與提示文案的方案，由我挑選", "Proposing UI hierarchy and hint copy for me to choose from"],
+    "cta": ["← 回到作品集", "← Back to Portfolio"],
+    "footer": ["© 2026 陳品愷 Kevin Chen · All Rights Reserved", "© 2026 Kevin Chen · All Rights Reserved"]
+  };
+
+  const langToggle = document.getElementById('lang-toggle');
+  const currentLangEl = document.querySelector('[data-lang-current]');
+  const nextLangEl = document.querySelector('[data-lang-next]');
+
+  function setLanguage(lang) {
+    const safeLang = lang === 'en' ? 'en' : 'zh';
+    document.documentElement.lang = safeLang === 'en' ? 'en' : 'zh-TW';
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const item = translations[el.dataset.i18n];
+      if (item) el.textContent = safeLang === 'en' ? item[1] : item[0];
+    });
+    document.querySelectorAll('[data-i18n-html]').forEach(el => {
+      const item = translations[el.dataset.i18nHtml];
+      if (item) el.innerHTML = safeLang === 'en' ? item[1] : item[0];
+    });
+    if (currentLangEl && nextLangEl) {
+      currentLangEl.textContent = safeLang === 'en' ? 'EN' : '中';
+      nextLangEl.textContent = safeLang === 'en' ? '中' : 'EN';
+    }
+    try { localStorage.setItem('portfolioLang', safeLang); } catch (e) {}
+  }
+
+  if (langToggle) {
+    langToggle.addEventListener('click', () => {
+      setLanguage(document.documentElement.lang === 'en' ? 'zh' : 'en');
+    });
+  }
+
+  let saved = 'zh';
+  try { saved = localStorage.getItem('portfolioLang') || 'zh'; } catch (e) {}
+  const urlLang = new URLSearchParams(window.location.search).get('lang');
+  setLanguage(urlLang === 'en' ? 'en' : saved);
+</script>
+</body>
+</html>
